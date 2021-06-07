@@ -3,3 +3,5 @@ bugs in map:
 - page buttons don't start out the right color. looks like the whole titlebar color changed. 
 - the cursor changes to a drag icon when over the body of the box, but should only do so when over the box titlebar (it should use mouseover singleton)
 - tools still freeze with large datasets 
+- found a new bug where buffer followed by intersection of polygons doesn't work - it stops after 1 intersection is found
+- there appears to be some bug when highlighting over newly generated layers, at least I think that's the cause, not sure 
