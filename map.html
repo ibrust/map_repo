@@ -1,0 +1,4535 @@
+<!DOCTYPE html>
+<!--  This site was created in Webflow. http://www.webflow.com  -->
+<!--  Last Published: Fri Oct 09 2020 19:42:33 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="5f21c02cca91fc81b16e9d2e" data-wf-site="5e80cbe25836db0b31bdef23">
+<head>
+  <meta charset="utf-8">
+  <title>MAP – OMAM</title>
+  <meta content="MAP – OMAM" property="og:title">
+  <meta content="MAP – OMAM" property="twitter:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/omam.webflow.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Inconsolata:400,700","PT Serif:400,400italic,700,700italic","PT Sans:400,400italic,700,700italic","Neuton:200,300,regular,italic,700,800","Lora:regular,500,600,700,italic,500italic,600italic,700italic","Rubik:300,300italic,regular,italic,500,500italic,700,700italic,900,900italic","Cormorant:300,300italic,regular,italic,500,500italic,600,600italic,700,700italic","Libre Baskerville:regular,italic,700","Libre Franklin:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic","Special Elite:regular","Forum:regular","Bevan:regular","Averia Serif Libre:300,300italic,regular,italic,700,700italic","Michroma:regular","Syncopate:regular,700","Old Standard TT:regular,italic,700","IBM Plex Serif:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic","Work Sans:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic","Playfair Display:regular,500,600,700,800,900,italic,500italic,600italic,700italic,800italic,900italic","Sen:regular","Karla:regular,italic,700,700italic:latin,latin-ext","Sen:regular,700,800:latin,latin-ext"]  }});</script>
+  <script src="https://use.typekit.net/ogf3eox.js" type="text/javascript"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.png" rel="apple-touch-icon">
+  <meta name="keywords" content="Civil War, war, warfare, guerrilla, digital humanities, digital history, occupation, Union, Confederacy, army, 
+                                   railroad, Of Methods and Madness, irregular, bushwhacker, ArcGIS, ArcServer, insurgency, counterinsurgency, 
+                                   ArcServer map, ArcGIS javascript map, ArcGIS webmap, storymap, guerrilla warfare, guerrilla attacks, MTSU, GIS">
+	<link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/themes/dark/main.css">
+	<script type="text/javascript" src="https://js.arcgis.com/4.15/"></script>
+</head>
+
+
+<body class="body" style="width:100%;height:100%;overflow:hidden">
+
+  <!-- TOP TITLE BAR -->
+  <div data-collapse="medium" data-animation="default" data-duration="400" role="banner" class="navbar-2 map w-nav">
+    <div class="w-container">
+      <a href="index.html" target="_blank" class="brand w-nav-brand">
+        <img src="images/160415_OMAM_Logo_01-06.png" loading="lazy" width="120" sizes="(max-width: 479px) 84vw, 120px" srcset="images/160415_OMAM_Logo_01-06-p-500.png 500w, images/160415_OMAM_Logo_01-06.png 1153w" alt="" class="image-13">
+      </a>
+      <nav role="navigation" class="nav-menu w-nav-menu">
+        <a href="index.html#project-origins-01" class="nav-link w-nav-link">Origins</a>
+        <a href="index.html#historical-conclusions-02" class="nav-link w-nav-link">Historical Conclusions</a>
+        <a href="index.html#data-03" class="nav-link w-nav-link">Data</a>
+        <a href="index.html#methods-04" class="nav-link w-nav-link">Methods</a>
+        <a href="index.html#credits-05" class="nav-link w-nav-link">Credits</a>
+        <a href="index.html#project-history-06" class="nav-link w-nav-link">Project History</a>
+        <a href="index.html#" class="nav-map-tut-button w-button">Map Tutorial</a>
+      </nav>
+      <div class="menu-button w-nav-button">
+        <div class="icon-3 w-icon-nav-menu"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEFT SIDE BUTTONS - LAYERS, TABLE, LEGEND, PRINT, POPUPS -->
+  <div class="side-nav-div" style="width:72px;">
+    <div class="side-nav-wrapper">
+
+      <!-- layers button -->
+      <div class="side-nav-button w-inline-block" id="custom_layers_button">
+        <div class="layers-button-warp" id="custom_layers_wrap">
+          <div class="layers-button-div" id="custom_layers_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Layers.png" loading="lazy" width="42" alt="" class="layers-button-icon" id="custom_layers_icon">
+          </div>
+          <div class="layers-button-text">Layers</div>
+        </div>
+      </div>
+
+      <!-- table button -->
+      <div class="side-nav-button w-inline-block" id="custom_table_button">
+        <div class="table-button-wrap" id="custom_table_wrap">
+          <div class="table-button-div" id="custom_table_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Table.png" loading="lazy" width="42" alt="" class="table-button-icon" id="custom_table_icon">
+          </div>
+          <div class="table-button-text">Table</div>
+        </div>
+      </div>
+
+      <!-- legend button -->
+      <div class="side-nav-button w-inline-block" id="custom_legend_button">
+        <div class="legend-button-wrap" id="custom_legend_wrap">
+          <div class="legend-button-div" id="custom_legend_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Legend.png" loading="lazy" width="42" alt="" class="legend-button-icon" id="custom_legend_icon">
+          </div>
+          <div class="legend-button-text">Legend</div>
+        </div>
+      </div>
+
+      <!-- print button -->
+      <div class="side-nav-button w-inline-block" id="custom_print_button">
+        <div class="print-button-wrap" id="custom_print_wrap">
+          <div class="print-button-div" id="custom_print_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Print.png" loading="lazy" width="42" alt="" class="print-button-icon" id="custom_print_icon">
+          </div>
+          <div class="print-button-text">Print</div>
+        </div>
+      </div>
+
+      <!-- popups button -->
+      <div class="side-nav-button w-inline-block" id="custom_popups_button">
+        <div class="popups-button-wrap" id="custom_popups_wrap">
+          <div class="popups-button-div" id="custom_popups_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Popups.png" loading="lazy" width="42" alt="" class="popups-button-icon" id="custom_popups_icon">
+          </div>
+          <div class="popups-button-text">Popups</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MAP VIEW W/ ESTI WIDGETS -->
+  <div id="mapview" style="width:95.5%;height:92%;position:absolute;top:60px;left:72px;">
+    <div id="zoom_widget" style="position:absolute;right:110px;top:50px;"></div>
+    <div id="legend_widget" style="display:none;position:absolute;right:20px;top:165px"></div>
+    <div id="toggle_widget" style="position:absolute;right:20px;top:50px;"></div>
+    <div id="search_widget" style="position:absolute;right:20px;top:10px;"></div>
+    <div id="scalebar_widget" style="position:absolute;right:20px;top:130px;"></div>
+    <div id="print_widget" style="display:none;position:absolute;right:20px;top:165px"></div>
+  </div>
+
+  <!-- LAYERS PANEL -->
+  <div class="layers-pane-div resize_layers_pane" id="custom_layers_pane">
+    
+    <div class="layers-form w-form">
+      <label for="Server-URL" class="form-title-1">Server URL</label>
+      <input type="text" id="service_input" value="https://sampleserver6.arcgisonline.com/arcgis/rest/services/" maxlength="256" class="layers-form-div serverurl-form-field w-input" />
+      <label for="Web-Service" class="form-title-1">Dataset</label>
+      <select id="service_selector" class="buffer-distance-dropdown-form w-dropdown dropdown-list web-service-dropdown-toggle" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"></select>
+    </div>
+    <div class="w-form">
+      <div id="layers_grid"></div>
+    </div>
+    <div class="close-window-button-div">
+      <div class="close-window-button w-button" id="close_layers_pane_button">X</div>
+    </div>
+  </div>
+
+  <!-- TABLE & TOOLS -->
+  <!-- this div wraps both the tables & tools -->
+  <div style="width:100%" class="table-div" id="custom_table_tools_wrapper">
+    
+    <!-- TOOLS -->
+    <div class="table-tools-div" id="custom_tools_wrapper">   
+      <!-- filter by extent button -->
+      <div class="table-tool-buton w-inline-block" id="custom_filter_button">
+        <div class="filter-tool-button-wrap" id="filter_wrap">
+          <div class="extent-button-image" id="filter_image">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Extent.png" loading="lazy" alt="" class="image-12">
+          </div>
+          <div class="side-nave-button-text" id="filter_text">
+            <div class="side-nave-button-text">Filter by View</div>
+            <div class="side-nav-button-descriptor">Limits Table Data to Current Map View</div>
+          </div>
+        </div>
+      </div>
+      <!-- mouse selector button -->      
+      <div class="table-tool-buton w-inline-block" id="mouse_selector_button">
+        <div class="selector-tool-button-wrap" id="mouse_selector_wrap">
+          <div class="selector-button-image" id="mouse_selector_image">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Selector.png" loading="lazy" alt="" class="image-12">
+          </div>
+          <div class="side-nave-button-text" id="mouse_selector_text">
+            <div class="side-nave-button-text">Item Selector</div>
+            <div class="side-nav-button-descriptor">Click/Drag Select, Rightclick Deselect</div>
+          </div>
+        </div>
+      </div>
+      <!-- intersect tool button -->
+      <div class="table-tool-buton w-inline-block" id="custom_intersect_button">  
+        <div class="intersect-tool-button-wrap" id="intersect_wrap">
+          <div class="intersect-button-image" id="intersect_image">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Intersect.png" loading="lazy" alt="" class="image-12"></div>
+          <div class="side-nave-button-text" id="intersect_text">
+            <div class="side-nave-button-text">Intersect Analysis</div>
+            <div class="side-nav-button-descriptor">New Layer from Intersection</div>
+          </div>
+        </div>
+      </div>
+      <!-- buffer tool button -->
+      <div class="table-tool-buton w-inline-block" id="custom_buffer_button">
+        <div class="buffer-tool-button-wrap" id="buffer_wrap">
+          <div class="extent-button-image" id="buffer_image">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Buffer.png" loading="lazy" alt="" class="image-12">
+          </div>
+          <div class="side-nave-button-text" id="buffer_text">
+            <div class="side-nave-button-text">Generate Buffer</div>
+            <div class="side-nav-button-descriptor">New Layer from Buffer</div>
+          </div>
+        </div>
+      </div>
+      <!-- heatmap tool button -->
+      <div class="table-tool-buton w-inline-block" id="custom_heatmap_button"> 
+        <div class="heatmap-tool-button-wrap" id="heatmap_wrap">
+          <div class="extent-button-image" id="heatmap_image">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Heatmap.png" loading="lazy" alt="" class="image-12">
+          </div>
+          <div class="side-nave-button-text" id="heatmap_text">
+            <div class="side-nave-button-text">Heatmap</div>
+            <div class="side-nav-button-descriptor">Create Custom Heatmaps</div>
+          </div>
+        </div>
+      </div>
+
+    </div>  <!-- END OF TOOLS -->
+
+    <!-- TABLE -->
+    <div class="table-content-div" style="width:935px;border-radius:0px 10px 0px 0px;" id="custom_table_wrapper">
+      <div class="table-head-banner" style="border-radius:0px 10px 0px 0px;">
+
+        <!-- table dataset selector -->
+        <div class="table-header-layers-form w-form">
+          <select id="table_dataset_selector" style="width:160px;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;
+                height:30px;padding-top:5px;padding-bottom:5px"
+                class="intersect-form-div table-header-dropdown-form-copy w-dropdown"></select>
+        </div>
+        <!-- page size buttons -->
+        <div class="page-count-form w-form">
+          <div id="wf-form-Service-Selector" name="wf-form-Service-Selector" data-name="Service Selector" class="page-count-form-div">
+            <label for="Server-URL-3" class="page-count-title">Results per Page</label>
+            <input type="radio" id="count_button_1" name="results" value="12" checked />
+            <span class="page-count-title">12</span>
+            <input type="radio" id="count_button_2" name="results" value="24" />
+            <span class="page-count-title">24</span>
+            <input type="radio" id="count_button_3" name="results" value="48" />
+            <span class="page-count-title">48</span>
+          </div>
+        </div>
+        <!-- page selection buttons -->
+        <div class="page-numbers-div" style="width:340px;">
+          <div class="page-numbers-title" style="width:130px;" id="results_count_text"></div>
+          <div class="page-numbers-wrap" id="page_numbers"></div>
+        </div>
+        <!-- search button -->        
+        <a id="search_button" href="#" class="search-table-button w-button">Search</a>
+        <div class="close-window-button-div">
+          <div id="table_close_button" class="close-window-button w-button">X</div>
+        </div>
+      </div>
+      <!-- table -->
+      <div id="attribute_table_wrapper" class="table-content-filler-div" style="width:935px;overflow:scroll">
+        <table id="attribute_table" style="width:100%;top:0px;background-color:#fff"></table>
+        <div id="table_error_div" class="error_text"></div>			
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERSECT PANEL -->
+  <!-- jojojo -->
+  <div class="intersect-pane-div popups" id="custom_intersection_pane" style="display:none;">
+    <div class="pane-heading-div" id="intersect_title_bar">
+      <div class="pane-header-image">
+        <img src="images/200920_OMAM_IntersectHeader_01.png" loading="lazy" alt="" class="image-12">
+      </div>
+      <div class="pane-heading">Intersect Analysis</div>
+    </div>
+
+    <div class="intersect-form w-form">
+      <div id="wf-form-Service-Selector" name="wf-form-Service-Selector" data-name="Service Selector" class="intersect-form-div">
+      
+        <label for="Server-URL-2" class="form-title-1">Layer 1</label>
+        <select id="intersect_select_A" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" 
+              class="buffer-distance-dropdown-form w-dropdown web-service-dropdown-toggle"></select>
+        <label for="Web-Service" class="form-title-2">SQL expression (optional)</label>
+        <input type="text" class="intersect-form-field w-input" maxlength="256" name="Server-URL-2" data-name="Server URL 2" 
+              placeholder="example: field=‘value’" id="SQL_input_A">
+
+        <label for="Server-URL-3" class="form-title-1">Layer 2</label>
+
+        <select id="intersect_select_B" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" 
+              class="buffer-distance-dropdown-form w-dropdown web-service-dropdown-toggle"></select>
+        <label for="Web-Service" class="form-title-2">SQL expression (optional)</label>
+        <input type="text" class="intersect-form-field w-input" maxlength="256" name="Server-URL-2" data-name="Server URL 2" 
+              placeholder="example: field=‘value’" id="SQL_input_B">
+        
+        <input type="submit" id="intersect_submit_button" value="Submit" data-wait="Please wait..." class="submit-button w-button">
+        <div id="intersect_error_div" class="error_text"></div>
+      </div>
+    </div>
+    <div class="close-window-button-div">
+      <div class="close-window-button w-button" id="intersect_close_button">X</div>
+    </div>
+  </div> 
+
+  <!-- BUFFER PANEL -->
+  <div class="buffer-pane-div popups" id="custom_buffer_pane" style="display:none;">
+ 
+    <div class="pane-heading-div" id="buffer_title_bar">
+      <div class="pane-header-image">
+        <img src="images/200920_OMAM_BufferHeader_01.png" loading="lazy" alt="" class="image-12">
+      </div>
+      <div class="pane-heading">Generate Buffer</div>
+    </div>
+
+    <div class="buffer-form w-form">
+      <div id="wf-form-Service-Selector" name="wf-form-Service-Selector" data-name="Service Selector" class="intersect-form-div"> 
+        
+        <label for="Server-URL-3" class="form-title-1">Layer </label>
+        <select id="buffer_select" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle dropdown-list"></select>
+        
+        <label for="Web-Service" class="form-title-2">SQL expression (optional)</label>
+        <input type="text" class="intersect-form-field w-input" id="SQL_input_C" placeholder="example: field=‘value’"/>
+        
+        <div class="buffer-distance-div"> 
+          <select id="buffer_distance_select" style="width:30%;top:-3px;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"
+                class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle dropdown-list"></select>
+          <input type="text" class="intersect-form-field w-input" maxlength="256" name="Server-URL-2" data-name="Server URL 2" 
+                style="width:60%;" placeholder="Distance" id="buffer_distance_textbox">
+        </div>
+        <input type="submit" id="buffer_submit_button" value="Submit" data-wait="Please wait..." class="submit-button w-button">
+        <div id="buffer_error_div" class="error_text"></div>
+
+      </div>
+    </div>
+
+    <div class="close-window-button-div">
+      <a id="buffer_close_button" href="#" class="close-window-button w-button">X</a>
+    </div>
+  </div>
+
+  <!-- HEATMAP PANEL -->
+  <div class="heatmap-pane-div popups" id="custom_heatmap_panel" style="display:none;">
+    <div class="pane-heading-div" id="heatmap_title_bar">
+      <div class="pane-header-image"><img src="images/200920_OMAM_HeatmapHeader_01.png" loading="lazy" alt="" class="image-12"></div>
+      <div class="pane-heading">Heatmap</div>
+    </div>
+    <div class="heatmap-form w-form">
+      <div id="wf-form-Service-Selector" name="wf-form-Service-Selector" data-name="Service Selector" class="intersect-form-div">
+        <label for="Server-URL-3" class="form-title-1">Input Layer</label>
+
+        <select style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"
+              class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle dropdown-text" id="heatmap_select_layer"></select>
+
+
+        <label for="Server-URL-3" class="form-title-1">Radius</label>
+        <input type="range" id="blur_range" min="1" max="99">
+
+        <label for="Server-URL-3" class="form-title-1">Intensity</label>
+        <input type="range" id="intensity_range" min="1" max="99">
+        
+        <!-- <input type="button" class="popup_buttons" id="heatmap_submit_button" value="Submit" /> -->
+        
+        <input type="submit" value="Submit" data-wait="Please wait..." id="heatmap_submit_button" class="submit-button w-button">
+      </div>
+      
+    </div>
+    <div class="close-window-button-div">
+      <a id="heatmap_close_button" href="#" class="close-window-button w-button">X</a>
+    </div>
+  </div>
+
+  <!-- SEARCH PANEL -->
+  <div class="search-pane-div popups" id="custom_search_pane" style="display:none;">
+    <div class="pane-heading-div" id="search_title_bar">
+      <div class="pane-heading">Search</div>
+    </div>
+    <div class="buffer-form w-form">
+
+      <label for="Server-URL-3" class="form-title-1">Layer</label>
+      <select id="search_select" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"
+            class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle"></select> 
+      <label for="Web-Service" class="form-title-2">SQL expression (required)</label>
+      <input type="text" class="intersect-form-field w-input" maxlength="256" name="Server-URL-2" data-name="Server URL 2" 
+            placeholder="example: field='value'" id="SQL_input_D">
+      <input type="submit" value="Submit" id="submit_search_button" data-wait="Please wait..." class="submit-button w-button">
+      <div id="search_error_div" class="error_text"></div>
+    </div>
+    <div class="close-window-button-div">
+      <a id="search_close_button" href="#" class="close-window-button w-button">X</a>
+    </div>
+  </div>
+
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=5e80cbe25836db0b31bdef23" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+
+
+<script type="module">
+/*********************************************************************************************************************************************************/
+/*******************PRELIMINARY CODE***************************************************************************************************************************/
+  
+  // interact is a module that allows boxes to be dragged & resized
+  import interact from 'https://cdn.interactjs.io/v1.9.19/interactjs/index.js';
+
+  // set all necessary document elements to global variables
+  // left side navbar buttons
+  var custom_layers_button = document.getElementById("custom_layers_button");
+  var custom_layers_icon = document.getElementById("custom_layers_icon");
+  var custom_layers_div = document.getElementById("custom_layers_div");
+  var custom_layers_wrap = document.getElementById("custom_layers_wrap");
+  var close_layers_pane_button = document.getElementById("close_layers_pane_button"); 
+
+  var custom_table_tools_wrapper = document.getElementById("custom_table_tools_wrapper");
+  var custom_table_button = document.getElementById("custom_table_button");
+  var custom_table_icon = document.getElementById("custom_table_icon");
+  var custom_table_div = document.getElementById("custom_table_div");
+  var custom_table_wrap = document.getElementById("custom_table_wrap");
+
+  var custom_print_button = document.getElementById("custom_print_button");
+  var custom_print_wrap = document.getElementById("custom_print_wrap");
+  var custom_print_div = document.getElementById("custom_print_div");
+  var custom_print_icon = document.getElementById("custom_print_icon");
+  
+  var custom_popups_button = document.getElementById("custom_popups_button");
+  var custom_popups_wrap = document.getElementById("custom_popups_wrap");
+  var custom_popups_div = document.getElementById("custom_popups_div");
+  var custom_popups_icon = document.getElementById("custom_popups_icon");
+
+  var custom_legend_button = document.getElementById("custom_legend_button");
+  var custom_legend_icon = document.getElementById("custom_legend_icon");
+  var custom_legend_div = document.getElementById("custom_legend_div");
+  var custom_legend_wrap = document.getElementById("custom_legend_wrap");
+
+  var custom_filter_button = document.getElementById("custom_filter_button");
+  var filter_image = document.getElementById("filter_image");
+  var filter_text = document.getElementById("filter_text");
+  var filter_wrap = document.getElementById("filter_wrap");
+
+  // table/tools divs & buttons
+  var attribute_table = document.getElementById("attribute_table"); 
+  var custom_layers_pane = document.getElementById("custom_layers_pane"); 
+  var custom_table_tools_wrapper = document.getElementById("custom_table_tools_wrapper");
+  var custom_tools_wrapper = document.getElementById("custom_tools_wrapper"); 
+  var custom_table_wrapper = document.getElementById("custom_table_wrapper"); 
+  var custom_intersection_pane = document.getElementById("custom_intersection_pane"); 
+  var custom_buffer_pane = document.getElementById("custom_buffer_pane");
+  var custom_heatmap_panel = document.getElementById("custom_heatmap_panel"); 
+  var custom_search_pane = document.getElementById("custom_search_pane"); 
+  var page_numbers = document.getElementById("page_numbers"); 
+
+  var search_panel = document.getElementById("search_panel"); 
+
+  var service_selector = document.getElementById("service_selector");
+  var table_dataset_selector = document.getElementById("table_dataset_selector");
+  var intersect_select_A = document.getElementById("intersect_select_A");
+  var intersect_select_B = document.getElementById("intersect_select_B");
+
+  var search_select = document.getElementById("search_select");
+  var submit_search_button = document.getElementById("submit_search_button");
+
+  var mouse_selector_button = document.getElementById("mouse_selector_button");
+  var mouse_selector_wrap = document.getElementById("mouse_selector_wrap");
+  var mouse_selector_image = document.getElementById("mouse_selector_image");
+  var mouse_selector_text = document.getElementById("mouse_selector_text");
+
+  var buffer_select = document.getElementById("buffer_select");
+  var buffer_distance_textbox = document.getElementById("buffer_distance_textbox");
+  var buffer_distance_select = document.getElementById("buffer_distance_select");
+  var buffer_submit_button = document.getElementById("buffer_submit_button");
+
+  var heatmap_submit_button = document.getElementById("heatmap_submit_button");
+  var heatmap_select_layer = document.getElementById("heatmap_select_layer");
+
+  var custom_intersect_button = document.getElementById("custom_intersect_button");
+  var intersect_text = document.getElementById("intersect_text");
+  var intersect_image = document.getElementById("intersect_image");
+  var intersect_wrap = document.getElementById("intersect_wrap");
+
+  var custom_buffer_button = document.getElementById("custom_buffer_button");
+  var buffer_wrap = document.getElementById("buffer_wrap");
+  var buffer_image = document.getElementById("buffer_image");
+  var buffer_text = document.getElementById("buffer_text");
+
+  var custom_heatmap_button = document.getElementById("custom_heatmap_button");
+  var heatmap_wrap = document.getElementById("heatmap_wrap");
+  var heatmap_image = document.getElementById("heatmap_image");
+  var heatmap_text = document.getElementById("heatmap_text");
+
+  var SQL_input_A = document.getElementById("SQL_input_A");
+  var SQL_input_B = document.getElementById("SQL_input_B");
+  var SQL_input_C = document.getElementById("SQL_input_C");
+  var SQL_input_D = document.getElementById("SQL_input_D");
+
+  var table_error_div = document.getElementById("table_error_div");
+  var search_error_div = document.getElementById("search_error_div");
+  var buffer_error_div = document.getElementById("buffer_error_div");
+  var intersect_error_div = document.getElementById("intersect_error_div");
+
+  var intersect_close_button = document.getElementById("intersect_close_button"); 
+  var buffer_close_button = document.getElementById("buffer_close_button"); 
+  var heatmap_close_button = document.getElementById("heatmap_close_button"); 
+  var search_close_button = document.getElementById("search_close_button"); 
+  var table_close_button = document.getElementById("table_close_button");
+
+  var heatmap_title_bar = document.getElementById("heatmap_title_bar"); 
+  var intersect_title_bar = document.getElementById("intersect_title_bar"); 
+  var buffer_title_bar = document.getElementById("buffer_title_bar"); 
+  var search_title_bar = document.getElementById("search_title_bar"); 
+
+  var colors_for_map_tools = 		["#43dcb2", "hsl(328, 54%, 38%)", "hsla(139, 54%, 46%, 0.5)", "#35c784", "#fdcd30", "hsl(194, 48%, 43%)", 
+											                "hsla(194, 48%, 43%, 0.45)"];
+  var colors_for_polygons = 		["#6ee298", "#f8844f", "#87a20c", "#7b5dc3", "#9be2ce", "#fff53d", "#80a32a"];
+  var colors_for_lines = 			  ["#7f84cb", "#bb40e4", "#33b472", "#1a5dfb", "#90a3dd", "#101aaf", "#3df691"];
+  var colors_for_points = 		  ["#8fb659", "#8fd054", "#dabad2", "#0475d1", "#fe2c7c", "#fce258", "#4a94f1"];
+  var colors_for_new_layers =   ["#0c9d3a", "#0201d7", "#167a23", "#f8b46c", "#321b53", "#f29dd6", "#54b054", "#b1281d", "#4098b8", 
+                                      "#ba976b", "#4bf3a3", "#0cee5d", "#86f51c", "#04470a"];
+
+  // use interact.js to add drag / resize functionality to certain elements 
+  var mouse_over = false;       // this variable is used to detect certain mouseover events where we want to disable interacts drag functionality
+  
+  interact('.resize_layers_pane')
+  .resizable({ 
+    edges: { left: false, right: true, bottom: true, top: false },			// resize from right and bottom 
+    listeners: {
+      move (event) {
+        var target = event.target
+        var x = (parseFloat(target.getAttribute('data-x')) || 0)
+        var y = (parseFloat(target.getAttribute('data-y')) || 0)
+        target.style.width = event.rect.width + 'px'; 					// update the element size
+        target.style.height = event.rect.height + 'px'; 	
+        x += event.deltaRect.left; 										// translate when resizing from top or left edges
+        y += event.deltaRect.top; 	
+
+        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+        target.setAttribute('data-x', x)
+        target.setAttribute('data-y', y) 
+      }
+    },
+    modifiers: [
+      interact.modifiers.restrictEdges({outer: 'parent'}),
+      interact.modifiers.restrictSize({min: { width: 120, height: 184 }})		// minimum size
+    ],
+    inertia: true
+  });
+  interact('.popups')
+  .draggable({							// makes the search box draggable as well as resizable 
+    inertia: true,								// enable inertial throwing
+    modifiers: [								// keep the element within the area of its parent
+        interact.modifiers.restrictRect({
+          restriction: 'parent',
+          endOnly: true
+      })
+    ],
+    autoScroll: true, 
+    listeners: {move: draggableBoxListener}			// call this function on every dragmove event
+  });
+  interact('#scalebar_widget')
+  .draggable({							// makes the search box draggable as well as resizable 
+    inertia: true,								// enable inertial throwing
+    modifiers: [								// keep the element within the area of its parent
+        interact.modifiers.restrictRect({
+          restriction: 'parent',
+          endOnly: true
+      })
+    ],
+    autoScroll: true, 
+    listeners: {move: draggableBoxListener}			// call this function on every dragmove event
+  });
+  function draggableBoxListener(event) {				// called whenever the box is dragged, sets the transform & updates the elements x/y attributes 
+    var target = event.target;
+    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;				// store the dragged position in the data-x/data-y attributes
+    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    // the test statement ensures the drag only executes when not mousing over the heatmaps sliders
+    if (mouse_over == true){
+      target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';    // this is the actual drag operation
+      target.setAttribute('data-x', x);												// updates the position attributes 
+      target.setAttribute('data-y', y);
+    }
+  }
+
+  var legend_active = false;
+  var layers_pane_active = false;
+  var print_widget_active = false; 
+  var popups_widget_active = false;  
+  var table_active = false; 
+  var intersect_panel_displayed = false; 
+  var buffer_panel_displayed = false; 
+  var heatmap_panel_displayed = false;
+  var filter_active = false;
+  var mouse_selector_active = false; 
+  var box_elements = [custom_search_pane, custom_intersection_pane, custom_buffer_pane, custom_heatmap_panel]; 
+
+  function increase_z_index(clicked_element){
+    clicked_element.style.zIndex = "4000";
+    for (let x = 0; x < box_elements.length; x++){
+      box_elements[x].style.zIndex = (Number(box_elements[x].style.zIndex) - 1).toString(); 
+    }
+  }
+
+  function add_alot_of_listeners_for_displaying_elements(){
+    for (let x = 0; x < box_elements.length; x++){
+      box_elements[x].addEventListener("click", function(){
+        increase_z_index(box_elements[x]);
+      });
+    }
+    search_button.addEventListener("click", function(){
+      custom_search_pane.style.display = "block"; 
+      increase_z_index(custom_search_pane);
+    });
+    search_close_button.addEventListener("click", function(){
+      custom_search_pane.style.display = "none"; 
+    });
+    table_close_button.addEventListener("click", function(){
+      toggle_table_button("off");
+    });
+
+    // blahblah
+    heatmap_title_bar.addEventListener("mouseover", function(e){
+      mouse_over = true; 
+    });
+    heatmap_title_bar.addEventListener("mouseout", function(e){
+      mouse_over = false; 
+    });
+    intersect_title_bar.addEventListener("mouseover", function(e){
+      mouse_over = true; 
+    });
+    intersect_title_bar.addEventListener("mouseout", function(e){
+      mouse_over = false; 
+    });
+    search_title_bar.addEventListener("mouseover", function(e){
+      mouse_over = true; 
+    });
+    search_title_bar.addEventListener("mouseout", function(e){
+      mouse_over = false; 
+    });
+    buffer_title_bar.addEventListener("mouseover", function(e){
+      mouse_over = true; 
+    });
+    buffer_title_bar.addEventListener("mouseout", function(e){
+      mouse_over = false; 
+    });
+
+    custom_layers_button.addEventListener("mouseover", function(e){
+      if (layers_pane_active == false){
+        custom_layers_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_layers_icon.style.opacity = 1;
+        custom_layers_div.style.opacity = 1; 
+        custom_layers_wrap.style.opacity = 1;
+      }
+    });
+    custom_layers_button.addEventListener("mouseout", function(e){
+      if (layers_pane_active == false){
+        custom_layers_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_layers_wrap.style.opacity = 0.65;
+      } 
+    });
+    custom_table_button.addEventListener("mouseover", function(e){
+      if (table_active == false){
+        custom_table_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_table_icon.style.opacity = 1;
+        custom_table_div.style.opacity = 1; 
+        custom_table_wrap.style.opacity = 1;
+      }
+    });
+    custom_table_button.addEventListener("mouseout", function(e){
+      if (table_active == false){
+        custom_table_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_table_wrap.style.opacity = 0.65;
+      } 
+    });
+    custom_print_button.addEventListener("mouseover", function(e){
+      if (print_widget_active == false){
+        custom_print_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_print_icon.style.opacity = 1;
+        custom_print_div.style.opacity = 1; 
+        custom_print_wrap.style.opacity = 1;
+      }
+    });
+    custom_print_button.addEventListener("mouseout", function(e){
+      if (print_widget_active == false){
+        custom_print_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_print_wrap.style.opacity = 0.65;
+      } 
+    });
+    custom_popups_button.addEventListener("mouseover", function(e){
+      if (popups_widget_active == false){
+        custom_popups_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_popups_icon.style.opacity = 1;
+        custom_popups_div.style.opacity = 1; 
+        custom_popups_wrap.style.opacity = 1;
+      }
+    });
+    custom_popups_button.addEventListener("mouseout", function(e){
+      if (popups_widget_active == false){
+        custom_popups_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_popups_wrap.style.opacity = 0.65;
+      } 
+    });
+    custom_legend_button.addEventListener("mouseover", function(e){
+      if (legend_active == false){
+        custom_legend_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_legend_icon.style.opacity = 1;
+        custom_legend_div.style.opacity = 1; 
+        custom_legend_wrap.style.opacity = 1;
+      }
+    });
+    custom_legend_button.addEventListener("mouseout", function(e){
+      if (legend_active == false){
+        custom_legend_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_legend_wrap.style.opacity = 0.65;
+      } 
+    });
+    custom_filter_button.addEventListener("mouseover", function(e){
+      if (filter_active == false){
+        custom_filter_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        filter_wrap.style.opacity = 1;
+        filter_text.style.opacity = 1; 
+        filter_image.style.opacity = 1;
+      }
+    });
+    custom_filter_button.addEventListener("mouseout", function(e){
+      if (filter_active == false){
+        custom_filter_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        filter_wrap.style.opacity = 0.65; 
+      } 
+    });
+    mouse_selector_button.addEventListener("mouseover", function(e){
+      if (mouse_selector_active == false){
+        mouse_selector_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        mouse_selector_wrap.style.opacity = 1;
+        mouse_selector_text.style.opacity = 1; 
+        mouse_selector_image.style.opacity = 1;
+      }
+    });
+    mouse_selector_button.addEventListener("mouseout", function(e){
+      if (mouse_selector_active == false){
+        mouse_selector_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        mouse_selector_wrap.style.opacity = 0.65; 
+      } 
+    });
+    custom_intersect_button.addEventListener("mouseover", function(e){
+      if (intersect_panel_displayed == false){
+        console.log("mouseover, intersect_panel_displayed = ", intersect_panel_displayed);
+        custom_intersect_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        intersect_wrap.style.opacity = 1;
+        intersect_text.style.opacity = 1; 
+        intersect_image.style.opacity = 1;
+      }
+    });
+    custom_intersect_button.addEventListener("mouseout", function(e){
+      if (intersect_panel_displayed == false){
+        console.log("mouseout, intersect_panel_displayed = ", intersect_panel_displayed);
+        custom_intersect_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        intersect_wrap.style.opacity = 0.65; 
+      } 
+    });
+    custom_intersect_button.addEventListener("click", function(){
+      if (intersect_panel_displayed == false){
+        toggle_intersect_button("on");
+      }
+      else{
+        toggle_intersect_button("off");
+      }
+    });
+    intersect_close_button.addEventListener("click", function(){
+      toggle_intersect_button("off");
+    });
+    custom_buffer_button.addEventListener("mouseover", function(e){
+      if (buffer_panel_displayed == false){
+        custom_buffer_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active
+        buffer_wrap.style.opacity = 1;
+        buffer_text.style.opacity = 1;
+        buffer_image.style.opacity = 1;
+      }
+    });
+    custom_buffer_button.addEventListener("mouseout", function(e){
+      if (buffer_panel_displayed == false){
+        custom_buffer_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        buffer_wrap.style.opacity = 0.65;
+      }
+    });
+    custom_buffer_button.addEventListener("click", function(){
+      if (buffer_panel_displayed == false){
+        toggle_buffer_button("on");
+      }
+      else{
+        toggle_buffer_button("off");
+      }
+    });
+    buffer_close_button.addEventListener("click", function(){
+      toggle_buffer_button("off");
+    });
+    custom_heatmap_button.addEventListener("mouseover", function(e){
+      if (heatmap_panel_displayed == false){
+        custom_heatmap_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        heatmap_wrap.style.opacity = 1;
+        heatmap_text.style.opacity = 1; 
+        heatmap_image.style.opacity = 1;
+      }
+    });
+    custom_heatmap_button.addEventListener("mouseout", function(e){
+      if (heatmap_panel_displayed == false){
+        custom_heatmap_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        heatmap_wrap.style.opacity = 0.65; 
+      } 
+    });
+    custom_heatmap_button.addEventListener("click", function(){
+      if (heatmap_panel_displayed == false){
+        toggle_heatmap_button("on");
+      }
+      else{
+        toggle_heatmap_button("off");
+      }
+    });
+    heatmap_close_button.addEventListener("click", function(){
+      toggle_heatmap_button("off");
+    });
+    custom_legend_button.addEventListener("click", function(e){
+      if (legend_active == false){
+        toggle_legend_button("on");
+        if (print_widget_active == true){
+          toggle_print_button("off");
+        }
+      }
+      else{
+        toggle_legend_button("off");
+      }
+    });
+    custom_table_button.addEventListener("click", function(e){
+      if (table_active == false){
+        toggle_table_button("on");
+      }
+      else{
+        toggle_table_button("off");
+      }
+    });
+    custom_layers_button.addEventListener("click", function(){
+      if (layers_pane_active == false){
+        toggle_layers_button("on");
+      }
+      else{
+        toggle_layers_button("off");
+      }
+    }); 
+    close_layers_pane_button.addEventListener("click", function(){
+      toggle_layers_button("off");
+    });
+    custom_print_button.addEventListener("click", function(){
+      if (print_widget_active == false){ 
+        toggle_print_button("on");
+        if (legend_active == true){
+          toggle_legend_button("off");
+        }
+      }
+      else{ 
+        toggle_print_button("off");
+      }
+    });
+    custom_popups_button.addEventListener("click", function(){
+      if (popups_widget_active == false){ 
+        toggle_popup_checkbox("on")
+        if (mouse_selector_active == true){
+          toggle_mouse_selector_button("off");
+        }
+      }
+      else{ 
+         toggle_popup_checkbox("off")
+      }
+    }); 
+    mouse_selector_button.addEventListener("click", function(){
+      if (mouse_selector_active == false){ 
+        toggle_mouse_selector_button("on")
+        if (popups_widget_active == true){
+          toggle_popup_checkbox("off");
+        }
+        if (filter_active == true){
+          toggle_filter_button("off");
+        }
+      }
+      else{ 
+         toggle_mouse_selector_button("off")
+      }
+    });
+    custom_filter_button.addEventListener("click", function(){
+      if (filter_active == false){ 
+        toggle_filter_button("on")
+        if (mouse_selector_active == true){
+          toggle_mouse_selector_button("off");
+        }
+      }
+      else{
+        toggle_filter_button("off")
+      }
+    });  
+  }
+  add_alot_of_listeners_for_displaying_elements(); 
+
+  // utility functions used for toggling various buttons & their corresponding elements 
+  function toggle_filter_button(change_state_to){
+    if (change_state_to == "on"){ 
+      map_view.graphics = []; 
+      filter_by_extent("on");
+      custom_filter_button.style.backgroundColor = "#b86240";
+      filter_image.style.opacity = 1;
+      filter_text.style.opacity = 1; 
+      filter_wrap.style.opacity = 1; 
+      filter_active = true; 
+    }
+    else{ 
+      filter_by_extent("off");
+      custom_filter_button.style.backgroundColor = "#c36d4a";
+      filter_wrap.style.opacity = 0.65; 
+      filter_active = false; 
+    }
+  }
+  function toggle_intersect_button(change_state_to){
+    if (change_state_to == "on"){
+      increase_z_index(custom_intersection_pane);
+      custom_intersection_pane.style.display = "block";
+      custom_intersect_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      intersect_image.style.opacity = 1;
+      intersect_text.style.opacity = 1; 
+      intersect_wrap.style.opacity = 1; 
+      intersect_panel_displayed = true;
+    }
+    else{
+      custom_intersection_pane.style.display = "none"; 
+      custom_intersect_button.style.backgroundColor = "#c36d4a";
+      intersect_wrap.style.opacity = 0.65;
+      intersect_panel_displayed = false;
+    }
+  }
+  function toggle_mouse_selector_button(change_state_to){
+    if (change_state_to == "on"){ 
+      map_view.graphics = []; 
+      mouse_selector_button.style.backgroundColor = "#b86240";
+      mouse_selector_image.style.opacity = 1;
+      mouse_selector_text.style.opacity = 1; 
+      mouse_selector_wrap.style.opacity = 1; 
+      mapview.style.cursor = "crosshair";
+      mouse_selector_active = true; 
+    }
+    else{ 
+      mouse_selector_button.style.backgroundColor = "#c36d4a";
+      mouse_selector_wrap.style.opacity = 0.65; 
+      mapview.style.cursor = "initial";
+      mouse_selector_active = false; 
+    }
+  }
+  function toggle_popup_checkbox(change_to_state){
+    if (change_to_state == "off"){
+      custom_popups_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+      custom_popups_wrap.style.opacity = 0.65; 
+      popups_widget_active = false;
+      for (let x = 0; x < feature_layers_array.length; x++){
+        feature_layers_array[x].popupEnabled = false; 
+      }
+    }
+    else if (change_to_state == "on"){
+      custom_popups_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_popups_icon.style.opacity = 1;
+      custom_popups_div.style.opacity = 1; 
+      custom_popups_wrap.style.opacity = 1; 
+      popups_widget_active = true;
+      for (let x = 0; x < feature_layers_array.length; x++){
+        feature_layers_array[x].popupEnabled = true; 
+      }
+    }
+  }
+  function toggle_buffer_button(change_state_to){
+    if (change_state_to == "on"){
+      increase_z_index(custom_buffer_pane);
+      custom_buffer_pane.style.display = "block";
+      custom_buffer_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      buffer_image.style.opacity = 1;
+      buffer_text.style.opacity = 1;
+      buffer_wrap.style.opacity = 1;
+      buffer_panel_displayed = true;
+    }
+    else{
+      custom_buffer_pane.style.display = "none"; 
+      custom_buffer_button.style.backgroundColor = "#c36d4a";
+      buffer_wrap.style.opacity = 0.65;
+      buffer_panel_displayed = false;
+    }
+  }
+  function toggle_print_button(change_state_to){
+    if (change_state_to == "on"){
+      custom_print_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_print_icon.style.opacity = 1;
+      custom_print_div.style.opacity = 1; 
+      custom_print_wrap.style.opacity = 1; 
+      print_widget_active = true;
+      print_widget.style.display = "block";
+    }
+    else{
+      custom_print_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+      custom_print_wrap.style.opacity = 0.65; 
+      print_widget_active = false;
+      print_widget.style.display = "none";
+    }
+  }
+  function toggle_layers_button(change_state_to){
+    if (change_state_to == "on"){
+      custom_layers_pane.style.display = "block";
+      custom_layers_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_layers_icon.style.opacity = 1;
+      custom_layers_div.style.opacity = 1; 
+      custom_layers_wrap.style.opacity = 1; 
+      layers_pane_active = true;
+    }
+    else{
+      custom_layers_pane.style.display = "none"; 
+      custom_layers_button.style.backgroundColor = "#c36d4a";
+      custom_layers_wrap.style.opacity = 0.65;
+      layers_pane_active = false; 
+    }
+  }
+  function toggle_table_button(change_state_to){
+    if (change_state_to == "on"){
+      custom_table_tools_wrapper.style.display = "block";
+      custom_table_button.style.backgroundColor = "#b86240";        // darker background color indicates the button is active 
+      custom_table_icon.style.opacity = 1;
+      custom_table_div.style.opacity = 1; 
+      custom_table_wrap.style.opacity = 1;
+      table_active = true;
+    }
+    else{
+      custom_table_tools_wrapper.style.display = "none";
+      custom_table_button.style.backgroundColor = "#c36d4a";        // lighter background color indicates button is inactive
+      custom_table_wrap.style.opacity = 0.65;
+      table_active = false;
+    }
+  }
+  function toggle_heatmap_button(change_state_to){
+    if (change_state_to == "on"){
+      increase_z_index(custom_heatmap_panel);
+      custom_heatmap_panel.style.display = "block";
+      custom_heatmap_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      heatmap_image.style.opacity = 1;
+      heatmap_text.style.opacity = 1;
+      heatmap_wrap.style.opacity = 1;
+      heatmap_panel_displayed = true;
+    }
+    else{
+      custom_heatmap_panel.style.display = "none"; 
+      custom_heatmap_button.style.backgroundColor = "#c36d4a";
+      heatmap_wrap.style.opacity = 0.65;
+      heatmap_panel_displayed = false;
+    }
+  }
+  function toggle_legend_button(change_state_to){
+    if (change_state_to == "on"){
+      legend_widget.style.display = "block";
+      custom_legend_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_legend_icon.style.opacity = 1;
+      custom_legend_div.style.opacity = 1; 
+      custom_legend_wrap.style.opacity = 1;
+      legend_active = true;
+    }
+    else{
+      legend_widget.style.display = "none";
+      custom_legend_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+      custom_legend_wrap.style.opacity = 0.65;
+      legend_active = false;
+    }
+  }
+
+  // fill the distance selector in the buffer panel with valid options 
+  var distance_options = ["miles", "kilometers", "meters", "feet", "nautical-miles", "yards"]; 
+  for (var x = 0; x < distance_options.length; x++){
+    let new_option = document.createElement("option");
+    new_option.textContent = distance_options[x];
+    if (new_option.textContent == "miles"){
+      new_option.selected = true; 
+    }
+    buffer_distance_select.appendChild(new_option);
+  }
+
+  custom_intersection_pane.style.height = "450px"; 
+  custom_buffer_pane.style.height = "345px";
+  custom_heatmap_panel.style.height = "330px";
+  custom_search_pane.style.height = "265px";
+
+/*********************************************************************************************************************************************************/
+/*******************CODE FOR MAP***************************************************************************************************************************/
+// variables to hold ArcGis library functions, filled by the request below
+var Map, MapView, Zoom, TileLayer, MapImageLayer, Request, Collection, Legend, Basemap, TileInfo, BasemapToggle, Search, Graphic, Watch, Circle, 
+	WebMercTools, GeometryEngine, Point, Line, AsyncGeometryEngine, Polygon, FeatureLayer, WebMap, GraphicsLayer, SimpleMarkerSymbol, SimpleFillSymbol, 
+  ScaleBar, Print, Projection, SpatialReference, Field, PopupTemplate, FieldsContent, FieldInfo; 
+// various map related variables
+var map_obj, map_view, brownmap, greenmap; 
+// other miscellaneous variables
+const default_service = "OilSandsProjectBoundaries";  // OilSandsProjectBoundaries PoolPermits Water_Network
+var base_url = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/";
+
+var selected_service_name = null;
+var old_clicked_page = 0;
+var current_page = 0;
+var global_results_per_page = 12;
+var global_title_rows = []; 
+
+var graphic = undefined;
+var previous_graphic = null;
+var global_use_graphics = false; 
+var polygon_count = 0; 
+var line_count = 0; 
+var point_count = 0;
+var new_layer_count = 0;
+var next_grid_line = 1;
+var field_widths = {};
+
+var polygon_outline_widths = [];
+var grid_divs_list = [];
+var feature_layers_array = [];
+var background_layers = [];
+var layer_ids = []; 
+var queried_features_array = []; 
+var queried_background_features = []; 
+var current_layers_query = null; 
+var saved_complete_query = null; 
+var selector_elements_list = [table_dataset_selector, intersect_select_A, intersect_select_B, buffer_select, search_select];
+
+/* used to establish the zoom levels for the basemap & resolutions for each level */
+var extended_tilelods = [
+	{"level": 3, "resolution": 19567.879241000017, "scale": 73957190.94894437},
+	{"level": 4, "resolution": 9783.939620500008, "scale": 36978595.47447219},
+	{"level": 5, "resolution": 4891.969810250004, "scale": 18489297.737236094},
+	{"level": 6, "resolution": 2445.984905125002, "scale": 9244648.868618047},
+	{"level": 7, "resolution": 1222.992452562501, "scale": 4622324.434309023},
+	{"level": 8, "resolution": 611.4962262812505, "scale": 2311162.2171545117}, 
+	{"level": 9, "resolution": 305.74811314055756, "scale": 1155581.108577}, 
+	{"level": 10, "resolution": 152.87405657041106, "scale": 577790.554289}, 
+	{"level": 11, "resolution": 76.43702828507324, "scale": 288895.277144}, 
+	{"level": 12, "resolution": 38.21851414253662, "scale": 144447.638572}, 
+	{"level": 13, "resolution": 19.10925707126831, "scale": 72223.819286},
+  {"level": 14, "resolution": 9.554628535634155, "scale": 36111.909643}, 
+  {"level": 15, "resolution": 4.77731426794937, "scale": 18055.954822}, 
+  {"level": 16, "resolution": 2.388657133974685, "scale": 9027.977411}
+];
+
+/* require is a function provided by the arcGIS API - fetches various API components 
+  arguments to the require array have a 1 to 1 mapping to the callback functions parameters*/ 
+require(["esri/Map", "esri/views/MapView", "esri/widgets/Zoom", "esri/layers/TileLayer", 
+        "esri/request", "esri/core/Collection", "esri/widgets/Legend", "esri/Basemap", "esri/layers/support/TileInfo", "esri/widgets/BasemapToggle",
+        "esri/widgets/Search", "esri/Graphic", "esri/core/watchUtils", "esri/geometry/Circle", "esri/geometry/support/webMercatorUtils", 
+        "esri/geometry/geometryEngine", "esri/geometry/Point", "esri/geometry/Polyline", "esri/geometry/geometryEngineAsync", "esri/geometry/Polygon", 
+        "esri/layers/FeatureLayer", "esri/WebMap", "esri/layers/GraphicsLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleFillSymbol", 
+        "esri/widgets/ScaleBar", "esri/widgets/Print", "esri/geometry/projection", "esri/geometry/SpatialReference", "esri/layers/support/Field", 
+        "esri/PopupTemplate", "esri/popup/content/FieldsContent", "esri/popup/FieldInfo", "dojo/domReady!"],
+function(eMap, eMapView, eZoom, eTileLayer, eRequest, eCollection, eLegend, eBasemap, eTileInfo, eBasemapToggle, eSearch, 
+        eGraphic, eWatch, eCircle, eWebMercTools, eGeometryEngine, ePoint, eLine, eAsyncGeometryEngine, ePolygon, eFeatureLayer, eWebMap, 
+        eGraphicsLayer, eSimpleMarkerSymbol, eSimpleFillSymbol, eScaleBar, ePrint, eProjection, eSpatialReference, eField, ePopupTemplate, 
+        eFieldsContent, eFieldInfo){
+	
+  Map=eMap, MapView=eMapView, Zoom=eZoom, TileLayer=eTileLayer, Request=eRequest, Collection=eCollection, 
+        Legend=eLegend, Basemap=eBasemap, TileInfo=eTileInfo, BasemapToggle=eBasemapToggle, Search=eSearch, Graphic=eGraphic, Watch=eWatch, 
+        Circle=eCircle, WebMercTools=eWebMercTools, GeometryEngine=eGeometryEngine, Point=ePoint, Line=eLine, 
+        AsyncGeometryEngine=eAsyncGeometryEngine, Polygon=ePolygon, FeatureLayer=eFeatureLayer, WebMap=eWebMap, GraphicsLayer=eGraphicsLayer, 
+        SimpleMarkerSymbol=eSimpleMarkerSymbol, SimpleFillSymbol=eSimpleFillSymbol, ScaleBar=eScaleBar, Print=ePrint, Projection=eProjection, 
+        SpatialReference=eSpatialReference, Field=eField, PopupTemplate=ePopupTemplate, FieldsContent=eFieldsContent, FieldInfo=eFieldInfo;
+
+	// create basemap (brown one, higher detail)
+	brownmap = new Basemap({
+		baseLayers: [new TileLayer({
+      url: "http://server.arcgisonline.com/arcgis/rest/services/World_Shaded_Relief/MapServer", 
+      title: "world_physical_basemap"})], 
+		title: "historically accurate", 
+		id: "brownmap", 
+		thumbnailUrl: "images/brownmap_icon.PNG"
+	});
+    // create basemap (green one, looks better than others)
+	greenmap = new Basemap({
+		baseLayers: [new TileLayer({
+        url: "http://server.arcgisonline.com/arcgis/rest/services/World_Physical_Map/MapServer", 
+        title: "world_physical_basemap"}
+      )],	
+      title: "natural earth", 
+      id: "greenmap", 
+		thumbnailUrl: "images/greenmap_icon.PNG"
+	});
+	// load the default basemap 
+	map_obj = new Map({basemap: brownmap});
+	
+	// create view - the view is like the lense through which you see the map
+	map_view = new MapView({
+		container: "mapview",
+		map: map_obj, 
+		center: [-85.18798828122625, 32.86113232280214], 
+		zoom: 3, 
+		constraints: {lods: extended_tilelods}
+	});
+
+	// create widgets & add to view
+	map_view.ui.components = ["attribution"];
+	
+  var zoom = new Zoom({
+    view: map_view, 
+    container: "zoom_widget"
+  });
+	map_view.ui.add(zoom, "manual"); // manual specifies that you will position the element manually, in this case within the zoom_widget div 
+	
+  var legend = new Legend({
+    view: map_view, 
+    defaultsymbol: false, 
+    container: "legend_widget"
+  });
+	map_view.ui.add(legend, "manual");
+	
+  let ESRI_search = new Search({
+    view: map_view, 
+    container: "search_widget"
+  });
+	map_view.ui.add(ESRI_search, "manual");
+
+  var scale_bar = new ScaleBar({
+    view: map_view, 
+    container: "scalebar_widget", 
+    unit: "non-metric", 
+    style: "ruler", 
+  });
+  map_view.ui.add(scale_bar, {position: "manual"});
+
+  var print_obj = new Print({
+    view: map_view, 
+    container: "print_widget", 
+    printServiceUrl: base_url + "Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+  });
+  map_view.ui.add(print_obj, {position: "manual"});
+	
+    // toggles between 2 baemaps - if you need more than 2 basemaps you have to use the basemap gallery widget 
+	var basemapToggle = new BasemapToggle({
+		view: map_view,
+		nextBasemap: greenmap,
+		container: "toggle_widget",
+		titleVisible: false
+	});
+	map_view.ui.add(basemapToggle, "manual");
+
+	// fill the services selector w/ the initial services
+	populate_services();
+	// prime listeners for the 3 radio buttons that select page sizes on attribute table 
+	let total_results = 12;
+	for (let x = 1; x <= 3; x++){
+    closure(x, total_results);
+    total_results *= 2;
+	} 
+  function closure(input_value, results){
+    let radio_button_id = "count_button_" + input_value;
+    let radio_button = document.getElementById(radio_button_id);
+    radio_button.addEventListener("click", function(){change_results_count(results);}); 
+  }
+
+	// set up an event listener for the REST URL box
+	service_input.addEventListener("change", change_services_url);
+}); /* end require  */
+
+// add services to the drop down list of services on the layers pane, prime event listeners to load them, then call load_service to load the first service in the list
+function populate_services(){
+	Request(base_url + "?f=json", {responseType: "json"})
+	.then(function(response){
+		let server_json = response.data;
+		// add event listeners so that when a new service is selected - fetch that service, render it on the map, & fill the layers pane with checkboxes for its layers
+		service_selector.addEventListener("change", function(){
+			load_service(false);
+		});
+		let total_elements = service_selector.childElementCount;
+		for (var x = 0; x < total_elements; x++){
+			service_selector.removeChild(service_selector.childNodes[0]);
+		}
+
+		// populate the drop down list of services with all available services names
+		for (var x = 0; x < server_json.services.length; x++){
+      let service_type = server_json.services[x].type; 
+      if (service_type == "FeatureServer"){
+        let new_option = document.createElement("option");
+        new_option.textContent = server_json.services[x].name;
+        if (new_option.textContent == default_service){
+          new_option.selected = true;
+        }
+        service_selector.appendChild(new_option);
+      }
+		}
+		load_service(true);
+	}); /* end promised request */
+} /* end populate services */
+
+function load_service(first_time){
+	// get the name of the currently selected service from the service selector in the layers pane 
+	selected_service_name = service_selector.options[service_selector.selectedIndex].textContent;
+	// remove any old service from the map
+	map_obj.removeAll();
+
+  // make a json request to find out how many layers there are 
+  let featureserver_info_url = base_url + selected_service_name + "/FeatureServer?f=pjson"; 
+
+  Request(featureserver_info_url).then(function(service_json_response){
+    feature_layers_array = []; 
+    background_layers = []; 
+    global_title_rows = []; 
+    graphic = undefined;
+    global_use_graphics = false; 
+    polygon_outline_widths = []; 
+    queried_features_array = []; 
+    queried_background_features = []; 
+    previous_graphic = null; 
+    saved_complete_query = null; 
+
+    var promises_array = []; 
+    var total_layers = service_json_response.data.layers.length;
+
+    if (!first_time){
+      clear_graphics_layer();
+    }
+    else{
+      map_view.graphics = []; 
+    }
+
+    var layer_objects = service_json_response.data.layers;       // get the layer ids for each layer in the service ...
+    layer_ids = []; 
+    for (let x = 0; x < layer_objects.length; x++){
+      layer_ids.push(layer_objects[x].id)
+    }
+
+    var server_query_url = base_url + selected_service_name + "/FeatureServer/"; 
+    var json_query = "?f=pjson"; 
+
+    for (let x = 0; x < total_layers; x++){
+
+      let layer_query_url = server_query_url + layer_ids[x];      
+      let promise = Request(layer_query_url + json_query).then(function(layer_json_response){
+          
+        let fields = layer_json_response.data.fields; 
+        let popup_field_infos = [];
+        let popup_field_names = []; 
+        for (let y = 0; y < fields.length; y++){
+          popup_field_infos.push(new FieldInfo({
+            fieldName: fields[y].name,
+            label: fields[y].alias,
+            visible: true, 
+            isEditable: true
+          }));
+          popup_field_names.push(fields[y].name); 
+        }
+        let display_field = layer_json_response.data.displayField; 
+
+        let popup_template = new PopupTemplate({
+          content: [{
+            type: "fields", 
+            fieldInfos: popup_field_infos
+          }]
+        });
+
+        let new_feature_layer = new FeatureLayer({
+          url: layer_query_url, 
+          outFields: popup_field_names, 
+          popupTemplate: popup_template
+        });
+
+        let promise = new_feature_layer.load().then(function(){
+          feature_layers_array.push(new_feature_layer);                 
+        });
+        return promise;
+      });
+
+      promises_array.push(promise);
+    }
+    return Promise.all(promises_array);
+  }).then(function(){
+
+    if (popups_widget_active == false){
+      toggle_popup_checkbox("off");
+    }
+    else{
+      toggle_popup_checkbox("on");
+    }
+
+    var geometry_types = ["polygon", "polyline", "point"];
+    for (let y = 0; y < 3; y++){
+      for (let x = 0; x < feature_layers_array.length; x++){
+        if (feature_layers_array[x].geometryType == geometry_types[y]){
+          map_obj.add(feature_layers_array[x]);
+        }
+      }
+    }        
+
+    feature_layers_array.sort(function(a, b){
+      return a.layerId - b.layerId; 
+    });
+
+    // get rid of the layer checkboxes listed by any prior service
+    grid_divs_list = [];
+    next_grid_line = 1;
+    let child_count = layers_grid.childElementCount;
+    for (let y = 0; y < child_count; y++){
+      layers_grid.removeChild(layers_grid.childNodes[0]); 
+    }
+
+    for (let x = 0; x < layer_ids.length; x++){  
+      let layer_id = layer_ids[x];
+      let feature_layer = feature_layers_array[x]; 
+
+      let checkbox = document.createElement("input");
+
+      checkbox.classList.add("w-checkbox-input");
+      checkbox.classList.add("w-checkbox-input--inputType-custom");
+      checkbox.classList.add("checkbox");
+
+      checkbox.type = "checkbox";								// set new checkbox's attributes
+      checkbox.value = feature_layer.layerId;
+      checkbox.checked = feature_layer.visible;
+      checkbox.style.position = "absolute";
+      checkbox.style.display = "inline-block";
+      checkbox.style.left = "0px";
+      checkbox.style.height = "12px";
+      
+      checkbox.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
+        feature_layer.visible = e.target.checked;
+      });
+ 
+      let checkbox_label = document.createElement("label");		// create a label for the new checkbox & set its CSS attributes 
+      checkbox_label.classList.add("checkbox-button-label");
+      checkbox_label.classList.add("w-form-label");
+
+      checkbox_label.style.position = "absolute";
+      checkbox_label.style.display = "inline-block";
+      checkbox_label.style.left = "15px";
+      checkbox_label.style.right = "0px";
+      checkbox_label.style.height = "20px";
+      checkbox_label.style.overflow = "hidden";
+      checkbox_label.style.whiteSpace = "nowrap";
+      checkbox_label.id = "services_checkbox_label_" + layer_id;          // needed later to append the feature counts to the checkboxes 
+
+      let label_text = feature_layer.title;			// get the text for the new label 
+      checkbox_label.textContent = label_text;
+
+      let new_div = document.createElement("div");
+      
+      new_div.classList.add("w-checkbox");
+      new_div.classList.add("checkbox-field"); 
+
+      checkbox_label.style.overflow = "hidden";
+      new_div.style.gridRowStart = next_grid_line;
+      next_grid_line += 1;
+      new_div.style.gridRowEnd = next_grid_line;
+      new_div.id = layer_id;
+      new_div.append(checkbox);
+      new_div.append(checkbox_label);
+      new_div.style.overflow = "hidden";
+      new_div.style.padding = "0px";
+
+      grid_divs_list.push(new_div); 
+      layers_grid.style.gridTemplateRows += " 25px"; 
+      layers_grid.append(new_div);
+    }// end of loop for adding layer checkboxes
+
+    // remove any old layer selector options throughout the various panels 
+    for (let x = 0; x < selector_elements_list.length; x++){
+      let old_count = selector_elements_list[x].childElementCount;
+      for (let y = 0; y < old_count; y++){
+        selector_elements_list[x].removeChild(selector_elements_list[x].childNodes[0]); 
+      }
+    }
+    let heatmap_child_count = heatmap_select_layer.childElementCount; 
+    for (let y = 0; y < heatmap_child_count; y++){
+      heatmap_select_layer.removeChild(heatmap_select_layer.childNodes[0]); 
+    }
+    // now populate the selectors with the new layers 
+    for (let x = 0; x < layer_ids.length; x++){
+      let layer_id = layer_ids[x]; 
+      let featurelayer = feature_layers_array[x];
+      for (let z = 0; z < selector_elements_list.length; z++){
+        add_option(selector_elements_list[z], featurelayer, layer_id);
+      }
+    }
+    for (let x = 0; x < layer_ids.length; x++){
+      let layer_id = layer_ids[x]; 
+      let featurelayer = feature_layers_array[x];
+      let geometry_type = featurelayer.geometryType; 
+      if (geometry_type == "point"){
+        add_option(heatmap_select_layer, featurelayer, layer_id);
+      }
+    }
+
+    function add_option(element, featurelayer, layer_id){
+      let layer_option = document.createElement("option");
+      layer_option.textContent = featurelayer.title;
+      layer_option.id = layer_id;                 // id is needed later by the options handler when an option is selected 
+      element.append(layer_option);
+    }
+      
+    // spatially project the new layers of the fetched service onto the map and zoom to the extent 
+    project_and_zoom(feature_layers_array[0].fullExtent);
+
+    // establish the current features in the array for all layers 
+    var promise_array = []; 
+    queried_features_array = []; 
+    for (let x = 0; x < feature_layers_array.length; x++){
+      let feature_layer = feature_layers_array[x]; 
+      let query = feature_layer.createQuery();
+      let query_promise = feature_layer.queryFeatures(query);
+      
+      let promise = query_promise.then(function(query_results){
+        
+        let query_object = {"data": query_results, "layer_id": layer_ids[x]}; 
+        queried_features_array.push(query_object); 
+
+        if (x == 0){                // initialize the attribute table with the data from the top layer in the service
+          current_layers_query = query_object; 
+          fill_attribute_table(1, true, false);
+
+          // set these event listeners only when the map is first loaded 
+          if (first_time == true){
+            initialize_listeners(); 
+          }
+        }
+      },
+      function reject(reason){
+        if (x == 0){
+          console.log("error in load_service for layer id: ", layer_ids[0], reason);
+          table_load_handler(reason);
+        }
+        else{
+          console.log("error in load_service for layer id: ", layer_ids[x], " ", reason);
+        }
+      });
+      promise_array.push(promise);
+    }
+    Promise.all(promise_array).then(() => {
+
+      const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+
+      Projection.load().then(function(){
+        for (let x = 0; x < queried_features_array.length; x++){
+          let prior_spatial_reference
+          if (queried_features_array[x]["data"].spatialReference.wkid != null){
+            prior_spatial_reference = new SpatialReference({
+              wkid: queried_features_array[x]["data"].spatialReference.wkid
+            });
+          }
+          else if (queried_features_array[x]["data"].spatialReference.wkt != null){
+            prior_spatial_reference = new SpatialReference({
+              wkt: queried_features_array[x]["data"].spatialReference.wkt
+            });
+          }
+
+          let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+          
+          queried_features_array[x]["data"].features.forEach(function(element) {
+            element.geometry = Projection.project(element.geometry, WGS84_spatial_reference);
+          });
+        }
+      }, 
+      function(reject){
+        console.log("failed to reproject layer: ", reject.message); 
+      }).then(function(){
+        // polygon layers, when their features are selected, use an outline width. 
+        // the width is calculated here, and is based on the average size of their features 
+        let promise = set_polygon_outline_widths();
+        append_feature_counts();
+        promise.then(function(){
+          create_graphic_layers();
+        });     
+      
+      }), 
+      function(reject){
+        console.log("failed to calculate polygon widths: ", reject.message); 
+      };
+    });
+  },
+	function(reject){
+  	console.log("failed to load service: ", reject.message); 
+  	table_load_handler(reject);
+  });
+}
+
+function create_graphic_layers(){
+  // create empty background layers for each foreground feature layer that's not a temporary layer 
+  let promises_array = []; 
+  for (let x = 0; x < feature_layers_array.length; x++){
+
+    if (feature_layers_array[x].hasOwnProperty("client_generated") == false){
+      let found_flag = false; 
+      let feature_fields = feature_layers_array[x].fields;
+      let fields = []; 
+      for (let y = 0; y < feature_fields.length; y++){
+        fields.push(
+          new Field({
+            alias: feature_fields[y].alias,
+            editable: true, 
+            name: feature_fields[y].name, 
+            type: feature_fields[y].type, 
+            valueType: feature_fields[y].valueType
+          })
+        )
+      }
+      let parent_id = feature_layers_array[x].layerId;
+
+      for (let z = 0; z < fields.length; z++){
+        if (fields[z].editable == false){
+          fields[z].editable = true; 
+        }
+        if (fields[z].type == "oid"){
+          fields[z].type = "integer"; 
+        }
+      }
+
+      let reduced_fields = []; 
+      let found_oid = false; 
+      let new_oid_field = new Field({
+        alias: "new__oid",
+        editable: true, 
+        name: "new__oid", 
+        type: "oid", 
+        valueType: "unique-identifier"
+      });
+      fields.unshift(new_oid_field);
+
+      let max_id = feature_layers_array[0].layerId; 
+      for (let z = 1; z < feature_layers_array.length; z++){
+        if (feature_layers_array[z].layerId > max_id){
+          max_id = feature_layers_array[z].layerId; 
+        }
+      }
+      for (let z = 0; z < background_layers.length; z++){
+        if (background_layers[z].layerId > max_id){
+          max_id = background_layers[z].layerId; 
+        }
+      }
+      let new_layer_id = max_id + 1; 
+
+      let geometry_type = feature_layers_array[x].geometryType;
+      let symbol = null;
+
+      if (geometry_type == "point"){
+        symbol = {
+          type: "simple-marker", 
+          color: colors_for_new_layers[point_count],
+          size: "7px",
+          style: "square"
+        }
+        point_count += 1; 
+        if (point_count > 6){
+          point_count = 0; 
+        }
+      }
+      else if (geometry_type == "polyline"){
+        symbol = {
+          join: "bevel",
+          type: "simple-line", 
+          cap: "round", 
+          color: colors_for_new_layers[line_count],  
+          width: 2.5, 
+          style: "solid"
+        }
+        line_count += 1; 
+        if (line_count > 6){
+          line_count = 0; 
+        }
+      }
+      else if (geometry_type == "polygon"){
+        let outline_color = hex_to_hsla(colors_for_new_layers[polygon_count], .95); 
+        let fill_color = hex_to_hsla(colors_for_new_layers[polygon_count], .30);
+        let new_width = null;
+
+        for (let z = 0; z < polygon_outline_widths.length; z++){
+          if (polygon_outline_widths[z]["layer_id"] == feature_layers_array[x].layerId){
+            new_width = polygon_outline_widths[z]["width"];
+            break;
+          }
+        }
+        symbol = {
+          type: "simple-fill", 
+          color: fill_color, 
+          style: "solid",
+          outline: {
+            width: new_width,
+            color: outline_color, 
+            style: "short-dash-dot",
+            cap: "round", 
+            join: "bevel", 
+          }
+        }
+        polygon_count += 1; 
+        if (polygon_count > 6){
+          polygon_count = 0; 
+        }
+      }
+
+      let custom_renderer = {
+        type: "simple", 
+        symbol: symbol
+      };
+
+      for (let z = 0; z < fields.length; z++){
+        reduced_fields.push(fields[z].name);
+      }
+
+      let WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+
+      let new_feature_layer = new FeatureLayer({
+        source: [],
+        fields: fields,
+        outFields: reduced_fields,
+        legendEnabled: false, 
+        objectIdField: new_oid_field.name,
+        geometryType: feature_layers_array[x].geometryType, 
+        layerId: new_layer_id,
+        maximumNumberOfFeatures: 60000,
+        renderer: custom_renderer,
+        spatialReference: WGS84_spatial_reference
+      });
+
+      new_feature_layer["parent_layer_id"] = parent_id;
+      new_feature_layer["client_generated"] = true; 
+      new_feature_layer["analysis_type"] = "background_layer";
+
+      background_layers.push(new_feature_layer);
+
+      // construct the global queried_background_features array - later when you add features to the background layers you'll also append them to this global array 
+      let promise = new_feature_layer.load().then(function(new_layer){
+        let query = new_layer.createQuery();
+        let query_promise = new_layer.queryFeatures(query);
+        let promise = query_promise.then(function(query_results){
+          let query_object = {"data": query_results, "layer_id": new_layer.layerId, "parent_layer_id": parent_id}; 
+          queried_background_features.push(query_object);
+        });
+        return promise; 
+      });
+      promises_array.push(promise); 
+    } // end if 
+  } // end for 
+  var geometry_types = ["polygon", "polyline", "point"];
+  for (let y = 0; y < 3; y++){
+    for (let x = 0; x < background_layers.length; x++){
+      if (background_layers[x].geometryType == geometry_types[y]){
+        map_obj.add(background_layers[x]);
+      }
+    }
+  }
+}
+
+function create_graphics_object(geometry, options){
+  var graphics_object = null;
+
+  if (options.hasOwnProperty("color") == false){
+    options["color"] = "#787878"; 
+  }
+  if (options.hasOwnProperty("attributes") == false){
+    options["attributes"] = null; 
+  }
+
+  if (geometry.type == "point"){
+    graphics_object = create_point_graphic(geometry.x, geometry.y, options["color"], options["size"], options["style"], options["attributes"])
+  }
+  else if (geometry.type == "polyline"){
+    graphics_object = create_line_graphic(geometry.paths, options["color"], options["cap"], options["join"], options["width"], options["style"], options["attributes"]);
+  }
+  else if (geometry.type == "polygon"){
+      let outline_color = hex_to_hsla(options["color"], .95); 
+      let fill_color = hex_to_hsla(options["color"], .30);
+      if (options.hasOwnProperty("fill_style") == false){
+        options["fill_style"] = "solid"; 
+      }
+      if (options.hasOwnProperty("outline_style") == false){
+        options["outline_style"] = "solid"; 
+      }
+      if (options.hasOwnProperty("cap") == false){
+        options["cap"] = "round"; 
+      }
+      if (options.hasOwnProperty("join") == false){
+        options["join"] = "bevel"; 
+      }
+      if (options.hasOwnProperty("width") == false){
+        options["width"] = 3; 
+      }
+      graphics_object = create_polygon_graphic(geometry.rings, fill_color, options["fill_style"], outline_color, options["outline_style"], options["width"], options["cap"], options["join"], options["attributes"]); 
+  }
+  return graphics_object; 
+}
+
+function create_point_graphic(x, y, color, size, style, attributes){
+	let point = {
+		type: "point", 
+		longitude: x, 
+		latitude: y
+	}
+	let symbol = {
+		type: "simple-marker", 
+		color: color, 
+		size: size, 
+		style: style
+	}
+	let graphic = new Graphic({geometry: point, symbol: symbol, attributes: attributes}); 
+	return graphic;
+}
+
+/* 	https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-SimpleLineSymbol.html
+	example: drawLine([[x1, y1], [x2, y2]], "red", "round", "bevel", 7, "solid")*/ 
+function create_line_graphic(paths, color, cap, join, width, style, attributes){
+    let lines = {
+		type: "polyline", 
+		paths: paths
+	}
+	let symbol = {
+		join: join, 
+		type: "simple-line", 
+		cap: cap, 
+		color: color, 
+		width: width, 
+		style: style
+	}
+	let graphic = new Graphic({geometry: lines, symbol: symbol, attributes: attributes}); 
+	return graphic;
+}
+
+/* 	https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-SimpleFillSymbol.html
+	example: drawPolygon([[x1, y1], [x2, y2], [x3, y3], [x1, y1]], "brown", "red", "round", "bevel", 7, "backward-diagonal", "solid")*/ 
+function create_polygon_graphic(rings, fill_color, fill_style, outline_color, outline_style, width, cap, join, attributes){
+	let polygon = {
+		type: "polygon", 
+		rings: rings
+	}
+	let symbol = {
+		type: "simple-fill", 
+		color: fill_color, 
+		style: fill_style,
+		outline: {
+			width: width, 
+			color: outline_color, 
+			style: outline_style, 
+			cap: cap, 
+			join: join
+		}
+	}
+	graphic = new Graphic({geometry: polygon, symbol: symbol, attributes: attributes}); 
+	return graphic; 
+}
+
+function hex_to_hsla(hex, opacity){
+
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+  var red = parseInt(result[1], 16);
+  var green = parseInt(result[2], 16);
+  var blue = parseInt(result[3], 16);
+  red /= 255; 
+	green /= 255;
+	blue /= 255;
+
+  var max = Math.max(red, green, blue), min = Math.min(red, green, blue);
+  var hue, saturation, lightness = (max + min) / 2;
+
+  if (max == min){
+    hue = 0; 
+		saturation = 0;
+  } 
+	else {
+    var distance = max - min;
+    saturation = lightness > 0.5 ? distance / (2 - max - min) : distance / (max + min);
+    switch(max) {
+      case red: hue = (green - blue) / distance + (green < blue ? 6 : 0); break;
+      case green: hue = (blue - red) / distance + 2; break;
+      case blue: hue = (red - green) / distance + 4; break;
+    }
+    hue /= 6;
+  }
+
+	hue = Math.round(hue * 360); 
+  saturation = Math.round(saturation * 100); 
+  lightness = Math.round(lightness * 100); 
+
+	let buggy_string = "hsla("; 		// concatenating hsla( + hue + the rest in one line doesn't work, not sure why, maybe js expects function
+	buggy_string += hue; 
+	buggy_string += ", " + saturation + "%, " + lightness + "%, " + opacity + ")"; 
+
+  return buggy_string; 
+}
+
+function append_feature_counts(){
+  for (let x = 0; x < queried_features_array.length; x++){
+    let checkbox_label_id = "services_checkbox_label_" + layer_ids[x]; 
+    let checkbox_label = document.getElementById(checkbox_label_id);
+
+    for (let y = 0; y < queried_features_array.length; y++){
+      if (queried_features_array[y]["layer_id"] == layer_ids[x]){
+        let feature_count = queried_features_array[y]["data"].features.length; 
+        checkbox_label.textContent += " (" + feature_count + ")"; 
+      }
+    }    
+  }
+}
+
+function create_geometry_class_object(input_geometry){
+	var class_object; 
+	if (input_geometry.rings != undefined){
+		class_object = new Polygon({
+			rings: input_geometry.rings, 
+			spatialReference: 4326, 
+		});
+	}
+	else if (input_geometry.paths != undefined){
+		class_object = new Line({
+			paths: input_geometry.paths, 
+			spatialReference: 4326
+		});
+	}
+	else{
+		class_object = new Point({
+			x: input_geometry.x, 
+			y: input_geometry.y, 
+			spatialReference: 4326
+		});
+	}
+	return class_object;
+}
+
+function set_polygon_outline_widths(){
+  let promises_array = [];
+  let averages_array = [];
+
+  for (let y = 0; y < queried_features_array.length; y++){
+    let queried_layer = queried_features_array[y];
+    let layer_id = queried_layer["layer_id"];
+    
+    if (queried_layer["data"].geometryType == "polygon"){
+      let features = queried_layer["data"].features;
+      let areas_array = [];
+
+      for (let x = 0; x < features.length; x++){
+        let class_geometry_object = create_geometry_class_object(features[x].geometry);
+        let promise = AsyncGeometryEngine.geodesicArea(class_geometry_object, "square-miles")
+        .then(function(area){
+          areas_array.push(area);
+          let count = 0;
+          let sum = 0;
+          
+          for (let x = 0; x < areas_array.length; x++){
+            sum += areas_array[x]; 
+            count++; 
+          }
+          
+          let average = Math.floor(sum / count);
+          let average_object = {
+            "average": average, 
+            "layer_id": layer_id 
+          }
+          averages_array.push(average_object);
+        });
+        promises_array.push(promise);  
+      }
+    }
+  }
+  let promise = Promise.all(promises_array).then(function(){
+    polygon_outline_widths = [];    // global array that holds the calculated outline widths used when selecting features from each polygon layer
+
+    averages_array.sort(function(a, b){
+      let temp = a["average"] - b["average"]; 
+      return temp; 
+    });
+    let sizes = [400, 1170, 1900, 2400, 3000, 4200, 9700, 26000, 41000, 50000, 75000, 103000, 118000, 137000, 160000, 210000, 240000]; 
+    let widths = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.5, 1.8, 2.1, 2.6, 2.7, 2.9, 3.2, 3.5, 3.6, 3.7, 3.8];
+    
+    for (let x = 0; x < averages_array.length; x++){
+      let width = null; 
+      let found_flag = false; 
+      for (let y = 0; y < sizes.length; y++){
+        if (averages_array[x]["average"] <= sizes[y]){
+          found_flag = true; 
+          width = widths[y]; 
+          break; 
+        }
+      }
+      if (found_flag == false){
+        width = 3.9; 
+      }
+      polygon_outline_widths.push({
+        "layer_id": averages_array[x]["layer_id"],
+        "width": width
+      });
+    }
+    return null; 
+  });
+  return promise; 
+}
+
+// this will spatially project an input featurelayers extent onto the map and zoom to the extent. it's called when you load a new service
+function project_and_zoom(fullExtent){
+	let url = base_url + "Utilities/Geometry/GeometryServer/project";
+	// this is a query to the spatial projection utility provided by the REST API 
+	let options = {
+		responseType: "json", 
+		query: {
+			f: "json", 
+			inSR: JSON.stringify(fullExtent.spatialReference), 
+			outSR: 4326, 
+			geometries: JSON.stringify({
+				"geometryType": "esriGeometryPoint", 
+				"geometries": [
+					{"x": fullExtent.xmin, "y": fullExtent.ymin}, 
+					{"x": fullExtent.xmax, "y": fullExtent.ymax}
+				]
+			})
+		}// end query 
+	}// end options 
+
+	Request(url, options)
+	.then(response => {
+		// construct a custom extent object with the response 
+		let extent_object = {};
+		let data = response.data;
+		extent_object.xmin = data.geometries[0].x; 
+		extent_object.ymin = data.geometries[0].y; 
+		extent_object.xmax = data.geometries[1].x; 
+		extent_object.ymax = data.geometries[1].y; 
+		extent_object.spatialReference = 4326;
+		// add that custom extent object to the map view
+		map_view.extent = extent_object;
+	});
+}// end project_and_zoom()
+
+function fill_attribute_table(current_page, reload_buttons, use_graphics, from_search_button){
+
+  var result_offset = current_page * global_results_per_page - global_results_per_page;
+  var padding = "4px"; 
+  var cursor_style = "pointer";
+
+  // remove all rows from the table
+  var count = attribute_table.childNodes.length;
+  let start = 0; 
+  let original_title = attribute_table.childNodes[0]; 
+  for (let start = 0; start < count; start++){
+    attribute_table.removeChild(attribute_table.childNodes[0]);
+  }
+
+  let fields = current_layers_query["data"].fields;
+  let features = current_layers_query["data"].features;
+
+  // update the results count text
+  if (result_offset + global_results_per_page > features.length + 1){
+    results_count_text.innerHTML = "Showing " + (result_offset + 1) + "-" + features.length + " of " + features.length; 
+  } else{
+    results_count_text.innerHTML = "Showing " + (result_offset + 1) + "-" + (result_offset + global_results_per_page) + " of " + features.length; 
+  }
+
+  if (reload_buttons == true){
+    field_widths = {}; 
+    for (let x = 0; x < fields.length; x++){
+      if (fields[x].type == "string" && features[0].attributes[fields[x].name] != null && field_widths[fields[x].name] != null){
+        field_widths[fields[x].name] = fields[x].name.length
+        let max; 
+        if (features.length < 50){
+          max = features.length;
+        } else {
+          max = 50
+        }
+        for (let y = 0; y < max; y++){
+          if (feautres[y].attributes[fields[x].name] != null && features[y].attributes[fields[x].name].length > field_widths[fields[x].name]){
+            field_widths[fields[x].name] = features[y].attributes[fields[x].name].length
+          }
+        }
+      } else {
+        field_widths[fields[x].name] = 10; 
+      }
+    }
+  }
+
+  if (from_search_button != true){
+    create_title_row(fields);     // create the top row of the table that contains the column titles 
+  } else{
+    attribute_table.appendChild(original_title);
+  }
+
+  for (let x = result_offset; x < result_offset + global_results_per_page && x < features.length; x++){    // for all the requested features, add a row to the table 
+    create_normal_row(features[x].attributes, x, fields);                    
+  }
+  
+  // reinitializes the buttons, but only if a new kind of table was created. fill attribute table is called in many circumstances. 
+  if (reload_buttons == true){  // it's called if a page number is changed, a layer changes, a service changes, with filter by extent or mouse select, etc.
+  
+    old_clicked_page = 0;
+    if (filter_active == true){
+      initialize_page_buttons(1, true, global_use_graphics);
+    }
+    else if (global_use_graphics == true){
+      initialize_page_buttons(current_page, true, global_use_graphics);
+    }
+    else{
+      initialize_page_buttons(1, true, global_use_graphics);
+    }
+  }
+
+  attribute_table.style.display = "block"; 
+  table_error_div.innerHTML = ""; 
+  table_error_div.style.display = "none";      
+
+  // various utility functions for constructing the table 
+  function style_title_column(element, innerHTML){
+    element.innerHTML = innerHTML;
+    element.style.cursor = cursor_style;  
+    element.style.padding = padding;
+    element.style.overflow = "hidden";
+  }
+  function create_title_row(input_fields){
+    global_title_rows = []; 
+    var title_row = document.createElement("tr");  
+    title_row.style.fontWeight = "bold";
+    //add various title fields to the top row of the table
+    var zoom_title_column = document.createElement("td");
+    title_row.appendChild(zoom_title_column);
+
+    for (let x = 0; x < input_fields.length; x++){
+      let title_column = document.createElement("td"); 
+      style_title_column(title_column, input_fields[x].name);
+
+      title_column.style.width = (field_widths[input_fields[x].name] * 5.5)+ "px";
+
+      title_column["id"] = x; 
+      title_column.addEventListener("click", function(){
+        let index = null;
+        for (let y = 0; y < global_title_rows.length; y++){
+          if (global_title_rows[y]["element"]["id"] == x){
+            if (global_title_rows[y]["increment"] == "even"){
+              table_reorder(input_fields[x], "ascending");
+              global_title_rows[y]["increment"] = "odd";
+            }
+            else if (global_title_rows[y]["increment"] == "odd"){
+              table_reorder(input_fields[x], "descending");
+              global_title_rows[y]["increment"] = "even";
+            }
+            fill_attribute_table(1, true, false, true); 
+          }
+        }
+      });
+      title_row.appendChild(title_column);
+      global_title_rows.push({"element": title_column, "id": x, "increment": "even"});
+    }
+    attribute_table.appendChild(title_row);
+  }
+  function create_normal_row(feature_attributes, loop_iterator, fields){
+    let new_row = document.createElement("tr");     
+    let zoom_column = document.createElement("td");
+    zoom_column.style.width = "30px";
+    zoom_column.style.height = "30px";
+    style_normal_column(zoom_column);
+    
+    let zoom_image_button = document.createElement("img");
+    zoom_image_button.style.width = "20x";
+    zoom_image_button.style.height = "20px"; 
+    zoom_image_button.src = "images/zoom_button_unpressed.png";
+    zoom_image_button.style.padding = "0px 0px 4px 4px";
+    zoom_image_button.style.cursor = cursor_style;
+
+    zoom_image_button.addEventListener("click", function(e){
+      if (filter_active == false){
+        zoom_to_feature(e);
+      }
+      else{
+        toggle_filter_button("off");
+        zoom_to_feature(e);
+      }
+    });
+
+    zoom_image_button.addEventListener("mouseover", function(){
+      zoom_image_button.src = "images/zoom_button_pressed.png"; 
+    });
+    zoom_image_button.addEventListener("mouseout", function(){
+      zoom_image_button.src = "images/zoom_button_unpressed.png"; 
+    });
+
+    zoom_column.appendChild(zoom_image_button); 
+    new_row.appendChild(zoom_column); 
+
+    // loop through each column in the current row and add a new cell, and put data inside the cell  
+    for (let y = 0; y < fields.length; y++){
+      let field = fields[y]; 
+      let new_column = document.createElement("td"); 
+      style_normal_column(new_column); 
+      new_column.style.width = (field_widths[field.name] * 5.5)+ "px";
+      // a few if statements check the type of the field and perform special actions 
+      if (field.type === "esriFieldTypeOID" || field.type == "oid"){     // the oid field is eventually needed by the zoom button, so store that data on the button
+        zoom_image_button.object_id = feature_attributes[field.name];
+      }					
+      if (field.type === "esriFieldTypeDate" || field.type == "date"){    // reformat dates from timestamp to readable form
+        let date_obj = new Date(feature_attributes[field.name]);
+        let formatted_date = String(date_obj).split(' ');
+        formatted_date = formatted_date[0] + " " + formatted_date[1] + " " + formatted_date[2] + " " + formatted_date[3];
+        new_column.textContent = formatted_date;
+      }
+      else{
+        new_column.textContent = feature_attributes[field.name];
+      }
+      new_row.appendChild(new_column);
+    } 
+    attribute_table.appendChild(new_row); 
+  }
+  function style_normal_column(element){
+    element.style.padding = padding;
+    element.style.overflow = "hidden";
+  }    
+} // end fill attribute table function 
+
+function initialize_page_buttons(starting_page, from_refill_table, use_graphics){
+	let old_page_count = page_numbers.childElementCount;
+	for (let x = 0; x < old_page_count; x++){                   // remove all the old page buttons
+		page_numbers.removeChild(page_numbers.childNodes[0]);
+	}
+  create_buttons(current_layers_query["data"].features.length);
+
+  function create_buttons(feature_count){
+    let total_pages = Math.ceil(feature_count / global_results_per_page);   // math for determining total page buttons that will be needed 
+    // set event listeners for all buttons. the listeners will call adjust_page_buttons which readjusts the page buttons / updates the table 
+    for (let button_number = 1; button_number <= total_pages; button_number++){
+      let new_button = document.createElement("button");
+      new_button.name = button_number;
+      new_button.innerHTML = button_number;
+      new_button.id = "page_button_" + button_number;
+      new_button.style.width = "30px";
+      new_button.classList.add("page-number-button");
+      //new_button.classList.add("w-button");
+
+      new_button.style.color = "grey";
+      
+      new_button.style.display = "flex"; 
+      new_button.style.flexWrap = "wrap"; 
+      new_button.style.alignContent = "center";
+      new_button.style.justifyContent = "center"; 
+
+      // each page button has a listener to update the display of the page buttons as they're pressed
+      // the listener also calls fill_attribute_table to adjust the table data depending on which button was pressed 
+      new_button.addEventListener("click", function(){adjust_page_buttons(button_number, total_pages, false, use_graphics)});
+      // each page button also needs listeners for creating the hover effect, because the webflow hover effect is broken 
+      new_button.addEventListener("mouseover", function(){
+        if (button_number != current_page){    // make sure the button isn't currently pressed 
+          new_button.style.backgroundColor = "#b86240";
+          new_button.style.color = "#fff"; 
+          new_button.style.opacity = 0.65; 
+        }
+      });
+      new_button.addEventListener("mouseout", function(){
+        if (button_number != current_page){    // make sure the button isn't currently pressed 
+          new_button.style.backgroundColor = "#fff"; 
+          new_button.style.opacity = 1
+          new_button.style.color = "grey"; 
+        }
+      });
+
+      page_numbers.appendChild(new_button);	        // append the newly styled page buttons to the list of buttons
+		}
+
+    // now you'll call adjust_page_buttons one time, which will initially display buttons 1-7 and hide the rest 
+    // initialize_page_buttons is called from either fill_attribute_table or change_results_count 
+		if (from_refill_table == false){      // this branch is the one called from change_results_count. 
+      // if called from change_results_count we need to call fill_attribute_table, because we didn't do that already ... the 3rd arg controls that 
+			adjust_page_buttons(starting_page, total_pages, false, use_graphics);
+		}
+		else{                           // if we came into initialize_page_buttons from fill_attribute_table we don't need to call it again
+			adjust_page_buttons(starting_page, total_pages, true, use_graphics);
+		}
+  }// end create_buttons()
+} // end initialize_page_buttons
+
+function adjust_page_buttons(newly_clicked_page, total_pages, from_refill_table, use_graphics){
+	old_clicked_page = current_page; 
+	current_page = newly_clicked_page;				// old & current_page are global variables and useful throughout the code, they're set here 
+	
+	// find the boundaries of the paging range
+	let center_point = 4; 
+	let span = 7; 
+	var lower_boundary, upper_boundary;
+	if (newly_clicked_page <= center_point){
+		lower_boundary = 1;
+		if (total_pages > span){ 							// current page is <= 9 and total pages > 17; (left edge case)
+			upper_boundary = span;
+		}
+		else{ 											// current page is <= 9 and total pages < 17 (left edge case w/ few total pages)
+			upper_boundary = total_pages; 
+		}
+	}
+	else if (newly_clicked_page > center_point){
+		if (total_pages > (newly_clicked_page + center_point + 1)){ 	// current page is >= 9 and total pages > current page + 15 (middle case ) 
+			upper_boundary = newly_clicked_page + center_point - 1;
+			lower_boundary = newly_clicked_page - center_point + 1;
+		}
+		else{ 											// current page is >= 9 and total_pages <= current page + 9 (right edge case) 
+			upper_boundary = total_pages;
+			lower_boundary = total_pages - span + 1; 
+		}
+	}
+	// now just show / hide the buttons as necessary 
+	let page_count = page_numbers.childElementCount;
+
+	for (let x = 0; x < page_count; x++){
+		if ((x + 1) < lower_boundary || (x + 1) > upper_boundary){
+			page_numbers.childNodes[x].style.display = "none"; 
+		}
+		else{
+			page_numbers.childNodes[x].style.display = "inline-block";
+			if ((x + 1) == newly_clicked_page){
+				page_numbers.childNodes[x].style.backgroundColor = "#b86240"; 	// if you found the new page button you just clicked, color it orange
+        page_numbers.childNodes[x].style.opacity = 1; 
+        page_numbers.childNodes[x].style.color = "#fff"; 
+      }
+		}
+	}
+	// change the previously selected button back to white 
+	if (old_clicked_page != 0 && old_clicked_page != newly_clicked_page){
+		page_numbers.childNodes[old_clicked_page - 1].style.backgroundColor = "#fff";
+    page_numbers.childNodes[old_clicked_page - 1].style.color = "grey"; 
+	}
+  
+	let layer_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id;
+	if (from_refill_table == false){
+		fill_attribute_table(newly_clicked_page, false, use_graphics); 
+	}
+} // end adjust_page_buttons 
+
+function clear_graphics_layer(){
+  global_use_graphics = false;
+  // now you need to clear all the background_layers 
+  for (let x = 0; x < background_layers.length; x++){
+    let query = background_layers[x].createQuery();
+    let query_promise = background_layers[x].queryFeatures(query);
+    let index = null; 
+
+    for (let y = 0; y < queried_background_features.length; y++){
+      if (background_layers[x].layerId == queried_background_features[y]["layer_id"]){
+        index = y; 
+        break;
+      }
+    }
+    let delete_edits = {
+      deleteFeatures: queried_background_features[index]["data"].features
+    };
+    let promise = background_layers[x].applyEdits(delete_edits);
+  }
+  for (let y = 0; y < queried_background_features.length; y++){
+    queried_background_features[y]["data"].features = []; 
+  }
+  let selected_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id
+  for (let x = 0; x < queried_features_array.length; x++){
+    if (queried_features_array[x]["layer_id"] == selected_id){
+      current_layers_query = queried_features_array[x]; 
+      break; 
+    }
+  }
+  fill_attribute_table(1, true, false);
+}
+
+// the function called when a URL is entered into the REST servuce URL box, changes all the services
+function change_services_url(){
+	base_url = service_input.value;
+	if (base_url[-1] != "/"){
+		base_url += "/";
+	} 
+	populate_services();
+}
+
+function filter_by_extent(mode){
+  if (mode == "on"){
+    map_view.graphics = [];
+    if (global_use_graphics == true){
+      clear_graphics_layer(); 
+    }
+    var feature_layer = null; 
+    var selected_id = Number(table_dataset_selector.options[table_dataset_selector.selectedIndex].id);      // get the currently selected layer_id
+
+    for (let x = 0; x < feature_layers_array.length; x++){
+      if (feature_layers_array[x].layerId == selected_id){
+        feature_layer = feature_layers_array[x]; 
+        break; 
+      }
+    }
+
+    var query = feature_layer.createQuery();
+    query.geometry = map_view.extent; 
+
+    var query_promise = feature_layer.queryFeatures(query);
+    saved_complete_query = current_layers_query; 
+
+    query_promise.then(function(query_results){
+      var fields = current_layers_query["data"].fields; 
+  
+      if (query_results.fields == null){
+        query_results.fields = fields; 
+      }
+
+      if (query_results.features.length > 0 && query_results.spatialReference.isWGS84 == false){
+        let prior_spatial_reference; 
+        const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+
+        let all_promised = Projection.load().then(function(){
+          if (query_results.spatialReference.wkid != null){
+            prior_spatial_reference = new SpatialReference({wkid: query_results.spatialReference.wkid});
+          }
+          else if (query_results.spatialReference.wkt != null){
+            prior_spatial_reference = new SpatialReference({wkt: query_results.spatialReference.wkt});
+          }
+
+          let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+
+          for (let x = 0; x < query_results.features.length; x++){
+            query_results.features[x].geometry = Projection.project(query_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
+          }
+          current_layers_query = {"data": query_results, "layer_id": selected_id};
+          fill_attribute_table(1, true, false);
+        });
+      }
+      else{
+        current_layers_query = {"data": query_results, "layer_id": selected_id};
+        fill_attribute_table(1, true, false);
+      }
+    });
+  }
+  else if (mode == "off"){
+    current_layers_query = saved_complete_query; 
+  } 
+}
+
+function change_results_count(count){
+  let multiple = count / global_results_per_page;
+  
+  old_clicked_page--; 
+  old_clicked_page = Math.floor(old_clicked_page / multiple); 
+  old_clicked_page++; 
+  current_page--; 
+  current_page = Math.floor(current_page / multiple); 
+  current_page++; 
+
+  global_results_per_page = count;        // update the global results count to whatever the radio button is now
+  if (filter_active == false){
+    initialize_page_buttons(current_page, false, global_use_graphics);
+  }
+	else{   // filter_by_extent refills the attribute table differently, it must be called instead of initialize_page_buttons if the filter is active 
+    filter_by_extent("on");
+  }
+}
+
+function initialize_listeners(){ 
+  // prime the dataset selector in the table to fetch & populate the table upon selection of a new dataset  
+	table_dataset_selector.addEventListener("change", function(){table_select_handler();});
+  
+  // with this listener, every time the map stops moving and the filter button is active, the filter function gets called. this ongoingly filters
+	Watch.whenTrue(map_view, "stationary", function(){
+		if (filter_active == true){
+      filter_by_extent("on");
+		}
+	});
+
+  // a variety of functions can be called when the map is clicked or dragged upon, here we choose which to call if any 
+	map_view.on("click", function(e){
+		if (mouse_selector_active == true){
+			if (e.button == 0){
+				click_select_function(e);
+			}
+		}
+		if (e.button == 2){
+      map_view.graphics = [];
+      if (global_use_graphics == true){
+        clear_graphics_layer(); 
+      }
+      toggle_mouse_selector_button("off");
+		}
+	});
+	map_view.on("drag", function(e){
+		if (mouse_selector_active == true){
+			drag_select_function(e);
+		}
+	});
+
+  // listener for handling submissions from various toolboxes
+	intersect_submit_button.addEventListener("click", function(){
+		intersect_function();
+	});
+  
+	buffer_submit_button.addEventListener("click", function(){
+		buffer_function();
+	});
+  
+  heatmap_submit_button.addEventListener("click", function(){
+		heatmap_function();
+	});
+	submit_search_button.addEventListener("click", function(){
+		search_function();
+	});
+}
+
+function intersect_function(){
+  
+  if (intersect_error_div.innerHTML != ""){
+    let int_slice = custom_intersection_pane.style.height; 
+    int_slice = Number(int_slice.slice(0, 3)); 
+    int_slice -= 50; 
+    let px_size = int_slice + "px"; 
+    custom_intersection_pane.style.height = px_size;
+  }
+	intersect_error_div.innerHTML = ""; 
+	intersect_error_div.style.overflowY = "hidden";
+
+	var layer_id_one = Number(intersect_select_A.options[intersect_select_A.selectedIndex].id);
+	var layer_id_two = Number(intersect_select_B.options[intersect_select_B.selectedIndex].id);
+
+	var SQL_query_one = SQL_input_A.value; 
+	var SQL_query_two = SQL_input_B.value;
+
+	if (SQL_query_one == ""){
+		SQL_query_one = "1=1";
+	}
+	if (SQL_query_two == ""){
+		SQL_query_two = "1=1";
+	}
+
+  var feature_layer_one = null; 
+  var feature_layer_two = null; 
+
+  for (let x = 0; x < feature_layers_array.length; x++){
+      if (feature_layers_array[x].layerId == layer_id_one){
+          feature_layer_one = feature_layers_array[x]; 
+      }
+      if (feature_layers_array[x].layerId == layer_id_two){
+          feature_layer_two = feature_layers_array[x]; 
+      }
+  }
+
+  var query_one = feature_layer_one.createQuery();
+  query_one.where = SQL_query_one;
+  query_one.sqlFormat = "standard"; 
+
+  var query_two = feature_layer_two.createQuery();
+  query_two.where = SQL_query_two;
+  query_two.sqlFormat = "standard"; 
+
+  var WGS84_intersected_results = []; 
+  var intersected_attributes_one = []; 
+  var intersected_attributes_two = [];
+  var intersected_fields_one = null; 
+  var intersected_fields_two = null;
+  var error_flag = false; 
+  var promises_array = [];
+  const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+
+  let all_promised = feature_layer_one.queryFeatures(query_one)
+  .then(function(query_one_results){
+      
+    let all_promised = Projection.load().then(function(){
+        let prior_spatial_reference; 
+
+        if (query_one_results.features.length > 0 && query_one_results.spatialReference.isWGS84 == false){
+
+            if (query_one_results.spatialReference.wkid != null){
+                prior_spatial_reference = new SpatialReference({wkid: query_one_results.spatialReference.wkid});
+            }
+            else if (query_one_results.spatialReference.wkt != null){
+                prior_spatial_reference = new SpatialReference({wkt: query_one_results.spatialReference.wkt});
+            }
+
+            let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+            
+            for (let x = 0; x < query_one_results.features.length; x++){
+                query_one_results.features[x].geometry = Projection.project(query_one_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
+            }
+        }
+    }).then(function(){
+      let all_promised = feature_layer_two.queryFeatures(query_two)
+      .then(function(query_two_results){
+        let all_promised = Projection.load().then(function(){
+          let prior_spatial_reference; 
+          if (query_two_results.features.length > 0 && query_two_results.spatialReference.isWGS84 == false){
+            if (query_two_results.spatialReference.wkid != null){
+              prior_spatial_reference = new SpatialReference({wkid: query_two_results.spatialReference.wkid});
+            }
+            else if (query_two_results.spatialReference.wkt != null){
+              prior_spatial_reference = new SpatialReference({wkt: query_two_results.spatialReference.wkt});
+            }
+            let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+            
+            for (let x = 0; x < query_two_results.features.length; x++){
+              query_two_results.features[x].geometry = Projection.project(query_two_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
+            }
+          }
+              
+        }).then(function(){
+          intersected_fields_one = query_one_results.fields;
+          intersected_fields_two = query_two_results.fields;
+
+          for (let x = 0; x < query_one_results.features.length; x++){
+            let geometry_one = query_one_results.features[x].geometry;
+            let attributes_one = query_one_results.features[x].attributes; 
+
+            for (let y = 0; y < query_two_results.features.length; y++){
+              let geometry_two = query_two_results.features[y].geometry; 
+
+              let promised_indicator = AsyncGeometryEngine.intersects(geometry_one, geometry_two)
+              .then(function(results){
+                if (results == true){
+                  let promised_geometry = AsyncGeometryEngine.intersect(geometry_one, geometry_two)
+                  .then(function(results){
+                    if (results != null){
+                      var duplicate = false 
+                      for (var index = 0; index < WGS84_intersected_results.length; index++){
+                        if (results.x == WGS84_intersected_results[index].x && results.y == WGS84_intersected_results[index].y){
+                          duplicate = true;
+                          break;
+                        }
+                      }
+                      if (duplicate == false){
+                        WGS84_intersected_results.push(results);
+                        // fill the attributes arrays with deep copies. Eventually you might want to change the code to make this a shallow copy for editing 
+                        intersected_attributes_one.push(Object.assign({}, attributes_one));
+                        intersected_attributes_two.push(Object.assign({}, query_two_results.features[y].attributes));
+                      }
+                    }
+                    return results; 
+                  });
+                  return promised_geometry; 
+                }
+                return results; 
+              });
+              promises_array.push(promised_indicator); 
+            }
+          }
+          return Promise.all(promises_array);
+        });
+        return all_promised;  
+      },
+      function(reject){
+        error_handler(reject.message, intersect_error_div, custom_intersection_pane);
+        error_flag = true;
+      });
+      return all_promised; 
+    });
+    return all_promised; 
+  },
+  function(reject){ 
+    error_handler(reject.message, intersect_error_div, custom_intersection_pane);
+    error_flag = true; 
+  });
+
+  all_promised.then(function(){
+    if (WGS84_intersected_results.length > 0){
+
+      // remove duplicate results 
+      //WGS84_intersected_results = [...new Set(WGS84_intersected_results)]; 
+      // construct a featurelayer and add it to the map. first join the attributes of both layers for inclusion in the new layer
+      var joined_fields = []; 
+      var joined_attributes = [];            
+      var oid_one = null, oid_two = null, oid_one_name = null, oid_two_name = null, new_oid_name = null, new_oid_field = null;
+
+      for (let x = 0; x < intersected_fields_one.length; x++){
+        if (intersected_fields_one[x].type == "oid"){
+          oid_one = intersected_fields_one[x];
+          oid_one_name = intersected_fields_one[x]["name"];
+
+          new_oid_name = "new__oid";
+          new_oid_field = new Field({
+            alias: new_oid_name, 
+            defaultValue: intersected_fields_one[x]["defaultValue"], 
+            description: intersected_fields_one[x]["description"], 
+            domain: intersected_fields_one[x]["domain"], 
+            editable: false, 
+            name: new_oid_name, 
+            type: "oid", 
+            valueType: "unique-identifier"
+          });
+        }
+        else{
+            joined_fields.push(intersected_fields_one[x]);
+        }
+      }
+      for (let x = 0; x < intersected_fields_two.length; x++){
+        if (intersected_fields_two[x].type == "oid"){
+          oid_two = intersected_fields_two[x];
+          oid_two_name = intersected_fields_two[x]["name"];
+        }
+        else{
+          joined_fields.push(intersected_fields_two[x]);
+        }
+      }
+      joined_fields.push(new_oid_field);
+
+      // attempt to delete the oid fields to avoid duplicates (sometimes delete doesn't work)
+      for (let x = 0; x < intersected_attributes_one.length; x++){    // both arrays are the same length
+        delete intersected_attributes_one[x][oid_one_name]; 
+        delete intersected_attributes_two[x][oid_two_name]; 
+
+        let joined_object = {
+          ...intersected_attributes_one[x], 
+          ...intersected_attributes_two[x]
+        }
+        joined_object[new_oid_name] = x; 
+        joined_attributes.push(joined_object);
+      }
+
+      var reduced_fields = Object.getOwnPropertyNames(joined_attributes[0]);
+      var final_fields = [];             
+      for (let x = 0; x < reduced_fields.length; x++){
+        for (let y = 0; y < joined_fields.length; y++){
+          if (joined_fields[y]["name"] == reduced_fields[x]){
+            reduced_fields[x] = null; 
+            final_fields.unshift(joined_fields[y]); 
+          }
+        }
+      }
+
+      // get the next layer_id 
+      let max_id = feature_layers_array[0].layerId; 
+      for (let x = 1; x < feature_layers_array.length; x++){
+        if (feature_layers_array[x].layerId > max_id){
+          max_id = feature_layers_array[x].layerId; 
+        }
+      }
+      let new_layer_id = max_id + 1; 
+      layer_ids.push(new_layer_id); 
+
+      // construct a graphics array for the new feature layer 
+      let graphics_objects_array = [];
+      let geometry_type = WGS84_intersected_results[0].type; 
+      let options = null; 
+
+      if (geometry_type == "point"){
+        options = {
+          color: colors_for_new_layers[new_layer_count],
+          size: "7px",
+          style: "circle"
+        }
+      }
+      else if (geometry_type == "polyline"){
+        options = {             //options["color"], options["cap"], options["join"], options["width"], options["style"]
+          color: colors_for_new_layers[new_layer_count], 
+          cap: "round", 
+          join: "bevel", 
+          width: 2.5, 
+          style: "solid"
+        }
+      }
+      else if (geometry_type == "polygon"){
+        let areas_array = [];
+
+        for (let x = 0; x < current_layers_query["data"].features.length; x++){
+          let class_geometry_object = create_geometry_class_object(current_layers_query["data"].features[x].geometry);
+          let area = GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
+          if (area > 100000){
+            continue; 
+          }
+          areas_array.push(area); 
+        }            
+
+        let count = 0; 
+        let sum = 0; 
+        
+        for (let x = 0; x < areas_array.length; x++){
+          sum += areas_array[x]; 
+          count++; 
+        }
+        
+        let average = Math.floor(sum / count);
+
+        let sizes = [400, 1170, 1900, 2400, 3000, 4200, 9700, 26000, 41000, 50000, 75000, 103000, 118000, 137000, 160000, 210000, 240000]; 
+        let widths = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.5, 1.8, 2.1, 2.6, 2.7, 2.9, 3.2, 3.5, 3.6, 3.7, 3.8];
+        
+        let new_width = null; 
+        let found_flag = false; 
+
+        for (let y = 0; y < sizes.length; y++){
+          if (average <= sizes[y]){
+            found_flag = true; 
+            new_width = widths[y]; 
+            break; 
+          }
+        }
+        if (found_flag == false){
+          new_width = 3.9; 
+        }
+
+        polygon_outline_widths.push({"width": new_width, "layer_id": new_layer_id});
+
+        options = {   // options["color"], options["fill_style"], options["outline_style"], options["width"], options["cap"], options["join"]
+          color: colors_for_new_layers[new_layer_count], 
+          fill_style: "solid",
+          outline_style: "short-dash-dot",
+          cap: "round", 
+          join: "bevel", 
+          width: new_width,
+        }    
+      }
+
+      for (let x = 0; x < WGS84_intersected_results.length; x++){
+        // get area to make sure you don't have a full extent object
+        if (geometry_type == "polygon"){
+          let class_geometry_object = create_geometry_class_object(WGS84_intersected_results[x]);
+          let area = GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
+          if (area > 100000){
+            continue; 
+          }
+        }
+        
+        options["attributes"] = joined_attributes[x];
+        let graphic_object = create_graphics_object(WGS84_intersected_results[x], options);
+        graphics_objects_array.push(graphic_object); 
+      }
+
+      var custom_renderer = {
+        type: "simple", 
+        symbol: graphics_objects_array[0].symbol
+      };
+
+      new_layer_count += 1;
+      if (new_layer_count > 13){
+        new_layer_count = 0;
+      }
+
+      var reduced_fields = Object.getOwnPropertyNames(joined_attributes[0]);
+
+      // find out what the title should be 
+      var count = 1;
+      for (let x = 0; x < feature_layers_array.length; x++){
+        if (feature_layers_array[x]["client_generated"] == true && feature_layers_array[x]["analysis_type"] == "intersection"){
+          count += 1; 
+        }
+      }
+      var new_title = "intersection " + count.toString(); 
+
+      // now construct the new feature layer & add it to the map             
+      var new_feature_layer = new FeatureLayer({
+        source: graphics_objects_array,
+        fields: final_fields,
+        outFields: reduced_fields,
+        objectIdField: new_oid_name,
+        geometryType: geometry_type, 
+        layerId: new_layer_id,
+        maximumNumberOfFeatures: 60000, 
+        title: new_title, 
+        renderer: custom_renderer
+      });
+
+      new_feature_layer["client_generated"] = true; 
+      new_feature_layer["analysis_type"] = "intersection";
+
+      new_feature_layer.load().then(function(){
+        map_obj.add(new_feature_layer);
+
+        feature_layers_array.push(new_feature_layer); 
+        feature_layers_array.sort(function(a, b){
+          return a.layerId - b.layerId;
+        });
+
+        let query = new_feature_layer.createQuery();
+        let query_promise = new_feature_layer.queryFeatures(query);
+
+        query_promise.then(function(query_results){
+          let query_object = {"data": query_results, "layer_id": new_layer_id}; 
+
+          queried_features_array.push(query_object); 
+          current_layers_query = query_object;
+
+          fill_attribute_table(1, true, false);
+
+          // now add the new feature layer to selectors throughout the map 
+          for (let z = 0; z < selector_elements_list.length; z++){
+            let layer_option = document.createElement("option");
+            layer_option.textContent = new_feature_layer.title;
+            layer_option.id = new_layer_id;                 // id is needed later by the options handler when an option is selected 
+            selector_elements_list[z].append(layer_option);
+          }
+          table_dataset_selector[table_dataset_selector.length - 1].selected = true;
+
+          // for heatmap selector 
+          if (geometry_type == "point"){
+            let layer_option = document.createElement("option");
+            layer_option.textContent = new_feature_layer.title;
+            layer_option.id = new_layer_id;                 // id is needed later by the options handler when an option is selected 
+            heatmap_select_layer.append(layer_option);
+          }
+
+          let checkbox = document.createElement("input");
+          checkbox.type = "checkbox";								// set new checkbox's attributes 
+          
+          checkbox.classList.add("w-checkbox-input");
+          checkbox.classList.add("w-checkbox-input--inputType-custom");
+          checkbox.classList.add("checkbox");
+
+          checkbox.value = new_feature_layer.layerId;
+          checkbox.checked = new_feature_layer.visible;
+          checkbox.style.position = "absolute";
+          checkbox.style.display = "inline-block"; 
+          checkbox.style.left = "7px";
+          checkbox.style.height = "12px"; 
+          
+          checkbox.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
+            new_feature_layer.visible = e.target.checked;
+          });
+
+          let checkbox_label = document.createElement("label");		// create a label for the new checkbox & set its CSS attributes 
+
+          checkbox_label.classList.add("checkbox-button-label");
+          checkbox_label.classList.add("w-form-label");
+
+          checkbox_label.style.position = "absolute";
+          checkbox_label.style.display = "inline-block"; 
+          checkbox_label.style.left = "15px";
+          checkbox_label.style.right = "0px";
+          checkbox_label.style.height = "20px"; 
+          checkbox_label.style.overflow = "hidden";
+          checkbox_label.style.whiteSpace = "nowrap";
+          checkbox_label.id = "services_checkbox_label_" + new_layer_id;          // needed later to append the feature counts to the checkboxes 
+
+          let close_box = document.createElement("input"); 
+          close_box.type = "image";	
+          close_box.src = "images/close_button.png";							// set new checkbox's attributes 
+
+          close_box.value = new_feature_layer.layerId;
+          checkbox.checked = new_feature_layer.visible;
+          close_box.style.position = "absolute";
+          close_box.style.left = "-18px";
+          close_box.style.width = "13px";
+          close_box.style.height = "13px"; 
+
+          let label_text = new_feature_layer.title;			// get the text for the new label 
+          checkbox_label.textContent = label_text;
+
+          let new_div = document.createElement("div");
+
+          checkbox_label.style.overflow = "hidden";
+          new_div.classList.add("w-checkbox");
+          new_div.classList.add("checkbox-field"); 
+
+          new_div.style.gridRowStart = next_grid_line; 
+          next_grid_line += 1; 
+          new_div.style.gridRowEnd = next_grid_line; 
+          new_div.id = new_layer_id;
+          new_div.append(close_box);  
+          new_div.append(checkbox);
+          new_div.append(checkbox_label); 
+          new_div.style.overflow = "hidden";
+          new_div.style.padding = "0px";  
+
+          grid_divs_list.push(new_div);
+          layers_grid.style.gridTemplateRows += " 25px";  
+          layers_grid.append(new_div);
+
+          let saved_layers_query = current_layers_query;
+          close_box.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
+            // remove the layer frmo the map object  
+            new_feature_layer.visible = false;
+            map_obj.remove(new_feature_layer); 
+
+            // remove the layer from the global lists of layers 
+            var index = feature_layers_array.indexOf(new_feature_layer);
+            let new_array = []; 
+            for (let x = 0; x < feature_layers_array.length; x++){
+              if (x != index){
+                new_array.push(feature_layers_array[x]); 
+              }
+            }
+            feature_layers_array = new_array; 
+
+            index = queried_features_array.indexOf(saved_layers_query);
+            new_array = []; 
+            for (let x = 0; x < queried_features_array.length; x++){
+              if (x != index){
+                new_array.push(queried_features_array[x]); 
+              }
+            }
+            queried_features_array = new_array;
+            
+            let selected_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id;
+            let flag = false; 
+            for (let x = 0; x < queried_features_array.length; x++){
+              if (queried_features_array[x]["layer_id"] == selected_id && selected_id != new_layer_id){
+                flag = true; 
+                break;
+              }
+            }
+            if (flag == false){
+              current_layers_query = queried_features_array[0];
+              fill_attribute_table(1, true, false);
+            }
+
+            layer_ids = []; 
+            for (let x = 0; x < feature_layers_array.length; x++){
+              layer_ids.push(feature_layers_array[x].layerId); 
+            }
+            // remove the option from various selectors 
+            for (let x = 0; x < selector_elements_list.length; x++){
+              for (let y = 0; y < selector_elements_list[x].length; y++){
+                if (selector_elements_list[x].options[y].id == new_layer_id){
+                  selector_elements_list[x].remove(y); 
+                }
+              }
+            }
+            for (let y = 0; y < heatmap_select_layer.length; y++){
+              if (heatmap_select_layer.options[y].id == new_layer_id){
+                heatmap_select_layer.remove(y); 
+              }
+            }
+
+            let layer_divs = layers_grid.children;
+            let found_flag = false; 
+            for (let V = 0; V < layer_divs.length; V++){
+              if (layer_divs[V].id == new_div.id){
+                found_flag = true; 
+                continue; 
+              }
+              if (found_flag == true){
+                layer_divs[V].style.gridRowStart -= 1; 
+                layer_divs[V].style.gridRowEnd -= 1;
+              }
+            }
+
+            // remove the elements in the layers panel  
+            checkbox_label.parentNode.removeChild(checkbox_label);
+            checkbox.parentNode.removeChild(checkbox); 
+            close_box.parentNode.removeChild(close_box);
+            new_div.parentNode.removeChild(new_div); 
+            next_grid_line -= 1; 
+          });
+
+          let feature_count = current_layers_query["data"].features.length; 
+          checkbox_label.textContent += " (" + feature_count + ")"; 
+
+        },
+        function reject(reason){
+          console.log("error querying new layer & loading it into attribute table: ", reason);
+          error_flag = true; 
+          table_load_handler(reason);
+        });
+      });
+    }
+    else{
+      if (error_flag == false){
+        error_handler("The geometries do not intersect.", intersect_error_div);
+      }
+    }
+  },
+  function(error){
+    error_handler(error.message, intersect_error_div, custom_intersection_pane);
+  });
+}
+
+function error_handler(error_message, error_div, parent_div){
+  console.log(error_message); 
+  error_div.innerHTML = error_message; 
+  error_div.style.overflowY = "scroll";
+  console.log("parent div height: ", parent_div.style.height, "|"); 
+  let int_slice = parent_div.style.height; 
+  int_slice = Number(int_slice.slice(0, 3)); 
+  int_slice += 50; 
+  let px_size = int_slice + "px"; 
+  if (parent_div != null){
+    parent_div.style.height = px_size; 
+  }
+}
+
+function buffer_function(){
+
+    if (buffer_error_div.innerHTML != ""){
+      let int_slice = custom_buffer_pane.style.height; 
+      int_slice = Number(int_slice.slice(0, 3)); 
+      int_slice -= 50; 
+      let px_size = int_slice + "px"; 
+      custom_buffer_pane.style.height = px_size;
+    }
+
+    buffer_error_div.innerHTML = "";
+    buffer_error_div.style.overflowY = "hidden";
+
+    var layer_id = Number(buffer_select.options[buffer_select.selectedIndex].id);
+    
+    var SQL_query = SQL_input_C.value;
+    var units = buffer_distance_select.value;
+    var distance = buffer_distance_textbox.value; 
+    
+    if (SQL_query == ""){
+      SQL_query = "1=1";
+    }
+    if (distance == ""){
+        distance = 10; 
+    }
+
+    var input_feature_layer = null; 
+    for (let x = 0; x < feature_layers_array.length; x++){
+        if (feature_layers_array[x].layerId == layer_id){
+            input_feature_layer = feature_layers_array[x]; 
+            break;
+        }
+    }
+
+    var query = input_feature_layer.createQuery();
+    query.where = SQL_query; 
+    query.sqlFormat = "standard"; 
+
+    var WSG84_buffer_results = [];
+    var promises_array = [];
+    var graphics_objects_array = [];
+    var query_fields = null; 
+
+    let all_promised = input_feature_layer.queryFeatures(query)
+    .then(function(query_results){
+        query_fields = query_results.fields; 
+
+        // convert the
+        if (query_results.features.length > 0){
+            const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+            let all_promised = Projection.load().then(function(){
+                let prior_spatial_reference; 
+
+                if (query_results.spatialReference.isWGS84 == false){
+
+                    if (query_results.spatialReference.wkid != null){
+                        prior_spatial_reference = new SpatialReference({wkid: query_results.spatialReference.wkid});
+                    }
+                    else if (query_results.spatialReference.wkt != null){
+                        prior_spatial_reference = new SpatialReference({wkt: query_results.spatialReference.wkt});
+                    }
+
+                    let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+                    
+                    for (let x = 0; x < query_results.features.length; x++){
+                        query_results.features[x].geometry = Projection.project(query_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
+                    }
+                }
+                
+            },
+            function(reject){
+                error_handler(reject.message, buffer_error_div, custom_buffer_pane);
+            }).then(function(){
+                // now do the buffer analysis
+                var geometry_type = query_results.geometryType; 
+
+                for (let x = 0; x < query_results.features.length; x++){
+                    let esri_object = create_geometry_class_object(query_results.features[x].geometry);
+
+                    if (geometry_type == "polygon"){
+                        let areas_array = []; 
+
+                        let class_geometry_object = create_geometry_class_object(query_results.features[x].geometry);
+                        let area = GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
+                        if (area > 100000){
+                            continue; 
+                        }
+                    }
+                    let buffer_object = AsyncGeometryEngine.geodesicBuffer(esri_object, distance, units)
+                    .then(function(response){
+                        WSG84_buffer_results.push({"geometry": response, "attributes": query_results.features[x].attributes});
+                        return response;
+                    });
+                    promises_array.push(buffer_object); 
+                }
+
+                return Promise.all(promises_array); 
+            },
+            function(reject){
+                error_handler(reject.message, buffer_error_div, custom_buffer_pane);
+            });
+            return all_promised; 
+        }
+    },
+    function(reject){
+        error_handler(reject.message, buffer_error_div, custom_buffer_pane);
+    });
+
+    all_promised.then(function(){
+        if (WSG84_buffer_results.length > 0){
+            var max_id = feature_layers_array[0].layerId;                   // get the layers new layer_id 
+        
+            for (let x = 1; x < feature_layers_array.length; x++){
+                if (feature_layers_array[x].layerId > max_id){
+                    max_id = feature_layers_array[x].layerId; 
+                }
+            }
+        
+            var new_layer_id = max_id + 1;
+            layer_ids.push(new_layer_id);
+
+            // construct a graphics array for the new feature layer 
+            var graphics_objects_array = [];
+            var areas_array = [];
+            var promises_array = [];
+
+            for (let x = 0; x < WSG84_buffer_results.length; x++){
+                let class_geometry_object = create_geometry_class_object(WSG84_buffer_results[x]["geometry"]);
+                let promise = AsyncGeometryEngine.geodesicArea(class_geometry_object, "square-miles")
+                .then(function(results){
+                    if (!(results > 100000)){
+                        areas_array.push(results);
+                    }
+                });
+                promises_array.push(promise);
+            }
+            
+            Promise.all(promises_array).then(function(){
+                var count = 0;
+                var sum = 0;
+                
+                for (let x = 0; x < areas_array.length; x++){
+                    sum += areas_array[x];
+                    count++;
+                }
+                
+                var average = Math.floor(sum / count);
+
+                var sizes = [400, 1170, 1900, 2400, 3000, 4200, 9700, 26000, 41000, 50000, 75000, 103000, 118000, 137000, 160000, 210000, 240000];
+                var widths = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.5, 1.8, 2.1, 2.6, 2.7, 2.9, 3.2, 3.5, 3.6, 3.7, 3.8];
+                
+                var new_width = null;
+                var found_flag = false;
+
+                for (let y = 0; y < sizes.length; y++){
+                    if (average <= sizes[y]){
+                        found_flag = true; 
+                        new_width = widths[y]; 
+                        break; 
+                    }
+                }
+                if (found_flag == false){
+                    new_width = 3.9;
+                }
+
+                polygon_outline_widths.push({"width": new_width, "layer_id": new_layer_id});
+
+                let options = {   // options["color"], options["fill_style"], options["outline_style"], options["width"], options["cap"], options["join"]
+                    color: colors_for_polygons[polygon_count], 
+                    fill_style: "solid",
+                    outline_style: "solid",
+                    cap: "round", 
+                    join: "bevel", 
+                    width: new_width,
+                }
+
+                polygon_count += 1;
+                if (polygon_count > 6){
+                    polygon_count = 0;
+                }
+                // find out what the title should be 
+                var count = 1;
+                for (let x = 0; x < feature_layers_array.length; x++){
+                    if (feature_layers_array[x]["client_generated"] == true && feature_layers_array[x]["analysis_type"] == "buffer"){
+                        count += 1; 
+                    }
+                }
+                var new_title = "buffer " + count.toString(); 
+
+                var outline_color = hex_to_hsla(options["color"], .95); 
+                var fill_color = hex_to_hsla(options["color"], .24);
+                for (let x = 0; x < WSG84_buffer_results.length; x++){
+                    options["attributes"] = WSG84_buffer_results[x]["attributes"];
+                    let graphic_object = create_polygon_graphic(WSG84_buffer_results[x]["geometry"].rings, fill_color, options["fill_style"], outline_color, options["outline_style"], options["width"], options["cap"], options["join"], options["attributes"]);
+                    graphics_objects_array.push(graphic_object); 
+                }
+
+                var custom_renderer = {
+                    type: "simple", 
+                    symbol: graphics_objects_array[0].symbol
+                };
+
+                var oid_name = null; 
+                for (let x = 0; x < query_fields.length; x++){
+                    if (query_fields[x].type == "oid"){
+                        oid_name = query_fields[x].name; 
+                        break; 
+                    }
+                }
+
+                var reduced_fields = Object.getOwnPropertyNames(WSG84_buffer_results[0]["attributes"]);
+
+                var new_feature_layer = new FeatureLayer({              // now construct the new feature layer & add it to the map  
+                    source: graphics_objects_array,
+                    fields: query_fields,
+                    outFields: reduced_fields,
+                    objectIdField: oid_name,
+                    geometryType: "polygon", 
+                    layerId: new_layer_id,
+                    maximumNumberOfFeatures: 60000, 
+                    title: new_title, 
+                    renderer: custom_renderer
+                });
+
+                new_feature_layer["client_generated"] = true;
+                new_feature_layer["analysis_type"] = "buffer";
+
+                new_feature_layer.load().then(function(){
+                    map_obj.add(new_feature_layer);
+
+                    feature_layers_array.push(new_feature_layer); 
+                    feature_layers_array.sort(function(a, b){
+                        return a.layerId - b.layerId;
+                    });
+
+                    let query = new_feature_layer.createQuery();
+                    let query_promise = new_feature_layer.queryFeatures(query);
+
+                    query_promise.then(function(query_results){
+                        let query_object = {"data": query_results, "layer_id": new_layer_id};
+
+                        queried_features_array.push(query_object);
+                        current_layers_query = query_object;
+
+                        // now add the new feature layer to selectors throughout the map 
+                        for (let z = 0; z < selector_elements_list.length; z++){
+                            let layer_option = document.createElement("option");
+                            layer_option.textContent = new_feature_layer.title;
+                            layer_option.id = new_layer_id;                 // id is needed later by the options handler when an option is selected 
+                            selector_elements_list[z].append(layer_option);
+                        }
+
+                        let checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";								// set new checkbox's attributes 
+                        
+                        checkbox.classList.add("w-checkbox-input");
+                        checkbox.classList.add("w-checkbox-input--inputType-custom");
+                        checkbox.classList.add("checkbox");
+
+                        checkbox.value = new_feature_layer.layerId;
+                        checkbox.checked = new_feature_layer.visible;
+                        checkbox.style.position = "absolute";
+                        checkbox.style.display = "inline-block"; 
+                        checkbox.style.left = "7px";
+                        checkbox.style.height = "12px"; 
+                        
+                        checkbox.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
+                          new_feature_layer.visible = e.target.checked;
+                        });
+
+                        let checkbox_label = document.createElement("label");		// create a label for the new checkbox & set its CSS attributes 
+
+                        checkbox_label.classList.add("checkbox-button-label");
+                        checkbox_label.classList.add("w-form-label");
+
+                        checkbox_label.style.position = "absolute";
+                        checkbox_label.style.display = "inline-block"; 
+                        checkbox_label.style.left = "15px";
+                        checkbox_label.style.right = "0px";
+                        checkbox_label.style.height = "20px"; 
+                        checkbox_label.style.overflow = "hidden";
+                        checkbox_label.style.whiteSpace = "nowrap";
+                        checkbox_label.id = "services_checkbox_label_" + new_layer_id;          // needed later to append the feature counts to the checkboxes 
+
+                        let close_box = document.createElement("input"); 
+                        close_box.type = "image";	
+                        close_box.src = "images/close_button.png";							// set new checkbox's attributes 
+
+                        close_box.value = new_feature_layer.layerId;
+                        checkbox.checked = new_feature_layer.visible;
+                        close_box.style.position = "absolute";
+                        close_box.style.left = "-18px";
+                        close_box.style.width = "13px";
+                        close_box.style.height = "13px"; 
+
+                        let label_text = new_feature_layer.title;			// get the text for the new label 
+                        checkbox_label.textContent = label_text;
+
+                        let new_div = document.createElement("div");
+
+                        checkbox_label.style.overflow = "hidden";
+                        new_div.classList.add("w-checkbox");
+                        new_div.classList.add("checkbox-field"); 
+
+                        new_div.style.gridRowStart = next_grid_line; 
+                        next_grid_line += 1; 
+                        new_div.style.gridRowEnd = next_grid_line; 
+                        new_div.id = new_layer_id;
+                        new_div.append(close_box);  
+                        new_div.append(checkbox); 
+                        new_div.append(checkbox_label); 
+                        new_div.style.overflow = "hidden";
+                        new_div.style.padding = "0px";  
+
+                        grid_divs_list.push(new_div);
+                        layers_grid.style.gridTemplateRows += " 25px";  
+                        layers_grid.append(new_div);
+
+                        let saved_layers_query = current_layers_query;
+                        close_box.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
+                            // remove the layer frmo the map object  
+                            new_feature_layer.visible = false;
+                            map_obj.remove(new_feature_layer);
+
+                            // remove the layer from the global lists of layers 
+                            var index = feature_layers_array.indexOf(new_feature_layer);
+                            let new_array = []; 
+                            for (let x = 0; x < feature_layers_array.length; x++){
+                                if (x != index){
+                                    new_array.push(feature_layers_array[x]); 
+                                }
+                            }
+                            feature_layers_array = new_array; 
+
+                            index = queried_features_array.indexOf(saved_layers_query);
+                            new_array = []; 
+                            for (let x = 0; x < queried_features_array.length; x++){
+                                if (x != index){
+                                    new_array.push(queried_features_array[x]); 
+                                }
+                            }
+                            queried_features_array = new_array;
+
+                            let selected_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id;
+                            let flag = false; 
+                            for (let x = 0; x < queried_features_array.length; x++){
+                                if (queried_features_array[x]["layer_id"] == selected_id && selected_id != new_layer_id){
+                                    flag = true; 
+                                    break;
+                                }
+                            }
+                            if (flag == false){
+                                current_layers_query = queried_features_array[0];
+                                fill_attribute_table(1, true, false);
+                            }
+
+                            layer_ids = []; 
+                            for (let x = 0; x < feature_layers_array.length; x++){
+                                layer_ids.push(feature_layers_array[x].layerId); 
+                            }
+
+                            // remove the option from various selectors 
+                            for (let x = 0; x < selector_elements_list.length; x++){
+                                for (let y = 0; y < selector_elements_list[x].length; y++){
+                                    if (selector_elements_list[x].options[y].id == new_layer_id){
+                                        selector_elements_list[x].remove(y); 
+                                    }
+                                }
+                            }
+
+                            let layer_divs = layers_grid.children;
+                            let found_flag = false; 
+                            for (let V = 0; V < layer_divs.length; V++){
+                                if (layer_divs[V].id == new_div.id){
+                                    found_flag = true; 
+                                    continue; 
+                                }
+                                if (found_flag == true){
+                                    layer_divs[V].style.gridRowStart -= 1; 
+                                    layer_divs[V].style.gridRowEnd -= 1;
+                                }
+                            }
+
+                            // remove the elements in the layers panel  
+                            checkbox_label.parentNode.removeChild(checkbox_label);
+                            checkbox.parentNode.removeChild(checkbox); 
+                            close_box.parentNode.removeChild(close_box);
+                            new_div.parentNode.removeChild(new_div); 
+                            next_grid_line -= 1; 
+                        });
+                    },
+                    function reject(reason){
+                        console.log("error querying new layer & loading it into attribute table: ", reason);
+                    });
+                });
+            });
+        }
+    });
+}
+
+function heatmap_function(){
+    var layer_id = Number(heatmap_select_layer.options[heatmap_select_layer.selectedIndex].id);
+ 
+    var blur_radius = Math.ceil(blur_range.value * 0.4) + 8; 
+    var input_intensity = intensity_range.value;
+
+    var feature_layer = null; 
+    var queried_features = null;
+    for (let x = 0; x < feature_layers_array.length; x++){
+        if (feature_layers_array[x].layerId == layer_id){
+            feature_layer = feature_layers_array[x]; 
+            break;
+        }
+    }     
+    for (let x = 0; x < queried_features_array.length; x++){
+        if (queried_features_array[x]["layer_id"] == layer_id){
+            queried_features = queried_features_array[x]; 
+            break;
+        }
+    }
+
+    var current_pixel_width = map_view.resolution; 
+	  var tolerance_radius = current_pixel_width * .00885;
+
+    if (tolerance_radius > 6359560){			// when the number gets too large (zooming too far out), it overloads the GeometryEngine it seems
+      tolerance_radius = 6359560;				// 1300 & 6359560 are dependent, so be careful with adjusting either 
+    }
+
+    var pixel_intensity = 9; 
+    var promises_array = []; 
+    var random_indices = []; 
+
+    // create some buffers to get an approximation of what the max intensity should be 
+    for (let x = 0; x < queried_features["data"].features.length && x < 100; x++){
+        let valid_number = false; 
+        let random_index = null; 
+        while (valid_number == false){
+            random_index = Math.floor(Math.random() * queried_features["data"].features.length);
+            let found_flag = false; 
+            for (let y = 0; y < random_indices.length; y++){
+                if (random_indices[y] == random_index){
+                    found_flag = true; 
+                }
+            }
+            if (found_flag == false){
+                valid_number = true; 
+            }
+        }
+        random_indices.push(random_index);
+        
+        let center_point = queried_features["data"].features[random_indices[x]].geometry; 
+        let edge_point = new Point({
+            x: center_point.x  - tolerance_radius, 
+            y: center_point.y, 
+            spatialReference: 4326
+        });
+        let radius = Math.abs(center_point.x - edge_point.x) * Math.ceil(blur_radius * 0.1);
+
+        if (radius > 220){
+            radius = 220;  
+        }
+
+        // now get a geodesic buffer around that point
+        let promise = AsyncGeometryEngine.geodesicBuffer(center_point, radius, "miles").then(function(buffer){
+            let buffer_object = create_graphics_object(buffer, {}); 
+            let count = 0; 
+
+            let query = feature_layer.createQuery();
+            query.geometry = buffer_object.geometry;
+            let query_promise = feature_layer.queryFeatures(query);
+
+            let promise = query_promise.then(function(query_results){
+                count = query_results.features.length;
+                return count; 
+            });
+
+            return promise; 
+        }, 
+        function(error){
+            console.log("error in creating test buffer: ", error, error.message);
+        });
+        promises_array.push(promise); 
+    }
+
+    Promise.all(promises_array).then(function(results){
+        let max_value = results.reduce(function(a, b){
+            return Math.max(a, b);
+        });
+        let final_max_intensity = Math.ceil(max_value * ((100 - input_intensity) / 100) * 10) + (max_value * 4) + 10; // 0.86
+
+        var renderer = {
+            type: "heatmap",
+            colorStops: [
+                { color: "rgba(22, 192, 15, 0)", ratio: 0 },
+                { color: "rgb(22, 192, 15)", ratio: 0.083 },
+                { color: "rgb(49, 162, 24)", ratio: 0.166 },
+                { color: "rgb(76, 132, 33)", ratio: 0.249 },
+                { color: "rgb(103, 102, 42)", ratio: 0.332 },
+                { color: "rgb(130, 72, 52)", ratio: 0.415 },
+                { color: "rgb(157, 42, 61)", ratio: 0.498 },
+                { color: "rgb(184, 12, 70)", ratio: 0.581 },
+                { color: "rgb(182, 51, 98)", ratio: 0.664 },
+                { color: "rgb(180, 90, 127)", ratio: 0.747 },
+                { color: "rgb(178, 128, 155)", ratio: 0.83 },
+                { color: "rgb(176, 166, 184)", ratio: 0.913 },
+                { color: "rgb(174, 205, 212)", ratio: 1 }
+            ],
+            maxPixelIntensity: final_max_intensity,
+            minPixelIntensity: 0, 
+            blurRadius: blur_radius
+        }
+
+        // create a new feature layer which is a clone of the old one
+        var count = 1;
+        for (let x = 0; x < feature_layers_array.length; x++){
+            if (feature_layers_array[x]["client_generated"] == true && feature_layers_array[x]["analysis_type"] == "heatmap"){
+                count += 1; 
+            }
+        }
+        var new_title = "heatmap " + count.toString(); 
+
+        let max_id = feature_layers_array[0].layerId; 
+            for (let z = 1; z < feature_layers_array.length; z++){
+                if (feature_layers_array[z].layerId > max_id){
+                    max_id = feature_layers_array[z].layerId; 
+                }
+            }
+            for (let z = 0; z < background_layers.length; z++){
+                if (background_layers[z].layerId > max_id){
+                    max_id = background_layers[z].layerId; 
+                }
+            }
+        let new_layer_id = max_id + 1;
+
+        const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+
+        let graphics_objects_array = [];
+        var oid_name = null;
+        var reduced_fields= null; 
+        var fields = null; 
+
+        let query_results = queried_features["data"]; 
+ 
+        let promise = Projection.load().then(function(){
+            for (let x = 0; x < query_results.features.length; x++){
+                let prior_spatial_reference
+                if (query_results.spatialReference.wkid != null){
+                    prior_spatial_reference = new SpatialReference({
+                        wkid: query_results.spatialReference.wkid
+                    });
+                }
+                else if (query_results.spatialReference.wkt != null){
+                    prior_spatial_reference = new SpatialReference({
+                        wkt: query_results.spatialReference.wkt
+                    });
+                }
+
+                let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+                
+                query_results.features.forEach(function(element) {
+                    element.geometry = Projection.project(element.geometry, WGS84_spatial_reference);
+                });
+            }
+            return null; 
+        }, 
+        function(reject){
+            console.log("failed to reproject layer: ", reject.message); 
+        }).then(function(){
+
+            for (let x = 0; x < query_results.features.length; x++){
+                let point = query_results.features[x].geometry;
+                let attributes = query_results.features[x].attributes;
+                let graphic_point = create_point_graphic(point.x, point.y, "#777777", 9, "circle", attributes);
+                graphics_objects_array.push(graphic_point);
+            }
+
+            fields = query_results.fields; 
+
+            for (let x = 0; x < fields.length; x++){
+                if (fields[x].type == "oid"){
+                    oid_name = fields[x].name;
+                    break;
+                }
+            }
+            
+            reduced_fields = Object.getOwnPropertyNames(query_results.features[0].attributes);
+
+        }).then(function(){
+
+            let new_feature_layer = new FeatureLayer({              // now construct the new feature layer & add it to the map  
+                source: graphics_objects_array,
+                maximumNumberOfFeatures: 60000, 
+                layerId: new_layer_id,
+                title: new_title,
+                renderer: renderer,
+                fields: fields,
+                outFields: reduced_fields,
+                legendEnabled: false, 
+                objectIdField: oid_name,
+                geometryType: "point", 
+                spatialReference: WGS84_spatial_reference, 
+                popupEnabled: false
+            });
+
+            new_feature_layer.load().then(function(){
+
+                map_obj.add(new_feature_layer);
+
+                let parent_id = feature_layer.layerId;
+                new_feature_layer["parent_layer_id"] = parent_id;
+                new_feature_layer["client_generated"] = true; 
+                new_feature_layer["analysis_type"] = "heatmap";
+                
+                feature_layers_array.push(new_feature_layer); 
+                feature_layers_array.sort(function(a, b){
+                    return a.layerId - b.layerId;
+                });
+
+                let query = new_feature_layer.createQuery();
+                let query_promise = new_feature_layer.queryFeatures(query);
+
+                query_promise.then(function(query_results){
+                    let query_object = {"data": query_results, "layer_id": new_layer_id};
+
+                    queried_features_array.push(query_object);
+
+                    let checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";								// set new checkbox's attributes 
+                    
+                    checkbox.classList.add("w-checkbox-input");
+                    checkbox.classList.add("w-checkbox-input--inputType-custom");
+                    checkbox.classList.add("checkbox");
+
+                    checkbox.value = new_feature_layer.layerId;
+                    checkbox.checked = new_feature_layer.visible;
+                    checkbox.style.position = "absolute";
+                    checkbox.style.display = "inline-block"; 
+                    checkbox.style.left = "7px";
+                    checkbox.style.height = "12px"; 
+                    
+                    checkbox.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
+                      new_feature_layer.visible = e.target.checked;
+                    });
+
+                    let checkbox_label = document.createElement("label");		// create a label for the new checkbox & set its CSS attributes 
+
+                    checkbox_label.classList.add("checkbox-button-label");
+                    checkbox_label.classList.add("w-form-label");
+
+                    checkbox_label.style.position = "absolute";
+                    checkbox_label.style.display = "inline-block"; 
+                    checkbox_label.style.left = "15px";
+                    checkbox_label.style.right = "0px";
+                    checkbox_label.style.height = "20px"; 
+                    checkbox_label.style.overflow = "hidden";
+                    checkbox_label.style.whiteSpace = "nowrap";
+                    checkbox_label.id = "services_checkbox_label_" + new_layer_id;          // needed later to append the feature counts to the checkboxes 
+
+                    let close_box = document.createElement("input"); 
+                    close_box.type = "image";	
+                    close_box.src = "images/close_button.png";							// set new checkbox's attributes 
+
+                    close_box.value = new_feature_layer.layerId;
+                    checkbox.checked = new_feature_layer.visible;
+                    close_box.style.position = "absolute";
+                    close_box.style.left = "-18px";
+                    close_box.style.width = "13px";
+                    close_box.style.height = "13px";  
+
+                    let label_text = new_feature_layer.title;			// get the text for the new label 
+                    checkbox_label.textContent = label_text;
+
+                    let new_div = document.createElement("div");
+
+                    checkbox_label.style.overflow = "hidden";
+                    new_div.classList.add("w-checkbox");
+                    new_div.classList.add("checkbox-field"); 
+
+                    new_div.style.gridRowStart = next_grid_line; 
+                    next_grid_line += 1; 
+                    new_div.style.gridRowEnd = next_grid_line; 
+                    new_div.id = new_layer_id;
+                    new_div.append(close_box);  
+                    new_div.append(checkbox); 
+                    new_div.append(checkbox_label); 
+                    new_div.style.overflow = "hidden";
+                    new_div.style.padding = "0px";  
+
+                    grid_divs_list.push(new_div);
+                    layers_grid.style.gridTemplateRows += " 25px";  
+                    layers_grid.append(new_div);
+
+                    close_box.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
+                        // remove the layer frmo the map object  
+                        new_feature_layer.visible = false;
+                        map_obj.remove(new_feature_layer);
+
+                        // remove the layer from the global lists of layers 
+                        var index = feature_layers_array.indexOf(new_feature_layer);
+                        let new_array = []; 
+                        for (let x = 0; x < feature_layers_array.length; x++){
+                            if (x != index){
+                                new_array.push(feature_layers_array[x]); 
+                            }
+                        }
+                        feature_layers_array = new_array; 
+
+                        new_array = []; 
+                        for (let x = 0; x < queried_features_array.length; x++){
+                            if (queried_features_array["layer_id"] != new_layer_id){
+                                new_array.push(queried_features_array[x]); 
+                            }
+                        }
+                        queried_features_array = new_array;
+
+                        layer_ids = []; 
+                        for (let x = 0; x < feature_layers_array.length; x++){
+                            layer_ids.push(feature_layers_array[x].layerId); 
+                        }
+
+                        let layer_divs = layers_grid.children;
+                        let found_flag = false; 
+                        for (let V = 0; V < layer_divs.length; V++){
+                            if (layer_divs[V].id == new_div.id){
+                                found_flag = true; 
+                                continue; 
+                            }
+                            if (found_flag == true){
+                                layer_divs[V].style.gridRowStart -= 1; 
+                                layer_divs[V].style.gridRowEnd -= 1;
+                            }
+                        }
+
+                        // remove the elements in the layers panel  
+                        checkbox_label.parentNode.removeChild(checkbox_label);
+                        checkbox.parentNode.removeChild(checkbox); 
+                        close_box.parentNode.removeChild(close_box);
+                        new_div.parentNode.removeChild(new_div); 
+                        next_grid_line -= 1; 
+                    });
+                },
+                function reject(reason){
+                    console.log("error querying new layer & loading it into attribute table: ", reason);
+                });
+            });
+
+
+            // print relevant info on the heatmap to the panel: current zoom level, pixel radius, max point intensity
+        });
+
+    });
+}
+
+function search_function(){
+    if (search_error_div.innerHTML != ""){
+      let int_slice = custom_search_pane.style.height; 
+      int_slice = Number(int_slice.slice(0, 3)); 
+      int_slice -= 50; 
+      let px_size = int_slice + "px"; 
+      custom_search_pane.style.height = px_size;
+    }
+    search_error_div.innerHTML = ""; 
+    search_error_div.style.overflowY = "hidden"; 
+      
+    var feature_layer = null; 
+    var selected_id = search_select.options[search_select.selectedIndex].id;
+
+    var SQL_query = SQL_input_D.value;
+    if (SQL_query == ""){
+      SQL_query = "1=1";
+    }
+
+    for (let x = 0; x < feature_layers_array.length; x++){
+        if (feature_layers_array[x].layerId == selected_id){
+            feature_layer = feature_layers_array[x]; 
+            break; 
+        }
+    }
+
+    var query = feature_layer.createQuery();
+    query.where = SQL_query; 
+    query.sqlFormat = "standard"; 
+
+    var query_promise = feature_layer.queryFeatures(query);
+
+    query_promise.then(function(query_results){
+        var fields = current_layers_query["data"].fields; 
+        if (query_results.fields == null){
+            query_results.fields = fields;
+        }
+        current_layers_query = {"data": query_results, "selected_id": selected_id};
+        if (filter_active == true){
+          toggle_filter_button("off");
+        } 
+        if (mouse_selector_active == true){
+          toggle_mouse_selector_button("off"); 
+        }
+        
+        fill_attribute_table(1, true, false);
+    },
+    function(reject){
+        error_handler(reject.message, search_error_div, custom_search_pane);
+    });
+}
+
+function table_load_handler(reason){
+	table_error_div.style.display = "block"; 
+	attribute_table.style.display = "none"; 
+	table_error_div.innerHTML = reason.message; 
+	// remove all rows from the table
+	var count = attribute_table.childNodes.length; 
+	for (let x = 0; x < count; x++){
+		attribute_table.removeChild(attribute_table.childNodes[0]);
+	}
+}
+
+function table_reorder(field, mode){
+    var field_name = field.name; 
+    for (let x = 0; x < current_layers_query["data"].fields.length; x++){
+        if (field_name == current_layers_query["data"].fields[x].name){
+            var field_type = field.type; 
+            if (mode == "ascending"){
+                if (field_type == "small-integer" || field_type == "integer" || field_type == "single" || field_type == "double" || field_type == "long" || field_type == "oid" || field_type == "date"){
+                    current_layers_query["data"].features.sort(function(a, b){
+                        return a.attributes[field_name] - b.attributes[field_name]; 
+                    });
+                }
+                else if (field_type == "string"){
+                    current_layers_query["data"].features.sort(function(a, b){
+                        return a.attributes[field_name].localeCompare(b.attributes[field_name]);  
+                    }); 
+                }
+                else{
+                    current_layers_query["data"].features.sort(function(a, b){
+                        return -1; 
+                    }); 
+                }
+            }
+            else if (mode == "descending"){
+                if (field_type == "small-integer" || field_type == "integer" || field_type == "single" || field_type == "double" || field_type == "long" || field_type == "oid" || field_type == "date"){
+                    current_layers_query["data"].features.sort(function(a, b){
+                        return b.attributes[field_name] - a.attributes[field_name]; 
+                    });
+                }
+                else if (field_type == "string") {
+                    current_layers_query["data"].features.sort(function(a, b){
+                        return b.attributes[field_name].localeCompare(a.attributes[field_name]); 
+                    });
+                }
+                else{
+                    current_layers_query["data"].features.sort(function(a, b){
+                        return -1; 
+                    }); 
+                }
+            }
+            break;
+        }
+    }
+}
+
+function zoom_to_feature(e){ 
+    map_view.graphics = []; 
+	let object_id = e.target.object_id;			// each zoom button was assigned the object_id to use in this spatial query 
+    var graphic = null;
+    var oid_field_name = null;
+    let layer_id = null; 
+    if (global_use_graphics == true){
+        layer_id = current_layers_query["parent_layer_id"]; 
+    }
+    else{
+        layer_id = current_layers_query["layer_id"];
+    }
+
+    for (let x = 0; x < current_layers_query["data"].fields.length; x++){
+        if (current_layers_query["data"].fields[x].type == "oid"){
+            oid_field_name = current_layers_query["data"].fields[x].name; 
+            break; 
+        }
+    }
+    // you need to handle finding the object_id for background layerse differently... don't you? look into that ...
+    let target_geometry = null; 
+    
+    for (let x = 0; x < current_layers_query["data"].features.length; x++){
+        if (object_id == current_layers_query["data"].features[x].attributes[oid_field_name]){
+            target_geometry = current_layers_query["data"].features[x].geometry;
+            break; 
+        }
+    }
+
+    let geometry_type = current_layers_query["data"].geometryType; 
+    let symbol = null;
+
+    if (geometry_type == "point"){
+        symbol = {
+            type: "simple-marker", 
+            color: colors_for_map_tools[0], 
+            size: 9,
+            style: "circle"
+        }
+        let point = {
+            type: "point", 
+            longitude: target_geometry.longitude, 
+            latitude: target_geometry.latitude, 
+            x: target_geometry.x, 
+            y: target_geometry.y
+        }
+        graphic = new Graphic({geometry: point, symbol: symbol}); 
+    }
+    else if (geometry_type == "polyline"){
+        symbol = {
+            join: "bevel",
+            type: "simple-line", 
+            cap: "round", 
+            color: colors_for_map_tools[0],  
+            width: 3.7, 
+            style: "solid"
+        }
+        let lines = {
+            type: "polyline", 
+            paths: target_geometry.paths
+        }
+        graphic = new Graphic({geometry: lines, symbol: symbol}); 
+    }
+    else if (geometry_type == "polygon"){
+        let outline_color = hex_to_hsla(colors_for_map_tools[0], .95); 
+        let fill_color = hex_to_hsla(colors_for_map_tools[0], .55);
+        
+        symbol = {
+            type: "simple-fill", 
+            color: fill_color, 
+            style: "forward-diagonal",
+            outline: {
+                width: 3.7,
+                color: outline_color, 
+                style: "dash-dot",
+                cap: "round", 
+                join: "bevel", 
+            }
+        }
+        let polygon = {
+            type: "polygon", 
+            rings: target_geometry.rings
+        }
+        graphic = new Graphic({geometry: polygon, symbol: symbol}); 
+    }
+
+    map_view.graphics.add(graphic);
+    map_view.goTo(graphic);
+}
+
+function table_select_handler(e){
+	old_clicked_page = 0;
+  current_page = 1; 
+  let selected_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id;
+  // current_layers_query
+  if (global_use_graphics == false){
+    for (let x = 0; x < queried_features_array.length; x++){
+      if (queried_features_array[x]["layer_id"] == selected_id){
+        current_layers_query = queried_features_array[x]; 
+        break;
+      }
+    }
+  }
+  else if (global_use_graphics == true){
+    for (let x = 0; x < queried_background_features.length; x++){
+      if (queried_background_features[x]["parent_layer_id"] == selected_id){
+        current_layers_query = queried_background_features[x]; 
+        break;
+      }
+    }
+  }
+  if (filter_active == true){
+    filter_by_extent("on");         // this calls fill_attribute_table 
+  }
+  else{   // called regardless of if we're using graphics for the data source, the only check needed is filter_active == true 
+    fill_attribute_table(1, true, global_use_graphics);
+  }
+}
+
+function click_select_function(e){
+  var clicked_point = e.mapPoint;                 // the point on the map that was clicked 
+  var point = e.mapPoint;
+
+  var current_pixel_width = map_view.resolution; 
+	var tolerance_radius = current_pixel_width * 770;
+	
+  if (tolerance_radius > 6359560){			// when the number gets too large (zooming too far out), it overloads the GeometryEngine it seems
+		tolerance_radius = 6359560;				// 1300 & 6359560 are dependent, so be careful with adjusting either 
+	}
+
+  var WGS84_center_point = WebMercTools.webMercatorToGeographic({"x": clicked_point.x, "y": clicked_point.y});
+	var WGS84_edge_point = WebMercTools.webMercatorToGeographic({"x": point.x  - tolerance_radius, "y": point.y}); // you might need to check if this needs flipping from + to - at some point 
+	var WGS84_radius = Math.abs(WGS84_center_point.x - WGS84_edge_point.x);
+
+    // needed to create a circle around the mouse click point 
+	var WGS84_center_point_object = new Point({
+		x: WGS84_center_point.x, 
+		y: WGS84_center_point.y, 
+		spatialReference: 4326
+	});
+	// get a circular buffer around the central point. geodesic buffers ended up more buggy at the map edges than regular circles with their oblong shape
+  var search_circle = new Circle(
+		WGS84_center_point_object, 
+		{
+			"radius": tolerance_radius * .00001, 
+			"radiusUnit": "miles" 
+		}
+	);
+  var small_search_circle = new Circle(
+		WGS84_center_point_object, 
+		{
+			"radius": (tolerance_radius * .00001) * 0.13, 
+			"radiusUnit": "miles" 
+		}
+	);
+    // loop through the layers by geometry type and look for a found geometry 
+  var geometry_types = ["point", "polyline", "polygon"];
+  var new_promises_array = []; 
+  let found_flag = false; 
+  for (let w = 0; w < 3 && found_flag == false; w++){
+    let promises_array = [];
+    
+    for (let x = 0; x < feature_layers_array.length; x++){
+      let feature_layer = feature_layers_array[x]; 
+      let geometry_type = feature_layer.geometryType;
+      let chosen_feature = null;
+
+      // if the layer qualifies for examination - is the current geometry type, is visible, isn't a temporary layer 
+      console.log("here"); 
+      if (geometry_type == geometry_types[w] && feature_layer.visible == true && feature_layer.hasOwnProperty("client_generated") == false){
+        // query the layer with the search circle
+        let query = feature_layer.createQuery();
+        
+        if (geometry_type == "point" || geometry_type == "polyline"){
+            query.geometry = search_circle;
+        }
+        else if (geometry_type == "polygon"){
+            query.geometry = small_search_circle;
+        }
+            
+        let query_promise = feature_layer.queryFeatures(query);
+        let promise = query_promise.then(function(query_results){
+            
+          let promise_2 = null;
+          // if anything was within the search circle 
+          if (query_results.features.length > 0){
+            let features = query_results.features;
+            let background_layer = null;
+            // get the background layer that corresponds with the currently examined feature layer 
+            for (let y = 0; y < background_layers.length; y++){
+              if (background_layers[y]["parent_layer_id"] == feature_layer.layerId){
+                background_layer = background_layers[y]; 
+                break; 
+              }
+            }
+            // query that later for its features within the circle to sort out any geometries that have already been highlighted 
+            let query_2 = background_layer.createQuery();
+            query_2.geometry = search_circle 
+            let query_promise_2 = background_layer.queryFeatures(); 
+
+            promise_2 = query_promise_2.then(function(query_results_2){
+              let layer_data = []; 
+              let fields = query_results.fields; 
+              let oid_field_name = null;
+              // identify features already highlighted with the oid field 
+              for (let z = 0; z < fields.length; z++){
+                if (fields[z].type == "oid"){
+                  oid_field_name = fields[z].name;
+                  break;
+                }
+              }
+              // so now you're looping through the features within the circle 
+              for (let z = 0; z < query_results.features.length; z++){
+                let symbol = null;
+                let new_geometry = null;
+                let query_geometry = query_results.features[z].geometry;
+                let attributes = query_results.features[z].attributes;
+
+                let feature_oid = attributes[oid_field_name];
+                let match = false;
+
+                // now you've got all the features in the background layer circle, you discard anything that already matches
+                for (let V = 0; V < query_results_2.features.length; V++){
+                  if (query_results_2.features[V].attributes[oid_field_name] == feature_oid){
+                    match = true;
+                    break;
+                  }
+                }
+                if (match == true){
+                  continue; 
+                }
+                found_flag = true; 
+                layer_data.push(query_results.features[z]); 
+              }
+              return layer_data;
+            }); // end query 2 
+          }
+          return promise_2; 
+        }); // end query 1
+        promises_array.push(promise); 
+      } // end if 
+    }
+    let new_promise = Promise.all(promises_array).then(function(array_results){
+      let closest_point = null;
+      let smallest_distance = null 
+      let closest_line = null; 
+      let smallest_distance_2 = null; 
+      let closest_polygon = null; 
+      let smallest_area = null;
+      let layer_id = null; 
+      let final_features = null;
+      let background_layer = null; 
+      let background_query = null; 
+      let index = null;
+      let background_index = null; 
+
+      // array_results is a 2d array. all the arrays in array_results should be the same geometry type.
+      for (let x = 0; x < array_results.length; x++){
+        let geometry_type = null;
+        
+        if (array_results[x] != null){
+
+          if (array_results[x].length > 0){
+            geometry_type = array_results[x][0].layer.geometryType;
+          }
+          let graphic = null;
+          let updated_geometry_flag = false; 
+          if (geometry_type == "point"){
+            // add all the points into an array
+            for (let y = 0; y < array_results[x].length; y++){
+              let layers_single_attribute = array_results[x][y].attributes;
+              let layers_single_geometry = array_results[x][y].geometry;
+
+              // get the distance from the center point to that geometry.
+              let distance_from_center = new Line({
+                paths: [
+                  [layers_single_geometry.x, layers_single_geometry.y],
+                  [WGS84_center_point.x, WGS84_center_point.y]
+                ],
+                spatialReference: 4326
+              });
+              let distance = GeometryEngine.geodesicLength(distance_from_center, "miles");
+              if (closest_point == null || smallest_distance > distance){
+                updated_geometry_flag = true; 
+                smallest_distance = distance;
+                closest_point = layers_single_geometry;
+                layer_id = array_results[x][y].layer.layerId; 
+                final_features = array_results[x][y]; 
+              }
+            }
+          }
+          else if (geometry_type == "polyline"){
+
+            for (let y = 0; y < array_results[x].length; y++){
+              let layers_single_attribute = array_results[x][y].attributes;
+              let layers_single_geometry = array_results[x][y].geometry;
+
+              let path = layers_single_geometry.paths; 
+              let nearest_point = GeometryEngine.nearestCoordinate(layers_single_geometry, WGS84_center_point_object);
+              let clipped_line = new Line({
+                paths: [
+                  [nearest_point.coordinate.x, nearest_point.coordinate.y], 
+                  [WGS84_center_point.x, WGS84_center_point.y]
+                ], 
+                spatialreference: 4326
+              });
+              if (smallest_distance_2 == null || nearest_point.distance < smallest_distance_2){
+                updated_geometry_flag = true; 
+                smallest_distance_2 = nearest_point.distance; 
+                closest_line = layers_single_geometry;
+                layer_id = array_results[x][y].layer.layerId; 
+                final_features = array_results[x][y]; 
+              }
+            }    
+          }
+          else if (geometry_type == "polygon"){
+
+            for (let y = 0; y < array_results[x].length; y++){
+              let layers_single_attribute = array_results[x][y].attributes;
+              let layers_single_geometry = array_results[x][y].geometry;
+
+              let area = GeometryEngine.geodesicArea(layers_single_geometry, "square-miles");
+
+              if (smallest_area == null || area < smallest_area){
+                updated_geometry_flag = true; 
+                smallest_area = area;
+                closest_polygon = layers_single_geometry;
+                layer_id = array_results[x][y].layer.layerId;
+                final_features = array_results[x][y];
+              }
+            }
+          }
+          if (updated_geometry_flag == true){
+            for (let z = 0; z < background_layers.length; z++){
+              if (layer_id == background_layers[z]["parent_layer_id"]){
+                background_layer = background_layers[z];
+                index = z;
+                break; 
+              }
+            }
+            for (let z = 0; z < queried_background_features.length; z++){
+              if (queried_background_features[z]["parent_layer_id"] == layer_id){
+                background_query = queried_background_features[z];
+                background_index = z;
+                break;
+              }
+            }
+          }
+
+        }
+      }
+      // now you want to add those geometries to the background arrays and the ongoing query parameters... and then return from the entire function 
+      let graphic = null; 
+      let symbol = null; 
+      let new_geometry = null; 
+      
+      if (closest_point != null){ 
+        symbol = {
+          type: "simple-marker",
+          style: "square"
+        }
+        new_geometry = {
+          type: "point",
+          longitude: closest_point.longitude,
+          latitude: closest_point.latitude, 
+          x: closest_point.x, 
+          y: closest_point.y
+        }
+        graphic = new Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
+        return {"graphic": graphic, "index": index, "background_index": background_index}; 
+      }
+      else if (closest_line != null){
+        symbol = {
+          type: "simple-line",
+          style: "solid"
+        }
+        new_geometry = {
+          type: "polyline",
+          paths: closest_line.paths
+        }
+        graphic = new Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
+        return {"graphic": graphic, "index": index, "background_index": background_index}; 
+      }
+      else if (closest_polygon != null){
+        symbol = {
+          type: "simple-fill",
+          style: "solid",
+        }
+        new_geometry = {
+          type: "polygon",
+          rings: closest_polygon.rings
+        }
+        graphic = new Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
+        return {"graphic": graphic, "index": index, "background_index": background_index};
+      }
+    });
+    new_promises_array.push(new_promise);
+  }
+
+  Promise.all(new_promises_array).then(function(array_results){
+    let found_flag = false; 
+    let final_graphic = null; 
+    let final_index = null; 
+    let final_background_index = null; 
+
+    for (let w = 0; w < 3 && found_flag == false; w++){
+      for (let x = 0; x < array_results.length; x++){
+        if (array_results[x] != undefined && array_results[x]["graphic"].geometry.type == geometry_types[w]){
+          final_graphic = array_results[x]["graphic"]; 
+          final_index = array_results[x]["index"];
+          final_background_index = array_results[x]["background_index"]; 
+          found_flag = true; 
+          break; 
+        }
+      }
+    }
+
+    queried_background_features[final_background_index]["data"].features.push(final_graphic);
+
+    let add_edits = {
+      addFeatures: [final_graphic]
+    };
+    background_layers[final_index].applyEdits(add_edits)
+    .then(function(){
+      // now set the current query and fill the attribute table. 
+      let page_number = null; 
+      if (global_use_graphics == true){
+        page_number = current_page;
+      }
+      else{
+        page_number = 1;
+        current_page = 1;
+        global_use_graphics = true; 
+      }
+
+      current_layers_query = queried_background_features[final_background_index]; 
+      fill_attribute_table(page_number, true, global_use_graphics);
+    });
+      
+  });
+}
+
+// a giant function that handles the drag select part of the feature selection tool 
+function drag_select_function(e){
+  e.stopPropagation();                    // prevent the drag from moving the map around as well 
+  if (previous_graphic != null){          // this will clear the drag select box 
+		map_view.graphics.remove(previous_graphic); 
+	}
+
+  var current_point = map_view.toMap(e); 
+	var original_point = map_view.toMap(e.origin); 
+	var WGS84_original_point = WebMercTools.webMercatorToGeographic({"x": original_point.x, "y": original_point.y});
+	var WGS84_current_point = WebMercTools.webMercatorToGeographic({"x": current_point.x, "y": current_point.y});
+
+  var rectangle_rings = [
+		[[WGS84_original_point.x, WGS84_original_point.y], 
+		[WGS84_current_point.x, WGS84_original_point.y], 
+		[WGS84_current_point.x, WGS84_current_point.y], 
+		[WGS84_original_point.x, WGS84_current_point.y], 
+		[WGS84_original_point.x, WGS84_original_point.y]]
+	];
+	var new_rectangle = new Polygon({
+		rings: rectangle_rings, 
+		spatialReference: 4326
+	});
+	var symbol = {
+		type: "simple-fill", 
+		color: colors_for_map_tools[2], 
+		style: "cross",
+		outline: {
+			width: 3.1, 
+			color: colors_for_map_tools[1], 
+			style: "short-dash", 
+			cap: "square", 
+			join: "miter"
+		}
+	}
+	previous_graphic = new Graphic({geometry: new_rectangle, symbol: symbol});
+	map_view.graphics.add(previous_graphic);
+
+  var promises_array = [];
+
+	if (e.action == "end"){										// the drag has ended 
+		map_view.graphics.remove(previous_graphic);
+		previous_graphic = null;
+  
+    for (let i = 0; i < feature_layers_array.length; i++){
+      let feature_layer = feature_layers_array[i];
+      let layer_id = feature_layer.layerId; 
+      let chosen_features = [];
+
+      if (feature_layer.visible == true && feature_layer.hasOwnProperty("client_generated") == false){
+
+        let query = feature_layer.createQuery();
+        query.geometry = new_rectangle;
+
+        if (feature_layers_array[i].geometryType == "polygon"){
+          query.spatialRelationship = "contains"; 
+        }
+
+        let query_promise = feature_layer.queryFeatures(query);
+        let promise = query_promise.then(function(query_results){
+
+          let promise_2 = null; 
+
+          if (query_results.features.length > 0){
+            let features = query_results.features;
+            let background_layer = null;
+
+            for (let y = 0; y < background_layers.length; y++){
+              if (background_layers[y]["parent_layer_id"] == feature_layers_array[i].layerId){
+                background_layer = background_layers[y]; 
+                break; 
+              }
+            }
+
+            let query_2 = background_layer.createQuery(); 
+            let query_promise_2 = background_layer.queryFeatures(); 
+
+            promise_2 = query_promise_2.then(function(query_results_2){
+              let graphics_objects_array = [];
+              let geometry_type = feature_layers_array[i].geometryType;
+              let fields = query_results.fields; 
+              let oid_field_name = null; 
+              for (let z = 0; z < fields.length; z++){
+                if (fields[z].type == "oid"){
+                  oid_field_name = fields[z].name;
+                  break;
+                }
+              }
+
+              // get the current queried_background_features element 
+              let index = null; 
+              for (let u = 0; u < queried_background_features.length; u++){
+                if (queried_background_features[u]["layer_id"] == background_layer.layerId){
+                  index = u; 
+                  break; 
+                }
+              }
+
+              let new_object_array = Object.assign({}, query_results.features);
+
+              for (let z = 0; z < query_results.features.length; z++){
+
+                let symbol = null;
+                let new_geometry = null;
+                let query_geometry = new_object_array[z].geometry;
+                let attributes = new_object_array[z].attributes;
+
+                let feature_oid = attributes[oid_field_name];
+                let match = false; 
+
+                for (let w = 0; w < query_results_2.features.length; w++){
+                  if (query_results_2.features[w].attributes[oid_field_name] == feature_oid){
+                    match = true; 
+                    break; 
+                  }
+                }
+                if (match == true){
+                  continue; 
+                }
+
+                queried_background_features[index]["data"].features.push(new_object_array[z]);
+
+                if (geometry_type == "point"){
+                  symbol = {
+                    type: "simple-marker",
+                    style: "square"
+                  }
+                  new_geometry = {
+                    type: "point",
+                    longitude: query_geometry.longitude,
+                    latitude: query_geometry.latitude, 
+                    x: query_geometry.x, 
+                    y: query_geometry.y
+                  }
+                }
+                else if (geometry_type == "polyline"){
+                  symbol = {
+                    type: "simple-line",
+                    style: "solid"
+                  }
+                  new_geometry = {
+                    type: "polyline",
+                    paths: query_geometry.paths
+                  }
+                }
+                else if (geometry_type == "polygon"){
+                  symbol = {
+                    type: "simple-fill",
+                    style: "solid",
+                  }
+                  new_geometry = {
+                    type: "polygon",
+                    rings: query_geometry.rings
+                  }
+                }
+                graphic = new Graphic({geometry: new_geometry, symbol: symbol, attributes: attributes}); 
+                graphics_objects_array.push(graphic); 
+              }
+              // add the features to the background layer
+              let add_edits = {
+                addFeatures: graphics_objects_array
+              };
+              let promise_3 = background_layer.applyEdits(add_edits); 
+
+              return promise_3; 
+            }); // end of query_results_2 
+          }// end if query_results.length > 0 
+          return promise_2; 
+        });
+        promises_array.push(promise);
+      }
+    }
+    Promise.all(promises_array).then(function(array_results){
+      // now set the current query and fill the attribute table. 
+      let page_number = null; 
+      if (global_use_graphics == true){
+        page_number = current_page;
+      }
+      else{
+        page_number = 1;
+        current_page = 1;
+        global_use_graphics = true; 
+      }
+
+      let selected_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id; 
+      for (let x = 0; x < queried_background_features.length; x++){
+        if (queried_background_features[x]["parent_layer_id"] == selected_id){
+          current_layers_query = queried_background_features[x]; 
+          break; 
+        }
+      }
+      fill_attribute_table(page_number, true, global_use_graphics);
+    }); 
+  } // end of mousedown 
+}
+
+</script> 
+
+</body>
+</html>
