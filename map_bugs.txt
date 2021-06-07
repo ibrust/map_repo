@@ -1,0 +1,5 @@
+bugs in map: 
+- clickdown should trigger zindex adjustment of boxes, not clickup. 
+- page buttons don't start out the right color. looks like the whole titlebar color changed. 
+- the cursor changes to a drag icon when over the body of the box, but should only do so when over the box titlebar (it should use mouseover singleton)
+- tools still freeze with large datasets 

@@ -380,6 +380,9 @@
   
   // interact is a module that allows boxes to be dragged & resized
   import interact from 'https://cdn.interactjs.io/v1.9.19/interactjs/index.js';
+  import * as Listeners from './mapjs/listeners.js';
+  import * as Utils from './mapjs/utils.js';
+  import * as Colors from './mapjs/colors.js';
 
   // set all necessary document elements to global variables
   // left side navbar buttons
@@ -436,6 +439,7 @@
 
   var search_select = document.getElementById("search_select");
   var submit_search_button = document.getElementById("submit_search_button");
+  var search_button = document.getElementById("search_button")
 
   var mouse_selector_button = document.getElementById("mouse_selector_button");
   var mouse_selector_wrap = document.getElementById("mouse_selector_wrap");
@@ -495,68 +499,58 @@
                                       "#ba976b", "#4bf3a3", "#0cee5d", "#86f51c", "#04470a"];
 
   // use interact.js to add drag / resize functionality to certain elements 
-  var mouse_over = false;       // this variable is used to detect certain mouseover events where we want to disable interacts drag functionality
-  
-  interact('.resize_layers_pane')
-  .resizable({ 
-    edges: { left: false, right: true, bottom: true, top: false },			// resize from right and bottom 
-    listeners: {
-      move (event) {
-        var target = event.target
-        var x = (parseFloat(target.getAttribute('data-x')) || 0)
-        var y = (parseFloat(target.getAttribute('data-y')) || 0)
-        target.style.width = event.rect.width + 'px'; 					// update the element size
-        target.style.height = event.rect.height + 'px'; 	
-        x += event.deltaRect.left; 										// translate when resizing from top or left edges
-        y += event.deltaRect.top; 	
 
-        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y) 
-      }
-    },
-    modifiers: [
-      interact.modifiers.restrictEdges({outer: 'parent'}),
-      interact.modifiers.restrictSize({min: { width: 120, height: 184 }})		// minimum size
-    ],
-    inertia: true
-  });
-  interact('.popups')
-  .draggable({							// makes the search box draggable as well as resizable 
-    inertia: true,								// enable inertial throwing
-    modifiers: [								// keep the element within the area of its parent
-        interact.modifiers.restrictRect({
-          restriction: 'parent',
-          endOnly: true
-      })
-    ],
-    autoScroll: true, 
-    listeners: {move: draggableBoxListener}			// call this function on every dragmove event
-  });
-  interact('#scalebar_widget')
-  .draggable({							// makes the search box draggable as well as resizable 
-    inertia: true,								// enable inertial throwing
-    modifiers: [								// keep the element within the area of its parent
-        interact.modifiers.restrictRect({
-          restriction: 'parent',
-          endOnly: true
-      })
-    ],
-    autoScroll: true, 
-    listeners: {move: draggableBoxListener}			// call this function on every dragmove event
-  });
-  function draggableBoxListener(event) {				// called whenever the box is dragged, sets the transform & updates the elements x/y attributes 
+  function dragListener(event) {				// called whenever the box is dragged, sets the transform & updates the elements x/y attributes 
     var target = event.target;
     var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;				// store the dragged position in the data-x/data-y attributes
     var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
     // the test statement ensures the drag only executes when not mousing over the heatmaps sliders
-    if (mouse_over == true){
-      target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';    // this is the actual drag operation
-      target.setAttribute('data-x', x);												// updates the position attributes 
-      target.setAttribute('data-y', y);
+    if (Listeners.mouseover_titlebar.get() == true){
+        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';    // this is the actual drag operation
+        target.setAttribute('data-x', x);												// updates the position attributes 
+        target.setAttribute('data-y', y);
     }
   }
+
+  interact('.resize_layers_pane')
+  .resizable({ 
+      edges: { left: false, right: true, bottom: true, top: false },			// resize from right and bottom 
+      listeners: {
+          move (event) {
+              Listeners.domElement_resizeHandler(event)
+          }
+      },
+      modifiers: [
+          interact.modifiers.restrictEdges({outer: 'parent'}),
+          interact.modifiers.restrictSize({min: { width: 120, height: 184 }})		// minimum size
+      ],
+      inertia: true
+  });
+  interact('.popups')
+  .draggable({							// makes the search box draggable as well as resizable 
+      inertia: false,								// disable inertial throwing - inertia can throw off the titlebars mouseover listener
+      modifiers: [								// keep the element within the area of its parent
+          interact.modifiers.restrictRect({
+              restriction: 'parent',
+              endOnly: true
+          })
+      ],
+      autoScroll: true, 
+      listeners: {move: dragListener}			// call this function on every dragmove event
+  });
+  interact('#scalebar_widget')
+  .draggable({ 
+        inertia: false, 
+        modifiers: [ 
+            interact.modifiers.restrictRect({
+            restriction: 'parent',
+            endOnly: true
+        })
+    ],
+    autoScroll: true, 
+    listeners: {move: dragListener} 
+  });
 
   var legend_active = false;
   var layers_pane_active = false;
@@ -568,61 +562,37 @@
   var heatmap_panel_displayed = false;
   var filter_active = false;
   var mouse_selector_active = false; 
-  var box_elements = [custom_search_pane, custom_intersection_pane, custom_buffer_pane, custom_heatmap_panel]; 
 
-  function increase_z_index(clicked_element){
-    clicked_element.style.zIndex = "4000";
-    for (let x = 0; x < box_elements.length; x++){
-      box_elements[x].style.zIndex = (Number(box_elements[x].style.zIndex) - 1).toString(); 
-    }
-  }
+  function setup_listeners(){
+    const search_button = document.getElementById("search_button")
+    const search_close_button = document.getElementById("search_close_button")
+    const custom_search_pane = document.getElementById("custom_search_pane")
+    const table_close_button = document.getElementById("table_close_button")
 
-  function add_alot_of_listeners_for_displaying_elements(){
-    for (let x = 0; x < box_elements.length; x++){
-      box_elements[x].addEventListener("click", function(){
-        increase_z_index(box_elements[x]);
-      });
-    }
+    Listeners.add_zindex_adjustment_listeners()
+  
+    // even these i'd like to factor out. Ultimately I want to factor this entire function out of here
     search_button.addEventListener("click", function(){
-      custom_search_pane.style.display = "block"; 
-      increase_z_index(custom_search_pane);
+        custom_search_pane.style.display = "block"; 
+        Listeners.increase_z_index(custom_search_pane);
     });
     search_close_button.addEventListener("click", function(){
       custom_search_pane.style.display = "none"; 
     });
     table_close_button.addEventListener("click", function(){
-      toggle_table_button("off");
+        toggle_table_button("off");
     });
 
-    // blahblah
-    heatmap_title_bar.addEventListener("mouseover", function(e){
-      mouse_over = true; 
-    });
-    heatmap_title_bar.addEventListener("mouseout", function(e){
-      mouse_over = false; 
-    });
-    intersect_title_bar.addEventListener("mouseover", function(e){
-      mouse_over = true; 
-    });
-    intersect_title_bar.addEventListener("mouseout", function(e){
-      mouse_over = false; 
-    });
-    search_title_bar.addEventListener("mouseover", function(e){
-      mouse_over = true; 
-    });
-    search_title_bar.addEventListener("mouseout", function(e){
-      mouse_over = false; 
-    });
-    buffer_title_bar.addEventListener("mouseover", function(e){
-      mouse_over = true; 
-    });
-    buffer_title_bar.addEventListener("mouseout", function(e){
-      mouse_over = false; 
-    });
+    Listeners.setup_drag_listeners()
+
+
+
+// bookmark
+
 
     custom_layers_button.addEventListener("mouseover", function(e){
       if (layers_pane_active == false){
-        custom_layers_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         custom_layers_icon.style.opacity = 1;
         custom_layers_div.style.opacity = 1; 
         custom_layers_wrap.style.opacity = 1;
@@ -630,13 +600,13 @@
     });
     custom_layers_button.addEventListener("mouseout", function(e){
       if (layers_pane_active == false){
-        custom_layers_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         custom_layers_wrap.style.opacity = 0.65;
       } 
     });
     custom_table_button.addEventListener("mouseover", function(e){
       if (table_active == false){
-        custom_table_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         custom_table_icon.style.opacity = 1;
         custom_table_div.style.opacity = 1; 
         custom_table_wrap.style.opacity = 1;
@@ -644,13 +614,13 @@
     });
     custom_table_button.addEventListener("mouseout", function(e){
       if (table_active == false){
-        custom_table_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         custom_table_wrap.style.opacity = 0.65;
       } 
     });
     custom_print_button.addEventListener("mouseover", function(e){
       if (print_widget_active == false){
-        custom_print_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_print_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         custom_print_icon.style.opacity = 1;
         custom_print_div.style.opacity = 1; 
         custom_print_wrap.style.opacity = 1;
@@ -658,13 +628,13 @@
     });
     custom_print_button.addEventListener("mouseout", function(e){
       if (print_widget_active == false){
-        custom_print_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_print_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         custom_print_wrap.style.opacity = 0.65;
       } 
     });
     custom_popups_button.addEventListener("mouseover", function(e){
       if (popups_widget_active == false){
-        custom_popups_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         custom_popups_icon.style.opacity = 1;
         custom_popups_div.style.opacity = 1; 
         custom_popups_wrap.style.opacity = 1;
@@ -672,13 +642,13 @@
     });
     custom_popups_button.addEventListener("mouseout", function(e){
       if (popups_widget_active == false){
-        custom_popups_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         custom_popups_wrap.style.opacity = 0.65;
       } 
     });
     custom_legend_button.addEventListener("mouseover", function(e){
       if (legend_active == false){
-        custom_legend_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         custom_legend_icon.style.opacity = 1;
         custom_legend_div.style.opacity = 1; 
         custom_legend_wrap.style.opacity = 1;
@@ -686,13 +656,13 @@
     });
     custom_legend_button.addEventListener("mouseout", function(e){
       if (legend_active == false){
-        custom_legend_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         custom_legend_wrap.style.opacity = 0.65;
       } 
     });
     custom_filter_button.addEventListener("mouseover", function(e){
       if (filter_active == false){
-        custom_filter_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_filter_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         filter_wrap.style.opacity = 1;
         filter_text.style.opacity = 1; 
         filter_image.style.opacity = 1;
@@ -700,13 +670,13 @@
     });
     custom_filter_button.addEventListener("mouseout", function(e){
       if (filter_active == false){
-        custom_filter_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_filter_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         filter_wrap.style.opacity = 0.65; 
       } 
     });
     mouse_selector_button.addEventListener("mouseover", function(e){
       if (mouse_selector_active == false){
-        mouse_selector_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        mouse_selector_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         mouse_selector_wrap.style.opacity = 1;
         mouse_selector_text.style.opacity = 1; 
         mouse_selector_image.style.opacity = 1;
@@ -714,14 +684,14 @@
     });
     mouse_selector_button.addEventListener("mouseout", function(e){
       if (mouse_selector_active == false){
-        mouse_selector_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        mouse_selector_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         mouse_selector_wrap.style.opacity = 0.65; 
       } 
     });
     custom_intersect_button.addEventListener("mouseover", function(e){
       if (intersect_panel_displayed == false){
         console.log("mouseover, intersect_panel_displayed = ", intersect_panel_displayed);
-        custom_intersect_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         intersect_wrap.style.opacity = 1;
         intersect_text.style.opacity = 1; 
         intersect_image.style.opacity = 1;
@@ -730,7 +700,7 @@
     custom_intersect_button.addEventListener("mouseout", function(e){
       if (intersect_panel_displayed == false){
         console.log("mouseout, intersect_panel_displayed = ", intersect_panel_displayed);
-        custom_intersect_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         intersect_wrap.style.opacity = 0.65; 
       } 
     });
@@ -747,7 +717,7 @@
     });
     custom_buffer_button.addEventListener("mouseover", function(e){
       if (buffer_panel_displayed == false){
-        custom_buffer_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active
+        custom_buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         buffer_wrap.style.opacity = 1;
         buffer_text.style.opacity = 1;
         buffer_image.style.opacity = 1;
@@ -755,7 +725,7 @@
     });
     custom_buffer_button.addEventListener("mouseout", function(e){
       if (buffer_panel_displayed == false){
-        custom_buffer_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         buffer_wrap.style.opacity = 0.65;
       }
     });
@@ -772,7 +742,7 @@
     });
     custom_heatmap_button.addEventListener("mouseover", function(e){
       if (heatmap_panel_displayed == false){
-        custom_heatmap_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+        custom_heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         heatmap_wrap.style.opacity = 1;
         heatmap_text.style.opacity = 1; 
         heatmap_image.style.opacity = 1;
@@ -780,7 +750,7 @@
     });
     custom_heatmap_button.addEventListener("mouseout", function(e){
       if (heatmap_panel_displayed == false){
-        custom_heatmap_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+        custom_heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
         heatmap_wrap.style.opacity = 0.65; 
       } 
     });
@@ -873,14 +843,14 @@
       }
     });  
   }
-  add_alot_of_listeners_for_displaying_elements(); 
+  setup_listeners(); 
 
   // utility functions used for toggling various buttons & their corresponding elements 
   function toggle_filter_button(change_state_to){
     if (change_state_to == "on"){ 
       map_view.graphics = []; 
       filter_by_extent("on");
-      custom_filter_button.style.backgroundColor = "#b86240";
+      custom_filter_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       filter_image.style.opacity = 1;
       filter_text.style.opacity = 1; 
       filter_wrap.style.opacity = 1; 
@@ -888,16 +858,16 @@
     }
     else{ 
       filter_by_extent("off");
-      custom_filter_button.style.backgroundColor = "#c36d4a";
+      custom_filter_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       filter_wrap.style.opacity = 0.65; 
       filter_active = false; 
     }
   }
   function toggle_intersect_button(change_state_to){
     if (change_state_to == "on"){
-      increase_z_index(custom_intersection_pane);
+      Listeners.increase_z_index(custom_intersection_pane);
       custom_intersection_pane.style.display = "block";
-      custom_intersect_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       intersect_image.style.opacity = 1;
       intersect_text.style.opacity = 1; 
       intersect_wrap.style.opacity = 1; 
@@ -905,7 +875,7 @@
     }
     else{
       custom_intersection_pane.style.display = "none"; 
-      custom_intersect_button.style.backgroundColor = "#c36d4a";
+      custom_intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       intersect_wrap.style.opacity = 0.65;
       intersect_panel_displayed = false;
     }
@@ -913,7 +883,7 @@
   function toggle_mouse_selector_button(change_state_to){
     if (change_state_to == "on"){ 
       map_view.graphics = []; 
-      mouse_selector_button.style.backgroundColor = "#b86240";
+      mouse_selector_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       mouse_selector_image.style.opacity = 1;
       mouse_selector_text.style.opacity = 1; 
       mouse_selector_wrap.style.opacity = 1; 
@@ -921,7 +891,7 @@
       mouse_selector_active = true; 
     }
     else{ 
-      mouse_selector_button.style.backgroundColor = "#c36d4a";
+      mouse_selector_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       mouse_selector_wrap.style.opacity = 0.65; 
       mapview.style.cursor = "initial";
       mouse_selector_active = false; 
@@ -929,7 +899,7 @@
   }
   function toggle_popup_checkbox(change_to_state){
     if (change_to_state == "off"){
-      custom_popups_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+      custom_popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       custom_popups_wrap.style.opacity = 0.65; 
       popups_widget_active = false;
       for (let x = 0; x < feature_layers_array.length; x++){
@@ -937,7 +907,7 @@
       }
     }
     else if (change_to_state == "on"){
-      custom_popups_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       custom_popups_icon.style.opacity = 1;
       custom_popups_div.style.opacity = 1; 
       custom_popups_wrap.style.opacity = 1; 
@@ -949,9 +919,9 @@
   }
   function toggle_buffer_button(change_state_to){
     if (change_state_to == "on"){
-      increase_z_index(custom_buffer_pane);
+      Listeners.increase_z_index(custom_buffer_pane);
       custom_buffer_pane.style.display = "block";
-      custom_buffer_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       buffer_image.style.opacity = 1;
       buffer_text.style.opacity = 1;
       buffer_wrap.style.opacity = 1;
@@ -959,14 +929,14 @@
     }
     else{
       custom_buffer_pane.style.display = "none"; 
-      custom_buffer_button.style.backgroundColor = "#c36d4a";
+      custom_buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       buffer_wrap.style.opacity = 0.65;
       buffer_panel_displayed = false;
     }
   }
   function toggle_print_button(change_state_to){
     if (change_state_to == "on"){
-      custom_print_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_print_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       custom_print_icon.style.opacity = 1;
       custom_print_div.style.opacity = 1; 
       custom_print_wrap.style.opacity = 1; 
@@ -974,7 +944,7 @@
       print_widget.style.display = "block";
     }
     else{
-      custom_print_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+      custom_print_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       custom_print_wrap.style.opacity = 0.65; 
       print_widget_active = false;
       print_widget.style.display = "none";
@@ -983,7 +953,7 @@
   function toggle_layers_button(change_state_to){
     if (change_state_to == "on"){
       custom_layers_pane.style.display = "block";
-      custom_layers_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       custom_layers_icon.style.opacity = 1;
       custom_layers_div.style.opacity = 1; 
       custom_layers_wrap.style.opacity = 1; 
@@ -991,7 +961,7 @@
     }
     else{
       custom_layers_pane.style.display = "none"; 
-      custom_layers_button.style.backgroundColor = "#c36d4a";
+      custom_layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       custom_layers_wrap.style.opacity = 0.65;
       layers_pane_active = false; 
     }
@@ -999,7 +969,7 @@
   function toggle_table_button(change_state_to){
     if (change_state_to == "on"){
       custom_table_tools_wrapper.style.display = "block";
-      custom_table_button.style.backgroundColor = "#b86240";        // darker background color indicates the button is active 
+      custom_table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       custom_table_icon.style.opacity = 1;
       custom_table_div.style.opacity = 1; 
       custom_table_wrap.style.opacity = 1;
@@ -1007,16 +977,16 @@
     }
     else{
       custom_table_tools_wrapper.style.display = "none";
-      custom_table_button.style.backgroundColor = "#c36d4a";        // lighter background color indicates button is inactive
+      custom_table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       custom_table_wrap.style.opacity = 0.65;
       table_active = false;
     }
   }
   function toggle_heatmap_button(change_state_to){
     if (change_state_to == "on"){
-      increase_z_index(custom_heatmap_panel);
+      Listeners.increase_z_index(custom_heatmap_panel);
       custom_heatmap_panel.style.display = "block";
-      custom_heatmap_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       heatmap_image.style.opacity = 1;
       heatmap_text.style.opacity = 1;
       heatmap_wrap.style.opacity = 1;
@@ -1024,7 +994,7 @@
     }
     else{
       custom_heatmap_panel.style.display = "none"; 
-      custom_heatmap_button.style.backgroundColor = "#c36d4a";
+      custom_heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       heatmap_wrap.style.opacity = 0.65;
       heatmap_panel_displayed = false;
     }
@@ -1032,7 +1002,7 @@
   function toggle_legend_button(change_state_to){
     if (change_state_to == "on"){
       legend_widget.style.display = "block";
-      custom_legend_button.style.backgroundColor = "#b86240";       // darker background color indicates the button is active 
+      custom_legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       custom_legend_icon.style.opacity = 1;
       custom_legend_div.style.opacity = 1; 
       custom_legend_wrap.style.opacity = 1;
@@ -1040,7 +1010,7 @@
     }
     else{
       legend_widget.style.display = "none";
-      custom_legend_button.style.backgroundColor = "#c36d4a";       // lighter background color indicates button is inactive
+      custom_legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       custom_legend_wrap.style.opacity = 0.65;
       legend_active = false;
     }
@@ -2212,14 +2182,14 @@ function initialize_page_buttons(starting_page, from_refill_table, use_graphics)
       // each page button also needs listeners for creating the hover effect, because the webflow hover effect is broken 
       new_button.addEventListener("mouseover", function(){
         if (button_number != current_page){    // make sure the button isn't currently pressed 
-          new_button.style.backgroundColor = "#b86240";
-          new_button.style.color = "#fff"; 
+          new_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+          new_button.style.color = Colors.getColor("webflowcolor", "white"); 
           new_button.style.opacity = 0.65; 
         }
       });
       new_button.addEventListener("mouseout", function(){
         if (button_number != current_page){    // make sure the button isn't currently pressed 
-          new_button.style.backgroundColor = "#fff"; 
+          new_button.style.backgroundColor = Colors.getColor("webflowcolor", "white"); 
           new_button.style.opacity = 1
           new_button.style.color = "grey"; 
         }
@@ -2277,15 +2247,15 @@ function adjust_page_buttons(newly_clicked_page, total_pages, from_refill_table,
 		else{
 			page_numbers.childNodes[x].style.display = "inline-block";
 			if ((x + 1) == newly_clicked_page){
-				page_numbers.childNodes[x].style.backgroundColor = "#b86240"; 	// if you found the new page button you just clicked, color it orange
+				page_numbers.childNodes[x].style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
         page_numbers.childNodes[x].style.opacity = 1; 
-        page_numbers.childNodes[x].style.color = "#fff"; 
+        page_numbers.childNodes[x].style.color = Colors.getColor("webflowcolor", "white"); 
       }
 		}
 	}
 	// change the previously selected button back to white 
 	if (old_clicked_page != 0 && old_clicked_page != newly_clicked_page){
-		page_numbers.childNodes[old_clicked_page - 1].style.backgroundColor = "#fff";
+		page_numbers.childNodes[old_clicked_page - 1].style.backgroundColor = Colors.getColor("webflowcolor", "white"); 
     page_numbers.childNodes[old_clicked_page - 1].style.color = "grey"; 
 	}
   
