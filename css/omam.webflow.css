@@ -1102,7 +1102,7 @@ blockquote {
   background-color: #7f1e1e;
 }
 
-.layers-button-warp {
+.layers-button-wrap {
   position: absolute;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1126,11 +1126,11 @@ blockquote {
   opacity: 0.65;
 }
 
-.layers-button-warp:active {
+.layers-button-wrap:active {
   opacity: 1;
 }
 
-.layers-button-warp:focus {
+.layers-button-wrap:focus {
   opacity: 1;
 }
 
