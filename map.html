@@ -56,10 +56,10 @@
     <div class="side-nav-wrapper">
 
       <!-- layers button -->
-      <div class="side-nav-button w-inline-block" id="custom_layers_button">
-        <div class="layers-button-warp" id="custom_layers_wrap">
-          <div class="layers-button-div" id="custom_layers_div">
-            <img src="images/200920_OMAM_MapButtons_01_Button_Layers.png" loading="lazy" width="42" alt="" class="layers-button-icon" id="custom_layers_icon">
+      <div class="side-nav-button w-inline-block" id="layers_button">
+        <div class="button-wrap" id="layers_button_wrapper">
+          <div class="layers-button-div" id="layers_button_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Layers.png" loading="lazy" width="42" alt="" class="layers-button-icon" id="layers_button_icon">
           </div>
           <div class="layers-button-text">Layers</div>
         </div>
@@ -67,7 +67,7 @@
 
       <!-- table button -->
       <div class="side-nav-button w-inline-block" id="custom_table_button">
-        <div class="table-button-wrap" id="custom_table_wrap">
+        <div class="button-wrap" id="custom_table_wrap">
           <div class="table-button-div" id="custom_table_div">
             <img src="images/200920_OMAM_MapButtons_01_Button_Table.png" loading="lazy" width="42" alt="" class="table-button-icon" id="custom_table_icon">
           </div>
@@ -77,7 +77,7 @@
 
       <!-- legend button -->
       <div class="side-nav-button w-inline-block" id="custom_legend_button">
-        <div class="legend-button-wrap" id="custom_legend_wrap">
+        <div class="button-wrap" id="custom_legend_wrap">
           <div class="legend-button-div" id="custom_legend_div">
             <img src="images/200920_OMAM_MapButtons_01_Button_Legend.png" loading="lazy" width="42" alt="" class="legend-button-icon" id="custom_legend_icon">
           </div>
@@ -87,7 +87,7 @@
 
       <!-- print button -->
       <div class="side-nav-button w-inline-block" id="custom_print_button">
-        <div class="print-button-wrap" id="custom_print_wrap">
+        <div class="button-wrap" id="custom_print_wrap">
           <div class="print-button-div" id="custom_print_div">
             <img src="images/200920_OMAM_MapButtons_01_Button_Print.png" loading="lazy" width="42" alt="" class="print-button-icon" id="custom_print_icon">
           </div>
@@ -97,7 +97,7 @@
 
       <!-- popups button -->
       <div class="side-nav-button w-inline-block" id="custom_popups_button">
-        <div class="popups-button-wrap" id="custom_popups_wrap">
+        <div class="button-wrap" id="custom_popups_wrap">
           <div class="popups-button-div" id="custom_popups_div">
             <img src="images/200920_OMAM_MapButtons_01_Button_Popups.png" loading="lazy" width="42" alt="" class="popups-button-icon" id="custom_popups_icon">
           </div>
@@ -131,7 +131,7 @@
       <div id="layers_grid"></div>
     </div>
     <div class="close-window-button-div">
-      <div class="close-window-button w-button" id="close_layers_pane_button">X</div>
+      <div class="close-window-button w-button" id="close_layers_panel_button">X</div>
     </div>
   </div>
 
@@ -386,11 +386,11 @@
 
   // set all necessary document elements to global variables
   // left side navbar buttons
-  var custom_layers_button = document.getElementById("custom_layers_button");
-  var custom_layers_icon = document.getElementById("custom_layers_icon");
-  var custom_layers_div = document.getElementById("custom_layers_div");
-  var custom_layers_wrap = document.getElementById("custom_layers_wrap");
-  var close_layers_pane_button = document.getElementById("close_layers_pane_button"); 
+  var layers_button = document.getElementById("layers_button");
+  var layers_button_icon = document.getElementById("layers_button_icon");
+  var layers_button_div = document.getElementById("layers_button_div");
+  var layers_button_wrapper = document.getElementById("layers_button_wrapper");
+  var close_layers_panel_button = document.getElementById("close_layers_panel_button"); 
 
   var custom_table_tools_wrapper = document.getElementById("custom_table_tools_wrapper");
   var custom_table_button = document.getElementById("custom_table_button");
@@ -586,18 +586,20 @@
 // bookmark 
 
 
-    custom_layers_button.addEventListener("mouseover", function(e){
+    layers_button.addEventListener("mouseover", function(e){
       if (layers_pane_active == false){
-        custom_layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        custom_layers_icon.style.opacity = 1;
-        custom_layers_div.style.opacity = 1; 
-        custom_layers_wrap.style.opacity = 1;
+        console.log("mouseover, false")
+        layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+        layers_button_icon.style.opacity = 1;
+        layers_button_div.style.opacity = 1; 
+        layers_button_wrapper.style.opacity = 1;
       }
     });
-    custom_layers_button.addEventListener("mouseout", function(e){
+    layers_button.addEventListener("mouseout", function(e){
       if (layers_pane_active == false){
-        custom_layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        custom_layers_wrap.style.opacity = 0.65;
+        console.log("mouseout, false")
+        layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+        layers_button_wrapper.style.opacity = 0.65;
       } 
     });
     custom_table_button.addEventListener("mouseover", function(e){
@@ -780,7 +782,8 @@
         toggle_table_button("off");
       }
     });
-    custom_layers_button.addEventListener("click", function(){
+    layers_button.addEventListener("click", function(){
+      console.log("click")
       if (layers_pane_active == false){
         toggle_layers_button("on");
       }
@@ -788,7 +791,7 @@
         toggle_layers_button("off");
       }
     }); 
-    close_layers_pane_button.addEventListener("click", function(){
+    close_layers_panel_button.addEventListener("click", function(){
       toggle_layers_button("off");
     });
     custom_print_button.addEventListener("click", function(){
@@ -837,7 +840,7 @@
       else{
         toggle_filter_button("off")
       }
-    });  
+    });
   }
   setup_listeners(); 
 
@@ -947,18 +950,19 @@
     }
   }
   function toggle_layers_button(change_state_to){
+    console.log("toggle off")
     if (change_state_to == "on"){
       custom_layers_pane.style.display = "block";
-      custom_layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      custom_layers_icon.style.opacity = 1;
-      custom_layers_div.style.opacity = 1; 
-      custom_layers_wrap.style.opacity = 1; 
+      layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+      layers_button_icon.style.opacity = 1;
+      layers_button_div.style.opacity = 1; 
+      layers_button_wrapper.style.opacity = 1; 
       layers_pane_active = true;
     }
     else{
       custom_layers_pane.style.display = "none"; 
-      custom_layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      custom_layers_wrap.style.opacity = 0.65;
+      layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+      layers_button_wrapper.style.opacity = 0.65;
       layers_pane_active = false; 
     }
   }
