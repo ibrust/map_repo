@@ -119,7 +119,7 @@
   </div>
 
   <!-- LAYERS PANEL -->
-  <div class="layers-pane-div resize_layers_pane" id="layers_panel">
+  <div class="layers-pane-div" id="layers_panel">
     
     <div class="layers-form w-form">
       <label for="Server-URL" class="form-title-1">Server URL</label>
@@ -508,7 +508,7 @@
     }
   }
 
-  interact('.resize_layers_pane')
+  interact('.layers-pane-div')
   .resizable({ 
       edges: { left: false, right: true, bottom: true, top: false },			// resize from right and bottom 
       listeners: {
