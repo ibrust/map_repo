@@ -66,40 +66,40 @@
       </div>
 
       <!-- table button -->
-      <div class="side-nav-button w-inline-block" id="custom_table_button">
-        <div class="button-wrap" id="custom_table_wrap">
-          <div class="button-div" id="custom_table_div">
-            <img src="images/200920_OMAM_MapButtons_01_Button_Table.png" loading="lazy" width="42" alt="" class="button-icon" id="custom_table_icon">
+      <div class="side-nav-button w-inline-block" id="table_button">
+        <div class="button-wrap" id="table_button_wrapper">
+          <div class="button-div" id="table_button_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Table.png" loading="lazy" width="42" alt="" class="button-icon" id="table_button_icon">
           </div>
           <div class="button-text">Table</div>
         </div>
       </div>
 
       <!-- legend button -->
-      <div class="side-nav-button w-inline-block" id="custom_legend_button">
-        <div class="button-wrap" id="custom_legend_wrap">
-          <div class="button-div" id="custom_legend_div">
-            <img src="images/200920_OMAM_MapButtons_01_Button_Legend.png" loading="lazy" width="42" alt="" class="button-icon" id="custom_legend_icon">
+      <div class="side-nav-button w-inline-block" id="legend_button">
+        <div class="button-wrap" id="legend_button_wrapper">
+          <div class="button-div" id="legend_button_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Legend.png" loading="lazy" width="42" alt="" class="button-icon" id="legend_button_icon">
           </div>
           <div class="button-text">Legend</div>
         </div>
       </div>
 
       <!-- print button -->
-      <div class="side-nav-button w-inline-block" id="custom_print_button">
-        <div class="button-wrap" id="custom_print_wrap">
-          <div class="button-div" id="custom_print_div">
-            <img src="images/200920_OMAM_MapButtons_01_Button_Print.png" loading="lazy" width="42" alt="" class="button-icon" id="custom_print_icon">
+      <div class="side-nav-button w-inline-block" id="print_button">
+        <div class="button-wrap" id="print_button_wrapper">
+          <div class="button-div" id="print_button_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Print.png" loading="lazy" width="42" alt="" class="button-icon" id="print_button_icon">
           </div>
           <div class="button-text">Print</div>
         </div>
       </div>
 
       <!-- popups button -->
-      <div class="side-nav-button w-inline-block" id="custom_popups_button">
-        <div class="button-wrap" id="custom_popups_wrap">
-          <div class="button-div" id="custom_popups_div">
-            <img src="images/200920_OMAM_MapButtons_01_Button_Popups.png" loading="lazy" width="42" alt="" class="button-icon" id="custom_popups_icon">
+      <div class="side-nav-button w-inline-block" id="popups_button">
+        <div class="button-wrap" id="popups_button_wrapper">
+          <div class="button-div" id="popups_button_div">
+            <img src="images/200920_OMAM_MapButtons_01_Button_Popups.png" loading="lazy" width="42" alt="" class="button-icon" id="popups_button_icon">
           </div>
           <div class="button-text">Popups</div>
         </div>
@@ -204,7 +204,7 @@
     </div>  <!-- END OF TOOLS -->
 
     <!-- TABLE -->
-    <div class="table-content-div" style="width:935px;border-radius:0px 10px 0px 0px;" id="custom_table_wrapper">
+    <div class="table-content-div" style="width:935px;border-radius:0px 10px 0px 0px;" id="table_button_wrapperper">
       <div class="table-head-banner" style="border-radius:0px 10px 0px 0px;">
 
         <!-- table dataset selector -->
@@ -393,25 +393,25 @@
   var close_layers_panel_button = document.getElementById("close_layers_panel_button"); 
 
   var custom_table_tools_wrapper = document.getElementById("custom_table_tools_wrapper");
-  var custom_table_button = document.getElementById("custom_table_button");
-  var custom_table_icon = document.getElementById("custom_table_icon");
-  var custom_table_div = document.getElementById("custom_table_div");
-  var custom_table_wrap = document.getElementById("custom_table_wrap");
+  var table_button = document.getElementById("table_button");
+  var table_button_icon = document.getElementById("table_button_icon");
+  var table_button_div = document.getElementById("table_button_div");
+  var table_button_wrapper = document.getElementById("table_button_wrapper");
 
-  var custom_print_button = document.getElementById("custom_print_button");
-  var custom_print_wrap = document.getElementById("custom_print_wrap");
-  var custom_print_div = document.getElementById("custom_print_div");
-  var custom_print_icon = document.getElementById("custom_print_icon");
+  var print_button = document.getElementById("print_button");
+  var print_button_wrapper = document.getElementById("print_button_wrapper");
+  var print_button_div = document.getElementById("print_button_div");
+  var print_button_icon = document.getElementById("print_button_icon");
   
-  var custom_popups_button = document.getElementById("custom_popups_button");
-  var custom_popups_wrap = document.getElementById("custom_popups_wrap");
-  var custom_popups_div = document.getElementById("custom_popups_div");
-  var custom_popups_icon = document.getElementById("custom_popups_icon");
+  var popups_button = document.getElementById("popups_button");
+  var popups_button_wrapper = document.getElementById("popups_button_wrapper");
+  var popups_button_div = document.getElementById("popups_button_div");
+  var popups_button_icon = document.getElementById("popups_button_icon");
 
-  var custom_legend_button = document.getElementById("custom_legend_button");
-  var custom_legend_icon = document.getElementById("custom_legend_icon");
-  var custom_legend_div = document.getElementById("custom_legend_div");
-  var custom_legend_wrap = document.getElementById("custom_legend_wrap");
+  var legend_button = document.getElementById("legend_button");
+  var legend_button_icon = document.getElementById("legend_button_icon");
+  var legend_button_div = document.getElementById("legend_button_div");
+  var legend_button_wrapper = document.getElementById("legend_button_wrapper");
 
   var custom_filter_button = document.getElementById("custom_filter_button");
   var filter_image = document.getElementById("filter_image");
@@ -423,7 +423,7 @@
   var custom_layers_pane = document.getElementById("custom_layers_pane"); 
   var custom_table_tools_wrapper = document.getElementById("custom_table_tools_wrapper");
   var custom_tools_wrapper = document.getElementById("custom_tools_wrapper"); 
-  var custom_table_wrapper = document.getElementById("custom_table_wrapper"); 
+  var table_button_wrapperper = document.getElementById("table_button_wrapperper"); 
   var custom_intersection_pane = document.getElementById("custom_intersection_pane"); 
   var custom_buffer_pane = document.getElementById("custom_buffer_pane");
   var custom_heatmap_panel = document.getElementById("custom_heatmap_panel"); 
@@ -602,60 +602,60 @@
         layers_button_wrapper.style.opacity = 0.65;
       } 
     });
-    custom_table_button.addEventListener("mouseover", function(e){
+    table_button.addEventListener("mouseover", function(e){
       if (table_active == false){
-        custom_table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        custom_table_icon.style.opacity = 1;
-        custom_table_div.style.opacity = 1; 
-        custom_table_wrap.style.opacity = 1;
+        table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+        table_button_icon.style.opacity = 1;
+        table_button_div.style.opacity = 1; 
+        table_button_wrapper.style.opacity = 1;
       }
     });
-    custom_table_button.addEventListener("mouseout", function(e){
+    table_button.addEventListener("mouseout", function(e){
       if (table_active == false){
-        custom_table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        custom_table_wrap.style.opacity = 0.65;
+        table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+        table_button_wrapper.style.opacity = 0.65;
       } 
     });
-    custom_print_button.addEventListener("mouseover", function(e){
+    print_button.addEventListener("mouseover", function(e){
       if (print_widget_active == false){
-        custom_print_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        custom_print_icon.style.opacity = 1;
-        custom_print_div.style.opacity = 1; 
-        custom_print_wrap.style.opacity = 1;
+        print_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+        print_button_icon.style.opacity = 1;
+        print_button_div.style.opacity = 1; 
+        print_button_wrapper.style.opacity = 1;
       }
     });
-    custom_print_button.addEventListener("mouseout", function(e){
+    print_button.addEventListener("mouseout", function(e){
       if (print_widget_active == false){
-        custom_print_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        custom_print_wrap.style.opacity = 0.65;
+        print_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+        print_button_wrapper.style.opacity = 0.65;
       } 
     });
-    custom_popups_button.addEventListener("mouseover", function(e){
+    popups_button.addEventListener("mouseover", function(e){
       if (popups_widget_active == false){
-        custom_popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        custom_popups_icon.style.opacity = 1;
-        custom_popups_div.style.opacity = 1; 
-        custom_popups_wrap.style.opacity = 1;
+        popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+        popups_button_icon.style.opacity = 1;
+        popups_button_div.style.opacity = 1; 
+        popups_button_wrapper.style.opacity = 1;
       }
     });
-    custom_popups_button.addEventListener("mouseout", function(e){
+    popups_button.addEventListener("mouseout", function(e){
       if (popups_widget_active == false){
-        custom_popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        custom_popups_wrap.style.opacity = 0.65;
+        popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+        popups_button_wrapper.style.opacity = 0.65;
       } 
     });
-    custom_legend_button.addEventListener("mouseover", function(e){
+    legend_button.addEventListener("mouseover", function(e){
       if (legend_active == false){
-        custom_legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        custom_legend_icon.style.opacity = 1;
-        custom_legend_div.style.opacity = 1; 
-        custom_legend_wrap.style.opacity = 1;
+        legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+        legend_button_icon.style.opacity = 1;
+        legend_button_div.style.opacity = 1; 
+        legend_button_wrapper.style.opacity = 1;
       }
     });
-    custom_legend_button.addEventListener("mouseout", function(e){
+    legend_button.addEventListener("mouseout", function(e){
       if (legend_active == false){
-        custom_legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        custom_legend_wrap.style.opacity = 0.65;
+        legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+        legend_button_wrapper.style.opacity = 0.65;
       } 
     });
     custom_filter_button.addEventListener("mouseover", function(e){
@@ -763,7 +763,7 @@
     heatmap_close_button.addEventListener("click", function(){
       toggle_heatmap_button("off");
     });
-    custom_legend_button.addEventListener("click", function(e){
+    legend_button.addEventListener("click", function(e){
       if (legend_active == false){
         toggle_legend_button("on");
         if (print_widget_active == true){
@@ -774,7 +774,7 @@
         toggle_legend_button("off");
       }
     });
-    custom_table_button.addEventListener("click", function(e){
+    table_button.addEventListener("click", function(e){
       if (table_active == false){
         toggle_table_button("on");
       }
@@ -794,7 +794,7 @@
     close_layers_panel_button.addEventListener("click", function(){
       toggle_layers_button("off");
     });
-    custom_print_button.addEventListener("click", function(){
+    print_button.addEventListener("click", function(){
       if (print_widget_active == false){ 
         toggle_print_button("on");
         if (legend_active == true){
@@ -805,7 +805,7 @@
         toggle_print_button("off");
       }
     });
-    custom_popups_button.addEventListener("click", function(){
+    popups_button.addEventListener("click", function(){
       if (popups_widget_active == false){ 
         toggle_popup_checkbox("on")
         if (mouse_selector_active == true){
@@ -898,18 +898,18 @@
   }
   function toggle_popup_checkbox(change_to_state){
     if (change_to_state == "off"){
-      custom_popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      custom_popups_wrap.style.opacity = 0.65; 
+      popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+      popups_button_wrapper.style.opacity = 0.65; 
       popups_widget_active = false;
       for (let x = 0; x < feature_layers_array.length; x++){
         feature_layers_array[x].popupEnabled = false; 
       }
     }
     else if (change_to_state == "on"){
-      custom_popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      custom_popups_icon.style.opacity = 1;
-      custom_popups_div.style.opacity = 1; 
-      custom_popups_wrap.style.opacity = 1; 
+      popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+      popups_button_icon.style.opacity = 1;
+      popups_button_div.style.opacity = 1; 
+      popups_button_wrapper.style.opacity = 1; 
       popups_widget_active = true;
       for (let x = 0; x < feature_layers_array.length; x++){
         feature_layers_array[x].popupEnabled = true; 
@@ -935,16 +935,16 @@
   }
   function toggle_print_button(change_state_to){
     if (change_state_to == "on"){
-      custom_print_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      custom_print_icon.style.opacity = 1;
-      custom_print_div.style.opacity = 1; 
-      custom_print_wrap.style.opacity = 1; 
+      print_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+      print_button_icon.style.opacity = 1;
+      print_button_div.style.opacity = 1; 
+      print_button_wrapper.style.opacity = 1; 
       print_widget_active = true;
       print_widget.style.display = "block";
     }
     else{
-      custom_print_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      custom_print_wrap.style.opacity = 0.65; 
+      print_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+      print_button_wrapper.style.opacity = 0.65; 
       print_widget_active = false;
       print_widget.style.display = "none";
     }
@@ -969,16 +969,16 @@
   function toggle_table_button(change_state_to){
     if (change_state_to == "on"){
       custom_table_tools_wrapper.style.display = "block";
-      custom_table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      custom_table_icon.style.opacity = 1;
-      custom_table_div.style.opacity = 1; 
-      custom_table_wrap.style.opacity = 1;
+      table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+      table_button_icon.style.opacity = 1;
+      table_button_div.style.opacity = 1; 
+      table_button_wrapper.style.opacity = 1;
       table_active = true;
     }
     else{
       custom_table_tools_wrapper.style.display = "none";
-      custom_table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      custom_table_wrap.style.opacity = 0.65;
+      table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+      table_button_wrapper.style.opacity = 0.65;
       table_active = false;
     }
   }
@@ -1002,16 +1002,16 @@
   function toggle_legend_button(change_state_to){
     if (change_state_to == "on"){
       legend_widget.style.display = "block";
-      custom_legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      custom_legend_icon.style.opacity = 1;
-      custom_legend_div.style.opacity = 1; 
-      custom_legend_wrap.style.opacity = 1;
+      legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+      legend_button_icon.style.opacity = 1;
+      legend_button_div.style.opacity = 1; 
+      legend_button_wrapper.style.opacity = 1;
       legend_active = true;
     }
     else{
       legend_widget.style.display = "none";
-      custom_legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      custom_legend_wrap.style.opacity = 0.65;
+      legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+      legend_button_wrapper.style.opacity = 0.65;
       legend_active = false;
     }
   }
