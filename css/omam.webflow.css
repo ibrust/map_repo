@@ -2244,7 +2244,7 @@ button:focus {
     outline: none;
 }
 
-#layers_grid{
+#layers_list{
 	position: absolute; 
 	display: grid;
 	grid-gap: 0px;  

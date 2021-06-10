@@ -119,28 +119,30 @@
   </div>
 
   <!-- LAYERS PANEL -->
-  <div class="layers-pane-div resize_layers_pane" id="custom_layers_pane">
+  <div class="layers-pane-div resize_layers_pane" id="layers_panel">
     
     <div class="layers-form w-form">
       <label for="Server-URL" class="form-title-1">Server URL</label>
-      <input type="text" id="service_input" value="https://sampleserver6.arcgisonline.com/arcgis/rest/services/" maxlength="256" class="layers-form-div serverurl-form-field w-input" />
+      <input type="text" id="service_input" value="https://sampleserver6.arcgisonline.com/arcgis/rest/services/" maxlength="256" 
+                      class="layers-form-div serverurl-form-field w-input" />
       <label for="Web-Service" class="form-title-1">Dataset</label>
-      <select id="service_selector" class="buffer-distance-dropdown-form w-dropdown dropdown-list web-service-dropdown-toggle" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"></select>
+      <select id="service_selector" class="buffer-distance-dropdown-form w-dropdown dropdown-list web-service-dropdown-toggle" 
+                      style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"></select>
     </div>
     <div class="w-form">
-      <div id="layers_grid"></div>
+      <div id="layers_list"></div>
     </div>
     <div class="close-window-button-div">
-      <div class="close-window-button w-button" id="close_layers_panel_button">X</div>
+      <div class="close-window-button w-button" id="close_layers_panel">X</div>
     </div>
   </div>
 
   <!-- TABLE & TOOLS -->
   <!-- this div wraps both the tables & tools -->
-  <div style="width:100%" class="table-div" id="custom_table_tools_wrapper">
+  <div style="width:100%" class="table-div" id="table_and_tools_wrapper">
     
     <!-- TOOLS -->
-    <div class="table-tools-div" id="custom_tools_wrapper">   
+    <div class="table-tools-div">   
       <!-- filter by extent button -->
       <div class="table-tool-buton w-inline-block" id="custom_filter_button">
         <div class="filter-tool-button-wrap" id="filter_wrap">
@@ -390,9 +392,9 @@
   var layers_button_icon = document.getElementById("layers_button_icon");
   var layers_button_div = document.getElementById("layers_button_div");
   var layers_button_wrapper = document.getElementById("layers_button_wrapper");
-  var close_layers_panel_button = document.getElementById("close_layers_panel_button"); 
+  var close_layers_panel = document.getElementById("close_layers_panel"); 
 
-  var custom_table_tools_wrapper = document.getElementById("custom_table_tools_wrapper");
+  var table_and_tools_wrapper = document.getElementById("table_and_tools_wrapper");
   var table_button = document.getElementById("table_button");
   var table_button_icon = document.getElementById("table_button_icon");
   var table_button_div = document.getElementById("table_button_div");
@@ -420,9 +422,6 @@
 
   // table/tools divs & buttons
   var attribute_table = document.getElementById("attribute_table"); 
-  var custom_layers_pane = document.getElementById("custom_layers_pane"); 
-  var custom_table_tools_wrapper = document.getElementById("custom_table_tools_wrapper");
-  var custom_tools_wrapper = document.getElementById("custom_tools_wrapper"); 
   var table_button_wrapperper = document.getElementById("table_button_wrapperper"); 
   var custom_intersection_pane = document.getElementById("custom_intersection_pane"); 
   var custom_buffer_pane = document.getElementById("custom_buffer_pane");
@@ -791,7 +790,7 @@
         toggle_layers_button("off");
       }
     }); 
-    close_layers_panel_button.addEventListener("click", function(){
+    close_layers_panel.addEventListener("click", function(){
       toggle_layers_button("off");
     });
     print_button.addEventListener("click", function(){
@@ -950,9 +949,9 @@
     }
   }
   function toggle_layers_button(change_state_to){
-    console.log("toggle off")
+    var layers_panel = document.getElementById("layers_panel"); 
     if (change_state_to == "on"){
-      custom_layers_pane.style.display = "block";
+      layers_panel.style.display = "block";
       layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       layers_button_icon.style.opacity = 1;
       layers_button_div.style.opacity = 1; 
@@ -960,7 +959,7 @@
       layers_pane_active = true;
     }
     else{
-      custom_layers_pane.style.display = "none"; 
+      layers_panel.style.display = "none"; 
       layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       layers_button_wrapper.style.opacity = 0.65;
       layers_pane_active = false; 
@@ -968,7 +967,7 @@
   }
   function toggle_table_button(change_state_to){
     if (change_state_to == "on"){
-      custom_table_tools_wrapper.style.display = "block";
+      table_and_tools_wrapper.style.display = "block";
       table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       table_button_icon.style.opacity = 1;
       table_button_div.style.opacity = 1; 
@@ -976,7 +975,7 @@
       table_active = true;
     }
     else{
-      custom_table_tools_wrapper.style.display = "none";
+      table_and_tools_wrapper.style.display = "none";
       table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       table_button_wrapper.style.opacity = 0.65;
       table_active = false;
@@ -1198,6 +1197,7 @@ function(eMap, eMapView, eZoom, eTileLayer, eRequest, eCollection, eLegend, eBas
   }
 
 	// set up an event listener for the REST URL box
+  var service_input = document.getElementById("service_input");
 	service_input.addEventListener("change", change_services_url);
 }); /* end require  */
 
@@ -1337,9 +1337,9 @@ function load_service(first_time){
     // get rid of the layer checkboxes listed by any prior service
     grid_divs_list = [];
     next_grid_line = 1;
-    let child_count = layers_grid.childElementCount;
+    let child_count = layers_list.childElementCount;
     for (let y = 0; y < child_count; y++){
-      layers_grid.removeChild(layers_grid.childNodes[0]); 
+      layers_list.removeChild(layers_list.childNodes[0]); 
     }
 
     for (let x = 0; x < layer_ids.length; x++){  
@@ -1396,8 +1396,8 @@ function load_service(first_time){
       new_div.style.padding = "0px";
 
       grid_divs_list.push(new_div); 
-      layers_grid.style.gridTemplateRows += " 25px"; 
-      layers_grid.append(new_div);
+      layers_list.style.gridTemplateRows += " 25px"; 
+      layers_list.append(new_div);
     }// end of loop for adding layer checkboxes
 
     // remove any old layer selector options throughout the various panels 
@@ -2244,6 +2244,7 @@ function clear_graphics_layer(){
 
 // the function called when a URL is entered into the REST servuce URL box, changes all the services
 function change_services_url(){
+  var service_input = document.getElementById("service_input");
 	base_url = service_input.value;
 	if (base_url[-1] != "/"){
 		base_url += "/";
@@ -2825,8 +2826,8 @@ function intersect_function(){
           new_div.style.padding = "0px";  
 
           grid_divs_list.push(new_div);
-          layers_grid.style.gridTemplateRows += " 25px";  
-          layers_grid.append(new_div);
+          layers_list.style.gridTemplateRows += " 25px";  
+          layers_list.append(new_div);
 
           let saved_layers_query = current_layers_query;
           close_box.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
@@ -2884,7 +2885,7 @@ function intersect_function(){
               }
             }
 
-            let layer_divs = layers_grid.children;
+            let layer_divs = layers_list.children;
             let found_flag = false; 
             for (let V = 0; V < layer_divs.length; V++){
               if (layer_divs[V].id == new_div.id){
@@ -3252,8 +3253,8 @@ function buffer_function(){
                         new_div.style.padding = "0px";  
 
                         grid_divs_list.push(new_div);
-                        layers_grid.style.gridTemplateRows += " 25px";  
-                        layers_grid.append(new_div);
+                        layers_list.style.gridTemplateRows += " 25px";  
+                        layers_list.append(new_div);
 
                         let saved_layers_query = current_layers_query;
                         close_box.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
@@ -3307,7 +3308,7 @@ function buffer_function(){
                                 }
                             }
 
-                            let layer_divs = layers_grid.children;
+                            let layer_divs = layers_list.children;
                             let found_flag = false; 
                             for (let V = 0; V < layer_divs.length; V++){
                                 if (layer_divs[V].id == new_div.id){
@@ -3612,8 +3613,8 @@ function heatmap_function(){
                     new_div.style.padding = "0px";  
 
                     grid_divs_list.push(new_div);
-                    layers_grid.style.gridTemplateRows += " 25px";  
-                    layers_grid.append(new_div);
+                    layers_list.style.gridTemplateRows += " 25px";  
+                    layers_list.append(new_div);
 
                     close_box.addEventListener("click", function(e){			// associate checkbox clicks with turning a layer on/off 
                         // remove the layer frmo the map object  
@@ -3643,7 +3644,7 @@ function heatmap_function(){
                             layer_ids.push(feature_layers_array[x].layerId); 
                         }
 
-                        let layer_divs = layers_grid.children;
+                        let layer_divs = layers_list.children;
                         let found_flag = false; 
                         for (let V = 0; V < layer_divs.length; V++){
                             if (layer_divs[V].id == new_div.id){
