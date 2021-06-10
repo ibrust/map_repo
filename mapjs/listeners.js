@@ -36,24 +36,25 @@ export function add_zindex_adjustment_listeners() {
     }
 }
 
-var _mouseover_titlebar = false;
-export const mouseover_titlebar = {
-  set: (boolean_value) => { _mouseover_titlebar = boolean_value} ,
-  get: () => { return _mouseover_titlebar }
+var _mouseover_draggable = false;
+export const mouseover_draggable = {
+  set: (boolean_value) => { _mouseover_draggable = boolean_value} ,
+  get: () => { return _mouseover_draggable }
 }
-Object.freeze(mouseover_titlebar);
+Object.freeze(mouseover_draggable);
 
 export function setup_drag_listeners() {
-    const title_bars = [document.getElementById("heatmap_title_bar"), 
-                        document.getElementById("intersect_title_bar"), 
-                        document.getElementById("search_title_bar"), 
-                        document.getElementById("buffer_title_bar")];
-    for (let x = 0; x < title_bars.length; x++) {
-        title_bars[x].addEventListener("mouseover", function(e){
-            mouseover_titlebar.set(true)
+    const draggable_elements = [document.getElementById("heatmap_title_bar"), 
+                                document.getElementById("intersect_title_bar"), 
+                                document.getElementById("search_title_bar"), 
+                                document.getElementById("buffer_title_bar"),
+                                document.getElementById("scalebar_widget")];
+    for (let x = 0; x < draggable_elements.length; x++) {
+        draggable_elements[x].addEventListener("mouseover", function(e){
+            mouseover_draggable.set(true)
         });
-        title_bars[x].addEventListener("mouseout", function(e){
-            mouseover_titlebar.set(false)
+        draggable_elements[x].addEventListener("mouseout", function(e){
+            mouseover_draggable.set(false)
         });
     }
 }
