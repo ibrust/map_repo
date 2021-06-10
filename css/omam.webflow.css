@@ -871,63 +871,19 @@ blockquote {
   background-color: #b86240;
 }
 
-.layers-button-icon {
-  display: block;
-  margin: auto;
-  padding-top: 5px;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.layers-button-text {
-  margin-right: auto;
-  margin-left: auto;
-  padding-bottom: 5px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 auto;
-  -ms-flex: 0 auto;
-  flex: 0 auto;
-  font-family: Karla, sans-serif;
-  color: #fff;
-  font-weight: 400;
-  text-align: center;
-}
-
-.layers-button-text:active {
-  opacity: 1;
-}
-
-.layers-button-text:focus {
-  opacity: 1;
-}
-
-.layers-button-div {
+.button-div {
   width: 34px;
 }
 
-.layers-button-div:active {
+.button-div:active {
   opacity: 1;
 }
 
-.layers-button-div:focus {
+.button-div:focus {
   opacity: 1;
 }
 
-.table-button-div {
-  width: 32px;
-}
-
-.table-button-div:active {
-  opacity: 1;
-}
-
-.table-button-div:focus {
-  opacity: 1;
-}
-
-.table-button-icon {
+.button-icon {
   display: block;
   margin: auto;
   padding-top: 5px;
@@ -937,139 +893,7 @@ blockquote {
   flex: 1;
 }
 
-.table-button-text {
-  margin-right: auto;
-  margin-left: auto;
-  padding-bottom: 5px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 auto;
-  -ms-flex: 0 auto;
-  flex: 0 auto;
-  font-family: Karla, sans-serif;
-  color: #fff;
-  font-weight: 400;
-  text-align: center;
-}
-
-.table-button-text:active {
-  opacity: 1;
-}
-
-.table-button-text:focus {
-  opacity: 1;
-}
-
-.legend-button-div {
-  width: 30px;
-}
-
-.legend-button-div:active {
-  opacity: 1;
-}
-
-.legend-button-div:focus {
-  opacity: 1;
-}
-
-.legend-button-icon {
-  display: block;
-  margin: auto;
-  padding-top: 5px;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.legend-button-text {
-  margin-right: auto;
-  margin-left: auto;
-  padding-bottom: 5px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 auto;
-  -ms-flex: 0 auto;
-  flex: 0 auto;
-  font-family: Karla, sans-serif;
-  color: #fff;
-  font-weight: 400;
-  text-align: center;
-}
-
-.legend-button-text:active {
-  opacity: 1;
-}
-
-.legend-button-text:focus {
-  opacity: 1;
-}
-
-.print-button-div {
-  width: 32px;
-}
-
-.print-button-div:active {
-  opacity: 1;
-}
-
-.print-button-div:focus {
-  opacity: 1;
-}
-
-.print-button-icon {
-  display: block;
-  margin: auto;
-  padding-top: 5px;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.print-button-text {
-  margin-right: auto;
-  margin-left: auto;
-  padding-bottom: 5px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 auto;
-  -ms-flex: 0 auto;
-  flex: 0 auto;
-  font-family: Karla, sans-serif;
-  color: #fff;
-  font-weight: 400;
-  text-align: center;
-}
-
-.print-button-text:active {
-  opacity: 1;
-}
-
-.print-button-text:focus {
-  opacity: 1;
-}
-
-.popups-button-div {
-  width: 28px;
-}
-
-.popups-button-div:active {
-  opacity: 1;
-}
-
-.popups-button-div:focus {
-  opacity: 1;
-}
-
-.popups-button-icon {
-  display: block;
-  margin: auto;
-  padding-top: 5px;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.popups-button-text {
+.button-text {
   margin-right: auto;
   margin-left: auto;
   padding-top: 3px;
@@ -1084,11 +908,11 @@ blockquote {
   text-align: center;
 }
 
-.popups-button-text:active {
+.button-text:active {
   opacity: 1;
 }
 
-.popups-button-text:focus {
+.button-text:focus {
   opacity: 1;
 }
 
