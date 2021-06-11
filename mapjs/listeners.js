@@ -16,7 +16,7 @@ export function domElement_resizeHandler(event) {
 export function increase_z_index(clicked_element){
     clicked_element.style.zIndex = "4000";
     const overlapping_elements = [document.getElementById("custom_search_pane"), 
-                                  document.getElementById("custom_intersection_pane"), 
+                                  document.getElementById("intersection_panel"), 
                                   document.getElementById("custom_buffer_pane"), 
                                   document.getElementById("custom_heatmap_panel")];
     for (let x = 0; x < overlapping_elements.length; x++){
@@ -26,7 +26,7 @@ export function increase_z_index(clicked_element){
 
 export function add_zindex_adjustment_listeners() {
     const overlapping_elements = [document.getElementById("custom_search_pane"), 
-                                  document.getElementById("custom_intersection_pane"), 
+                                  document.getElementById("intersection_panel"), 
                                   document.getElementById("custom_buffer_pane"), 
                                   document.getElementById("custom_heatmap_panel")];
     for (let x = 0; x < overlapping_elements.length; x++){
@@ -45,7 +45,7 @@ Object.freeze(mouseover_draggable);
 
 export function setup_drag_listeners() {
     const draggable_elements = [document.getElementById("heatmap_title_bar"), 
-                                document.getElementById("intersect_title_bar"), 
+                                document.getElementById("intersection_title_bar"), 
                                 document.getElementById("search_title_bar"), 
                                 document.getElementById("buffer_title_bar"),
                                 document.getElementById("scalebar_widget")];

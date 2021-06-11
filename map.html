@@ -246,8 +246,8 @@
   </div>
 
   <!-- INTERSECT PANEL -->
-  <div class="intersect-pane-div popups" id="custom_intersection_pane" style="display:none;">
-    <div class="pane-heading-div" id="intersect_title_bar">
+  <div class="intersect-pane-div popups" id="intersection_panel" style="display:none;">
+    <div class="pane-heading-div" id="intersection_title_bar">
       <div class="pane-header-image">
         <img src="images/200920_OMAM_IntersectHeader_01.png" loading="lazy" alt="" class="image-12">
       </div>
@@ -258,26 +258,27 @@
       <div id="wf-form-Service-Selector" name="wf-form-Service-Selector" data-name="Service Selector" class="intersect-form-div">
       
         <label for="Server-URL-2" class="form-title-1">Layer 1</label>
-        <select id="intersect_select_A" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" 
-              class="buffer-distance-dropdown-form w-dropdown web-service-dropdown-toggle"></select>
+        <select id="intersection_layer_selector_1" 
+                        style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" 
+                        class="buffer-distance-dropdown-form w-dropdown web-service-dropdown-toggle"></select>
         <label for="Web-Service" class="form-title-2">SQL expression (optional)</label>
         <input type="text" class="intersect-form-field w-input" maxlength="256" name="Server-URL-2" data-name="Server URL 2" 
-              placeholder="example: field=‘value’" id="SQL_input_A">
+                        placeholder="example: field=‘value’" id="intersection_SQL_input_1">
 
         <label for="Server-URL-3" class="form-title-1">Layer 2</label>
 
-        <select id="intersect_select_B" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" 
-              class="buffer-distance-dropdown-form w-dropdown web-service-dropdown-toggle"></select>
+        <select id="intersection_layer_selector_2" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" 
+                        class="buffer-distance-dropdown-form w-dropdown web-service-dropdown-toggle"></select>
         <label for="Web-Service" class="form-title-2">SQL expression (optional)</label>
         <input type="text" class="intersect-form-field w-input" maxlength="256" name="Server-URL-2" data-name="Server URL 2" 
-              placeholder="example: field=‘value’" id="SQL_input_B">
+                        placeholder="example: field=‘value’" id="intersection_SQL_input_2">
         
-        <input type="submit" id="intersect_submit_button" value="Submit" data-wait="Please wait..." class="submit-button w-button">
+        <input type="submit" id="intersection_submit_button" value="Submit" data-wait="Please wait..." class="submit-button w-button">
         <div id="intersect_error_div" class="error_text"></div>
       </div>
     </div>
     <div class="close-window-button-div">
-      <div class="close-window-button w-button" id="intersect_close_button">X</div>
+      <div class="close-window-button w-button" id="intersection_close_button">X</div>
     </div>
   </div> 
 
@@ -420,7 +421,7 @@
 
   // table/tools divs & buttons
   var attribute_table = document.getElementById("attribute_table"); 
-  var custom_intersection_pane = document.getElementById("custom_intersection_pane"); 
+  var intersection_panel = document.getElementById("intersection_panel"); 
   var custom_buffer_pane = document.getElementById("custom_buffer_pane");
   var custom_heatmap_panel = document.getElementById("custom_heatmap_panel"); 
   var custom_search_pane = document.getElementById("custom_search_pane"); 
@@ -430,8 +431,8 @@
 
   var service_selector = document.getElementById("service_selector");
   var table_dataset_selector = document.getElementById("table_dataset_selector");
-  var intersect_select_A = document.getElementById("intersect_select_A");
-  var intersect_select_B = document.getElementById("intersect_select_B");
+  var intersection_layer_selector_1 = document.getElementById("intersection_layer_selector_1");
+  var intersection_layer_selector_2 = document.getElementById("intersection_layer_selector_2");
 
   var search_select = document.getElementById("search_select");
   var submit_search_button = document.getElementById("submit_search_button");
@@ -465,8 +466,8 @@
   var heatmap_button_image = document.getElementById("heatmap_button_image");
   var heatmap_button_text = document.getElementById("heatmap_button_text");
 
-  var SQL_input_A = document.getElementById("SQL_input_A");
-  var SQL_input_B = document.getElementById("SQL_input_B");
+  var intersection_SQL_input_1 = document.getElementById("intersection_SQL_input_1");
+  var intersection_SQL_input_2 = document.getElementById("intersection_SQL_input_2");
   var SQL_input_C = document.getElementById("SQL_input_C");
   var SQL_input_D = document.getElementById("SQL_input_D");
 
@@ -475,14 +476,14 @@
   var buffer_error_div = document.getElementById("buffer_error_div");
   var intersect_error_div = document.getElementById("intersect_error_div");
 
-  var intersect_close_button = document.getElementById("intersect_close_button"); 
+  var intersection_close_button = document.getElementById("intersection_close_button"); 
   var buffer_close_button = document.getElementById("buffer_close_button"); 
   var heatmap_close_button = document.getElementById("heatmap_close_button"); 
   var search_close_button = document.getElementById("search_close_button"); 
   var table_close_button = document.getElementById("table_close_button");
 
   var heatmap_title_bar = document.getElementById("heatmap_title_bar"); 
-  var intersect_title_bar = document.getElementById("intersect_title_bar"); 
+  var intersection_title_bar = document.getElementById("intersection_title_bar"); 
   var buffer_title_bar = document.getElementById("buffer_title_bar"); 
   var search_title_bar = document.getElementById("search_title_bar"); 
 
@@ -707,7 +708,7 @@
         toggle_intersect_button("off");
       }
     });
-    intersect_close_button.addEventListener("click", function(){
+    intersection_close_button.addEventListener("click", function(){
       toggle_intersect_button("off");
     });
     buffer_button.addEventListener("mouseover", function(e){
@@ -861,8 +862,8 @@
   }
   function toggle_intersect_button(change_state_to){
     if (change_state_to == "on"){
-      Listeners.increase_z_index(custom_intersection_pane);
-      custom_intersection_pane.style.display = "block";
+      Listeners.increase_z_index(intersection_panel);
+      intersection_panel.style.display = "block";
       intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       intersect_button_image.style.opacity = 1;
       intersect_button_text.style.opacity = 1; 
@@ -870,7 +871,7 @@
       intersect_panel_displayed = true;
     }
     else{
-      custom_intersection_pane.style.display = "none"; 
+      intersection_panel.style.display = "none"; 
       intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       intersect_button_wrapper.style.opacity = 0.65;
       intersect_panel_displayed = false;
@@ -1024,7 +1025,7 @@
     buffer_distance_select.appendChild(new_option);
   }
 
-  custom_intersection_pane.style.height = "450px"; 
+  intersection_panel.style.height = "450px"; 
   custom_buffer_pane.style.height = "345px";
   custom_heatmap_panel.style.height = "330px";
   custom_search_pane.style.height = "265px";
@@ -1062,7 +1063,7 @@ var queried_features_array = [];
 var queried_background_features = []; 
 var current_layers_query = null; 
 var saved_complete_query = null; 
-var selector_elements_list = [table_dataset_selector, intersect_select_A, intersect_select_B, buffer_select, search_select];
+var selector_elements_list = [table_dataset_selector, intersection_layer_selector_1, intersection_layer_selector_2, buffer_select, search_select];
 
 /* used to establish the zoom levels for the basemap & resolutions for each level */
 var extended_tilelods = [
@@ -2363,7 +2364,7 @@ function initialize_listeners(){
 	});
 
   // listener for handling submissions from various toolboxes
-	intersect_submit_button.addEventListener("click", function(){
+	intersection_submit_button.addEventListener("click", function(){
 		intersect_function();
 	});
   
@@ -2382,20 +2383,20 @@ function initialize_listeners(){
 function intersect_function(){
   
   if (intersect_error_div.innerHTML != ""){
-    let int_slice = custom_intersection_pane.style.height; 
+    let int_slice = intersection_panel.style.height; 
     int_slice = Number(int_slice.slice(0, 3)); 
     int_slice -= 50; 
     let px_size = int_slice + "px"; 
-    custom_intersection_pane.style.height = px_size;
+    intersection_panel.style.height = px_size;
   }
 	intersect_error_div.innerHTML = ""; 
 	intersect_error_div.style.overflowY = "hidden";
 
-	var layer_id_one = Number(intersect_select_A.options[intersect_select_A.selectedIndex].id);
-	var layer_id_two = Number(intersect_select_B.options[intersect_select_B.selectedIndex].id);
+	var layer_id_one = Number(intersection_layer_selector_1.options[intersection_layer_selector_1.selectedIndex].id);
+	var layer_id_two = Number(intersection_layer_selector_2.options[intersection_layer_selector_2.selectedIndex].id);
 
-	var SQL_query_one = SQL_input_A.value; 
-	var SQL_query_two = SQL_input_B.value;
+	var SQL_query_one = intersection_SQL_input_1.value; 
+	var SQL_query_two = intersection_SQL_input_2.value;
 
 	if (SQL_query_one == ""){
 		SQL_query_one = "1=1";
@@ -2518,7 +2519,7 @@ function intersect_function(){
         return all_promised;  
       },
       function(reject){
-        error_handler(reject.message, intersect_error_div, custom_intersection_pane);
+        error_handler(reject.message, intersect_error_div, intersection_panel);
         error_flag = true;
       });
       return all_promised; 
@@ -2526,7 +2527,7 @@ function intersect_function(){
     return all_promised; 
   },
   function(reject){ 
-    error_handler(reject.message, intersect_error_div, custom_intersection_pane);
+    error_handler(reject.message, intersect_error_div, intersection_panel);
     error_flag = true; 
   });
 
@@ -2922,7 +2923,7 @@ function intersect_function(){
     }
   },
   function(error){
-    error_handler(error.message, intersect_error_div, custom_intersection_pane);
+    error_handler(error.message, intersect_error_div, intersection_panel);
   });
 }
 
