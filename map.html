@@ -283,7 +283,7 @@
   </div> 
 
   <!-- BUFFER PANEL -->
-  <div class="buffer-pane-div popups" id="custom_buffer_pane" style="display:none;">
+  <div class="buffer-pane-div popups" id="buffer_panel" style="display:none;">
  
     <div class="pane-heading-div" id="buffer_title_bar">
       <div class="pane-header-image">
@@ -296,13 +296,13 @@
       <div id="wf-form-Service-Selector" name="wf-form-Service-Selector" data-name="Service Selector" class="intersect-form-div"> 
         
         <label for="Server-URL-3" class="form-title-1">Layer </label>
-        <select id="buffer_select" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle dropdown-list"></select>
+        <select id="buffer_layer_selector" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;" class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle dropdown-list"></select>
         
         <label for="Web-Service" class="form-title-2">SQL expression (optional)</label>
-        <input type="text" class="intersect-form-field w-input" id="SQL_input_C" placeholder="example: field=‘value’"/>
+        <input type="text" class="intersect-form-field w-input" id="buffer_SQL_input" placeholder="example: field=‘value’"/>
         
         <div class="buffer-distance-div"> 
-          <select id="buffer_distance_select" style="width:30%;top:-3px;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"
+          <select id="buffer_distance_selector" style="width:30%;top:-3px;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"
                 class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle dropdown-list"></select>
           <input type="text" class="intersect-form-field w-input" maxlength="256" name="Server-URL-2" data-name="Server URL 2" 
                 style="width:60%;" placeholder="Distance" id="buffer_distance_textbox">
@@ -319,7 +319,7 @@
   </div>
 
   <!-- HEATMAP PANEL -->
-  <div class="heatmap-pane-div popups" id="custom_heatmap_panel" style="display:none;">
+  <div class="heatmap-pane-div popups" id="heatmap_panel" style="display:none;">
     <div class="pane-heading-div" id="heatmap_title_bar">
       <div class="pane-header-image"><img src="images/200920_OMAM_HeatmapHeader_01.png" loading="lazy" alt="" class="image-12"></div>
       <div class="pane-heading">Heatmap</div>
@@ -329,14 +329,14 @@
         <label for="Server-URL-3" class="form-title-1">Input Layer</label>
 
         <select style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"
-              class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle dropdown-text" id="heatmap_select_layer"></select>
+              class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle dropdown-text" id="heatmap_layer_selector"></select>
 
 
         <label for="Server-URL-3" class="form-title-1">Radius</label>
-        <input type="range" id="blur_range" min="1" max="99">
+        <input type="range" id="heatmap_blur_range" min="1" max="99">
 
         <label for="Server-URL-3" class="form-title-1">Intensity</label>
-        <input type="range" id="intensity_range" min="1" max="99">
+        <input type="range" id="heatmap_intensity_range" min="1" max="99">
         
         <!-- <input type="button" class="popup_buttons" id="heatmap_submit_button" value="Submit" /> -->
         
@@ -350,18 +350,18 @@
   </div>
 
   <!-- SEARCH PANEL -->
-  <div class="search-pane-div popups" id="custom_search_pane" style="display:none;">
+  <div class="search-pane-div popups" id="search_panel" style="display:none;">
     <div class="pane-heading-div" id="search_title_bar">
       <div class="pane-heading">Search</div>
     </div>
     <div class="buffer-form w-form">
 
       <label for="Server-URL-3" class="form-title-1">Layer</label>
-      <select id="search_select" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"
+      <select id="search_layer_selector" style="width:100%;background-color:#fff;border-color:#c36d4a;color:#c36d4a;text-align:center;height:40px;"
             class="buffer-distance-dropdown-form w-dropdown layer-dropdown-toggle"></select> 
       <label for="Web-Service" class="form-title-2">SQL expression (required)</label>
       <input type="text" class="intersect-form-field w-input" maxlength="256" name="Server-URL-2" data-name="Server URL 2" 
-            placeholder="example: field='value'" id="SQL_input_D">
+            placeholder="example: field='value'" id="search_SQL_input">
       <input type="submit" value="Submit" id="submit_search_button" data-wait="Please wait..." class="submit-button w-button">
       <div id="search_error_div" class="error_text"></div>
     </div>
@@ -422,9 +422,9 @@
   // table/tools divs & buttons
   var attribute_table = document.getElementById("attribute_table"); 
   var intersection_panel = document.getElementById("intersection_panel"); 
-  var custom_buffer_pane = document.getElementById("custom_buffer_pane");
-  var custom_heatmap_panel = document.getElementById("custom_heatmap_panel"); 
-  var custom_search_pane = document.getElementById("custom_search_pane"); 
+  var buffer_panel = document.getElementById("buffer_panel");
+  var heatmap_panel = document.getElementById("heatmap_panel"); 
+  var search_panel = document.getElementById("search_panel"); 
   var page_numbers = document.getElementById("page_numbers"); 
 
   var search_panel = document.getElementById("search_panel"); 
@@ -434,7 +434,7 @@
   var intersection_layer_selector_1 = document.getElementById("intersection_layer_selector_1");
   var intersection_layer_selector_2 = document.getElementById("intersection_layer_selector_2");
 
-  var search_select = document.getElementById("search_select");
+  var search_layer_selector = document.getElementById("search_layer_selector");
   var submit_search_button = document.getElementById("submit_search_button");
   var search_button = document.getElementById("search_button")
 
@@ -443,13 +443,13 @@
   var item_selector_button_image = document.getElementById("item_selector_button_image");
   var item_selector_button_text = document.getElementById("item_selector_button_text");
 
-  var buffer_select = document.getElementById("buffer_select");
+  var buffer_layer_selector = document.getElementById("buffer_layer_selector");
   var buffer_distance_textbox = document.getElementById("buffer_distance_textbox");
-  var buffer_distance_select = document.getElementById("buffer_distance_select");
+  var buffer_distance_selector = document.getElementById("buffer_distance_selector");
   var buffer_submit_button = document.getElementById("buffer_submit_button");
 
   var heatmap_submit_button = document.getElementById("heatmap_submit_button");
-  var heatmap_select_layer = document.getElementById("heatmap_select_layer");
+  var heatmap_layer_selector = document.getElementById("heatmap_layer_selector");
 
   var intersect_button = document.getElementById("intersect_button");
   var intersect_button_text = document.getElementById("intersect_button_text");
@@ -468,8 +468,8 @@
 
   var intersection_SQL_input_1 = document.getElementById("intersection_SQL_input_1");
   var intersection_SQL_input_2 = document.getElementById("intersection_SQL_input_2");
-  var SQL_input_C = document.getElementById("SQL_input_C");
-  var SQL_input_D = document.getElementById("SQL_input_D");
+  var buffer_SQL_input = document.getElementById("buffer_SQL_input");
+  var search_SQL_input = document.getElementById("search_SQL_input");
 
   var table_error_div = document.getElementById("table_error_div");
   var search_error_div = document.getElementById("search_error_div");
@@ -560,18 +560,18 @@
   function setup_listeners(){
     const search_button = document.getElementById("search_button")
     const search_close_button = document.getElementById("search_close_button")
-    const custom_search_pane = document.getElementById("custom_search_pane")
+    const search_panel = document.getElementById("search_panel")
     const table_close_button = document.getElementById("table_close_button")
 
     Listeners.add_zindex_adjustment_listeners()
   
     // even these i'd like to factor out. Ultimately I want to factor this entire function out of here
     search_button.addEventListener("click", function(){
-        custom_search_pane.style.display = "block"; 
-        Listeners.increase_z_index(custom_search_pane);
+        search_panel.style.display = "block"; 
+        Listeners.increase_z_index(search_panel);
     });
     search_close_button.addEventListener("click", function(){
-      custom_search_pane.style.display = "none"; 
+      search_panel.style.display = "none"; 
     });
     table_close_button.addEventListener("click", function(){
         toggle_table_button("off");
@@ -916,8 +916,8 @@
   }
   function toggle_buffer_button(change_state_to){
     if (change_state_to == "on"){
-      Listeners.increase_z_index(custom_buffer_pane);
-      custom_buffer_pane.style.display = "block";
+      Listeners.increase_z_index(buffer_panel);
+      buffer_panel.style.display = "block";
       buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       buffer_button_image.style.opacity = 1;
       buffer_button_text.style.opacity = 1;
@@ -925,7 +925,7 @@
       buffer_panel_displayed = true;
     }
     else{
-      custom_buffer_pane.style.display = "none"; 
+      buffer_panel.style.display = "none"; 
       buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       buffer_button_wrapper.style.opacity = 0.65;
       buffer_panel_displayed = false;
@@ -982,8 +982,8 @@
   }
   function toggle_heatmap_button(change_state_to){
     if (change_state_to == "on"){
-      Listeners.increase_z_index(custom_heatmap_panel);
-      custom_heatmap_panel.style.display = "block";
+      Listeners.increase_z_index(heatmap_panel);
+      heatmap_panel.style.display = "block";
       heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
       heatmap_button_image.style.opacity = 1;
       heatmap_button_text.style.opacity = 1;
@@ -991,7 +991,7 @@
       heatmap_panel_displayed = true;
     }
     else{
-      custom_heatmap_panel.style.display = "none"; 
+      heatmap_panel.style.display = "none"; 
       heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
       heatmap_button_wrapper.style.opacity = 0.65;
       heatmap_panel_displayed = false;
@@ -1022,13 +1022,13 @@
     if (new_option.textContent == "miles"){
       new_option.selected = true; 
     }
-    buffer_distance_select.appendChild(new_option);
+    buffer_distance_selector.appendChild(new_option);
   }
 
   intersection_panel.style.height = "450px"; 
-  custom_buffer_pane.style.height = "345px";
-  custom_heatmap_panel.style.height = "330px";
-  custom_search_pane.style.height = "265px";
+  buffer_panel.style.height = "345px";
+  heatmap_panel.style.height = "330px";
+  search_panel.style.height = "265px";
 
 /*********************************************************************************************************************************************************/
 /*******************CODE FOR MAP***************************************************************************************************************************/
@@ -1063,7 +1063,7 @@ var queried_features_array = [];
 var queried_background_features = []; 
 var current_layers_query = null; 
 var saved_complete_query = null; 
-var selector_elements_list = [table_dataset_selector, intersection_layer_selector_1, intersection_layer_selector_2, buffer_select, search_select];
+var selector_elements_list = [table_dataset_selector, intersection_layer_selector_1, intersection_layer_selector_2, buffer_layer_selector, search_layer_selector];
 
 /* used to establish the zoom levels for the basemap & resolutions for each level */
 var extended_tilelods = [
@@ -1406,9 +1406,9 @@ function load_service(first_time){
         selector_elements_list[x].removeChild(selector_elements_list[x].childNodes[0]); 
       }
     }
-    let heatmap_child_count = heatmap_select_layer.childElementCount; 
+    let heatmap_child_count = heatmap_layer_selector.childElementCount; 
     for (let y = 0; y < heatmap_child_count; y++){
-      heatmap_select_layer.removeChild(heatmap_select_layer.childNodes[0]); 
+      heatmap_layer_selector.removeChild(heatmap_layer_selector.childNodes[0]); 
     }
     // now populate the selectors with the new layers 
     for (let x = 0; x < layer_ids.length; x++){
@@ -1423,7 +1423,7 @@ function load_service(first_time){
       let featurelayer = feature_layers_array[x];
       let geometry_type = featurelayer.geometryType; 
       if (geometry_type == "point"){
-        add_option(heatmap_select_layer, featurelayer, layer_id);
+        add_option(heatmap_layer_selector, featurelayer, layer_id);
       }
     }
 
@@ -2759,7 +2759,7 @@ function intersect_function(){
             let layer_option = document.createElement("option");
             layer_option.textContent = new_feature_layer.title;
             layer_option.id = new_layer_id;                 // id is needed later by the options handler when an option is selected 
-            heatmap_select_layer.append(layer_option);
+            heatmap_layer_selector.append(layer_option);
           }
 
           let checkbox = document.createElement("input");
@@ -2878,9 +2878,9 @@ function intersect_function(){
                 }
               }
             }
-            for (let y = 0; y < heatmap_select_layer.length; y++){
-              if (heatmap_select_layer.options[y].id == new_layer_id){
-                heatmap_select_layer.remove(y); 
+            for (let y = 0; y < heatmap_layer_selector.length; y++){
+              if (heatmap_layer_selector.options[y].id == new_layer_id){
+                heatmap_layer_selector.remove(y); 
               }
             }
 
@@ -2944,20 +2944,20 @@ function error_handler(error_message, error_div, parent_div){
 function buffer_function(){
 
     if (buffer_error_div.innerHTML != ""){
-      let int_slice = custom_buffer_pane.style.height; 
+      let int_slice = buffer_panel.style.height; 
       int_slice = Number(int_slice.slice(0, 3)); 
       int_slice -= 50; 
       let px_size = int_slice + "px"; 
-      custom_buffer_pane.style.height = px_size;
+      buffer_panel.style.height = px_size;
     }
 
     buffer_error_div.innerHTML = "";
     buffer_error_div.style.overflowY = "hidden";
 
-    var layer_id = Number(buffer_select.options[buffer_select.selectedIndex].id);
+    var layer_id = Number(buffer_layer_selector.options[buffer_layer_selector.selectedIndex].id);
     
-    var SQL_query = SQL_input_C.value;
-    var units = buffer_distance_select.value;
+    var SQL_query = buffer_SQL_input.value;
+    var units = buffer_distance_selector.value;
     var distance = buffer_distance_textbox.value; 
     
     if (SQL_query == ""){
@@ -3012,7 +3012,7 @@ function buffer_function(){
                 
             },
             function(reject){
-                error_handler(reject.message, buffer_error_div, custom_buffer_pane);
+                error_handler(reject.message, buffer_error_div, buffer_panel);
             }).then(function(){
                 // now do the buffer analysis
                 var geometry_type = query_results.geometryType; 
@@ -3040,13 +3040,13 @@ function buffer_function(){
                 return Promise.all(promises_array); 
             },
             function(reject){
-                error_handler(reject.message, buffer_error_div, custom_buffer_pane);
+                error_handler(reject.message, buffer_error_div, buffer_panel);
             });
             return all_promised; 
         }
     },
     function(reject){
-        error_handler(reject.message, buffer_error_div, custom_buffer_pane);
+        error_handler(reject.message, buffer_error_div, buffer_panel);
     });
 
     all_promised.then(function(){
@@ -3338,10 +3338,10 @@ function buffer_function(){
 }
 
 function heatmap_function(){
-    var layer_id = Number(heatmap_select_layer.options[heatmap_select_layer.selectedIndex].id);
+    var layer_id = Number(heatmap_layer_selector.options[heatmap_layer_selector.selectedIndex].id);
  
-    var blur_radius = Math.ceil(blur_range.value * 0.4) + 8; 
-    var input_intensity = intensity_range.value;
+    var blur_radius = Math.ceil(heatmap_blur_range.value * 0.4) + 8; 
+    var input_intensity = heatmap_intensity_range.value;
 
     var feature_layer = null; 
     var queried_features = null;
@@ -3678,19 +3678,19 @@ function heatmap_function(){
 
 function search_function(){
     if (search_error_div.innerHTML != ""){
-      let int_slice = custom_search_pane.style.height; 
+      let int_slice = search_panel.style.height; 
       int_slice = Number(int_slice.slice(0, 3)); 
       int_slice -= 50; 
       let px_size = int_slice + "px"; 
-      custom_search_pane.style.height = px_size;
+      search_panel.style.height = px_size;
     }
     search_error_div.innerHTML = ""; 
     search_error_div.style.overflowY = "hidden"; 
       
     var feature_layer = null; 
-    var selected_id = search_select.options[search_select.selectedIndex].id;
+    var selected_id = search_layer_selector.options[search_layer_selector.selectedIndex].id;
 
-    var SQL_query = SQL_input_D.value;
+    var SQL_query = search_SQL_input.value;
     if (SQL_query == ""){
       SQL_query = "1=1";
     }
@@ -3724,7 +3724,7 @@ function search_function(){
         fill_attribute_table(1, true, false);
     },
     function(reject){
-        error_handler(reject.message, search_error_div, custom_search_pane);
+        error_handler(reject.message, search_error_div, search_panel);
     });
 }
 

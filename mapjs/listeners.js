@@ -15,20 +15,20 @@ export function domElement_resizeHandler(event) {
 
 export function increase_z_index(clicked_element){
     clicked_element.style.zIndex = "4000";
-    const overlapping_elements = [document.getElementById("custom_search_pane"), 
+    const overlapping_elements = [document.getElementById("search_panel"), 
                                   document.getElementById("intersection_panel"), 
-                                  document.getElementById("custom_buffer_pane"), 
-                                  document.getElementById("custom_heatmap_panel")];
+                                  document.getElementById("buffer_panel"), 
+                                  document.getElementById("heatmap_panel")];
     for (let x = 0; x < overlapping_elements.length; x++){
         overlapping_elements[x].style.zIndex = (Number(overlapping_elements[x].style.zIndex) - 1).toString(); 
     }
 }
 
 export function add_zindex_adjustment_listeners() {
-    const overlapping_elements = [document.getElementById("custom_search_pane"), 
+    const overlapping_elements = [document.getElementById("search_panel"), 
                                   document.getElementById("intersection_panel"), 
-                                  document.getElementById("custom_buffer_pane"), 
-                                  document.getElementById("custom_heatmap_panel")];
+                                  document.getElementById("buffer_panel"), 
+                                  document.getElementById("heatmap_panel")];
     for (let x = 0; x < overlapping_elements.length; x++){
         overlapping_elements[x].addEventListener("click", function(){
             increase_z_index(overlapping_elements[x]);
