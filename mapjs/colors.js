@@ -89,3 +89,20 @@ export const heatmap_colorstops = [
     { color: "rgb(176, 166, 184)", ratio: 0.913 },
     { color: "rgb(174, 205, 212)", ratio: 1 }
 ]
+
+
+
+/*layers_button.addEventListener("mouseover", function(e){
+      if (State.layersPaneActive.get() == false){
+        layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
+        layers_button_icon.style.opacity = 1;
+        layers_button_div.style.opacity = 1; 
+        layers_button_wrapper.style.opacity = 1;
+      }
+    });
+    layers_button.addEventListener("mouseout", function(e){
+      if (State.layersPaneActive.get() == false){
+        layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
+        layers_button_wrapper.style.opacity = 0.65;
+      } 
+    });*/
