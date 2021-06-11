@@ -89,20 +89,19 @@ export const heatmap_colorstops = [
     { color: "rgb(176, 166, 184)", ratio: 0.913 },
     { color: "rgb(174, 205, 212)", ratio: 1 }
 ]
+export function highlightButton(buttonIdentifier, highlight) {
+    let button = document.getElementById(buttonIdentifier.button);
+    let button_icon = document.getElementById(buttonIdentifier.icon);
+    let button_div = document.getElementById(buttonIdentifier.div);
+    let button_wrapper = document.getElementById(buttonIdentifier.wrapper);
 
-
-
-/*layers_button.addEventListener("mouseover", function(e){
-      if (State.layersPaneActive.get() == false){
-        layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        layers_button_icon.style.opacity = 1;
-        layers_button_div.style.opacity = 1; 
-        layers_button_wrapper.style.opacity = 1;
-      }
-    });
-    layers_button.addEventListener("mouseout", function(e){
-      if (State.layersPaneActive.get() == false){
-        layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        layers_button_wrapper.style.opacity = 0.65;
-      } 
-    });*/
+    if (highlight == true) {
+        button.style.backgroundColor = getColor("webflowcolor", "darkorange");
+        button_icon.style.opacity = 1;
+        button_div.style.opacity = 1; 
+        button_wrapper.style.opacity = 1;
+    } else {
+        button.style.backgroundColor = getColor("webflowcolor", "lightorange");
+        button_wrapper.style.opacity = 0.65;
+    }
+}

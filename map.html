@@ -564,119 +564,105 @@
 
 // jojojojo
 
-// I'd like to extract the logic for changing a buttons background into the Colors module
-
 
     layers_button.addEventListener("mouseover", function(e){
       if (State.layersPanelActive.get() == false){
-        layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        layers_button_icon.style.opacity = 1;
-        layers_button_div.style.opacity = 1; 
-        layers_button_wrapper.style.opacity = 1;
+        Colors.highlightButton(Utils.buttonIdentifiers.LAYERSBUTTON, true);
       }
     });
     layers_button.addEventListener("mouseout", function(e){
       if (State.layersPanelActive.get() == false){
-        layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        layers_button_wrapper.style.opacity = 0.65;
+        Colors.highlightButton(Utils.buttonIdentifiers.LAYERSBUTTON, false);
       } 
     });
     table_button.addEventListener("mouseover", function(e){
       if (State.tableActive.get() == false){
-        table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        table_button_icon.style.opacity = 1;
-        table_button_div.style.opacity = 1; 
-        table_button_wrapper.style.opacity = 1;
+        Colors.highlightButton(Utils.buttonIdentifiers.TABLEBUTTON, true);
       }
     });
     table_button.addEventListener("mouseout", function(e){
       if (State.tableActive.get() == false){
-        table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        table_button_wrapper.style.opacity = 0.65;
+        Colors.highlightButton(Utils.buttonIdentifiers.TABLEBUTTON, false);
       } 
     });
     print_button.addEventListener("mouseover", function(e){
       if (State.printWidgetActive.get() == false){
-        print_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        print_button_icon.style.opacity = 1;
-        print_button_div.style.opacity = 1; 
-        print_button_wrapper.style.opacity = 1;
+        Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, true);
       }
     });
     print_button.addEventListener("mouseout", function(e){
       if (State.printWidgetActive.get() == false){
-        print_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        print_button_wrapper.style.opacity = 0.65;
+        Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, false);
       } 
     });
     popups_button.addEventListener("mouseover", function(e){
       if (State.popupsActive.get() == false){
-        popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        popups_button_icon.style.opacity = 1;
-        popups_button_div.style.opacity = 1; 
-        popups_button_wrapper.style.opacity = 1;
+        Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, true);
       }
     });
     popups_button.addEventListener("mouseout", function(e){
       if (State.popupsActive.get() == false){
-        popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        popups_button_wrapper.style.opacity = 0.65;
+        Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, false);
       } 
     });
     legend_button.addEventListener("mouseover", function(e){
       if (State.legendActive.get() == false){
-        legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        legend_button_icon.style.opacity = 1;
-        legend_button_div.style.opacity = 1; 
-        legend_button_wrapper.style.opacity = 1;
+        Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, true);
       }
     });
     legend_button.addEventListener("mouseout", function(e){
       if (State.legendActive.get() == false){
-        legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        legend_button_wrapper.style.opacity = 0.65;
+        Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, false);
       } 
     });
     filter_button.addEventListener("mouseover", function(e){
       if (State.filterActive.get() == false){
-        filter_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        filter_button_wrapper.style.opacity = 1;
-        filter_button_text.style.opacity = 1; 
-        filter_button_image.style.opacity = 1;
+        Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, true);
       }
     });
     filter_button.addEventListener("mouseout", function(e){
       if (State.filterActive.get() == false){
-        filter_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        filter_button_wrapper.style.opacity = 0.65; 
+        Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, false);
       } 
     });
     item_selector_button.addEventListener("mouseover", function(e){
       if (State.itemSelectorActive.get() == false){
-        item_selector_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        item_selector_button_wrapper.style.opacity = 1;
-        item_selector_button_text.style.opacity = 1; 
-        item_selector_button_image.style.opacity = 1;
+        Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, true);
       }
     });
     item_selector_button.addEventListener("mouseout", function(e){
       if (State.itemSelectorActive.get() == false){
-        item_selector_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        item_selector_button_wrapper.style.opacity = 0.65; 
+        Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, false);
       } 
     });
     intersect_button.addEventListener("mouseover", function(e){
       if (State.intersectionPanelActive.get() == false){
-        intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        intersect_button_wrapper.style.opacity = 1;
-        intersect_button_text.style.opacity = 1; 
-        intersect_button_image.style.opacity = 1;
+        Colors.highlightButton(Utils.buttonIdentifiers.INTERSECTBUTTON, true);
       }
     });
     intersect_button.addEventListener("mouseout", function(e){
       if (State.intersectionPanelActive.get() == false){
-        intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        intersect_button_wrapper.style.opacity = 0.65; 
+        Colors.highlightButton(Utils.buttonIdentifiers.INTERSECTBUTTON, false);
+      } 
+    });
+    buffer_button.addEventListener("mouseover", function(e){
+      if (State.bufferPanelActive.get() == false){
+        Colors.highlightButton(Utils.buttonIdentifiers.BUFFERBUTTON, true);
+      }
+    });
+    buffer_button.addEventListener("mouseout", function(e){
+      if (State.bufferPanelActive.get() == false){
+        Colors.highlightButton(Utils.buttonIdentifiers.BUFFERBUTTON, false);
+      }
+    });
+    heatmap_button.addEventListener("mouseover", function(e){
+      if (State.heatmapPanelActive.get() == false){
+        Colors.highlightButton(Utils.buttonIdentifiers.HEATMAPBUTTON, true);
+      }
+    });
+    heatmap_button.addEventListener("mouseout", function(e){
+      if (State.heatmapPanelActive.get() == false){
+        Colors.highlightButton(Utils.buttonIdentifiers.HEATMAPBUTTON, false);
       } 
     });
     intersect_button.addEventListener("click", function(){
@@ -690,20 +676,6 @@
     intersection_close_button.addEventListener("click", function(){
       toggle_intersect_button("off");
     });
-    buffer_button.addEventListener("mouseover", function(e){
-      if (State.bufferPanelActive.get() == false){
-        buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        buffer_button_wrapper.style.opacity = 1;
-        buffer_button_text.style.opacity = 1;
-        buffer_button_image.style.opacity = 1;
-      }
-    });
-    buffer_button.addEventListener("mouseout", function(e){
-      if (State.bufferPanelActive.get() == false){
-        buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        buffer_button_wrapper.style.opacity = 0.65;
-      }
-    });
     buffer_button.addEventListener("click", function(){
       if (State.bufferPanelActive.get() == false){
         toggle_buffer_button("on");
@@ -714,20 +686,6 @@
     });
     buffer_close_button.addEventListener("click", function(){
       toggle_buffer_button("off");
-    });
-    heatmap_button.addEventListener("mouseover", function(e){
-      if (State.heatmapPanelActive.get() == false){
-        heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-        heatmap_button_wrapper.style.opacity = 1;
-        heatmap_button_text.style.opacity = 1; 
-        heatmap_button_image.style.opacity = 1;
-      }
-    });
-    heatmap_button.addEventListener("mouseout", function(e){
-      if (State.heatmapPanelActive.get() == false){
-        heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-        heatmap_button_wrapper.style.opacity = 0.65; 
-      } 
     });
     heatmap_button.addEventListener("click", function(){
       if (State.heatmapPanelActive.get() == false){
