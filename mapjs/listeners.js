@@ -1,3 +1,5 @@
+import * as Colors from './colors.js';
+import * as Utils from './utils.js';
 
 export function domElement_resizeHandler(event) {
     var target = event.target
@@ -55,6 +57,24 @@ export function setup_drag_listeners() {
         });
         draggable_elements[x].addEventListener("mouseout", function(e){
             mouseover_draggable.set(false)
+        });
+    }
+}
+
+export function setup_button_hover_listeners() {
+    for (let x = 0; x < Utils.buttonIdentifiersArray.length; x++) {
+        let buttonIdentifier = Utils.buttonIdentifiersArray[x];
+        console.log("buttonIdentifier: ", x, buttonIdentifier);
+        let button = document.getElementById(buttonIdentifier.button);
+        button.addEventListener("mouseover", function() {
+            if (buttonIdentifier.buttonState.get() == false) {
+                Colors.highlightButton(buttonIdentifier, true);
+            }
+        });
+        button.addEventListener("mouseout", function() {
+            if (buttonIdentifier.buttonState.get() == false) { 
+                Colors.highlightButton(buttonIdentifier, false);
+            }
         });
     }
 }

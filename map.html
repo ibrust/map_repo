@@ -379,14 +379,13 @@
 /*********************************************************************************************************************************************************/
 /*******************PRELIMINARY CODE***************************************************************************************************************************/
   
-  // interact is a module that allows boxes to be dragged & resized
-  import interact from 'https://cdn.interactjs.io/v1.9.19/interactjs/index.js';
+  import interact from 'https://cdn.interactjs.io/v1.9.19/interactjs/index.js';       // interact allows boxes to be dragged & resized
   import * as Listeners from './mapjs/listeners.js';
   import * as Utils from './mapjs/utils.js';
   import * as Colors from './mapjs/colors.js';
   import * as State from './mapjs/state.js';
-  // set all necessary document elements to global variables
-  // left side navbar buttons
+
+
   var layers_button = document.getElementById("layers_button");
   var layers_button_icon = document.getElementById("layers_button_icon");
   var layers_button_div = document.getElementById("layers_button_div");
@@ -490,8 +489,7 @@
     var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;				// store the dragged position in the data-x/data-y attributes
     var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-    console.log("here", target)
-    // the test statement ensures the drag only executes when not mousing over the heatmaps sliders
+    // without this test statement the mouse behaves sticky & a variety of bugs arise
     if (Listeners.mouseover_draggable.get() == true){
         target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';    // this is the actual drag operation
         target.setAttribute('data-x', x);												// updates the position attributes 
@@ -539,132 +537,46 @@
   });
 
   function setup_listeners(){
+    Listeners.add_zindex_adjustment_listeners();
+    Listeners.setup_drag_listeners();
+    Listeners.setup_button_hover_listeners();
+
     const search_button = document.getElementById("search_button")
     const search_close_button = document.getElementById("search_close_button")
     const search_panel = document.getElementById("search_panel")
     const table_close_button = document.getElementById("table_close_button")
-
-    Listeners.add_zindex_adjustment_listeners()
   
     // even these i'd like to factor out. Ultimately I want to factor this entire function out of here
     search_button.addEventListener("click", function(){
         search_panel.style.display = "block"; 
         Listeners.increase_z_index(search_panel);
     });
+
+
     search_close_button.addEventListener("click", function(){
-      search_panel.style.display = "none"; 
+        search_panel.style.display = "none"; 
     });
+
+
     table_close_button.addEventListener("click", function(){
         toggle_table_button("off");
     });
+    intersection_close_button.addEventListener("click", function(){
+        toggle_intersect_button("off");
+    });
+    buffer_close_button.addEventListener("click", function(){
+        toggle_buffer_button("off");
+    });
+    close_layers_panel.addEventListener("click", function(){
+        toggle_layers_button("off");
+    });
+    heatmap_close_button.addEventListener("click", function(){
+        toggle_heatmap_button("off");
+    });
 
-    Listeners.setup_drag_listeners()
 
 
 
-// jojojojo
-
-
-    layers_button.addEventListener("mouseover", function(e){
-      if (State.layersPanelActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.LAYERSBUTTON, true);
-      }
-    });
-    layers_button.addEventListener("mouseout", function(e){
-      if (State.layersPanelActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.LAYERSBUTTON, false);
-      } 
-    });
-    table_button.addEventListener("mouseover", function(e){
-      if (State.tableActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.TABLEBUTTON, true);
-      }
-    });
-    table_button.addEventListener("mouseout", function(e){
-      if (State.tableActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.TABLEBUTTON, false);
-      } 
-    });
-    print_button.addEventListener("mouseover", function(e){
-      if (State.printWidgetActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, true);
-      }
-    });
-    print_button.addEventListener("mouseout", function(e){
-      if (State.printWidgetActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, false);
-      } 
-    });
-    popups_button.addEventListener("mouseover", function(e){
-      if (State.popupsActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, true);
-      }
-    });
-    popups_button.addEventListener("mouseout", function(e){
-      if (State.popupsActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, false);
-      } 
-    });
-    legend_button.addEventListener("mouseover", function(e){
-      if (State.legendActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, true);
-      }
-    });
-    legend_button.addEventListener("mouseout", function(e){
-      if (State.legendActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, false);
-      } 
-    });
-    filter_button.addEventListener("mouseover", function(e){
-      if (State.filterActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, true);
-      }
-    });
-    filter_button.addEventListener("mouseout", function(e){
-      if (State.filterActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, false);
-      } 
-    });
-    item_selector_button.addEventListener("mouseover", function(e){
-      if (State.itemSelectorActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, true);
-      }
-    });
-    item_selector_button.addEventListener("mouseout", function(e){
-      if (State.itemSelectorActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, false);
-      } 
-    });
-    intersect_button.addEventListener("mouseover", function(e){
-      if (State.intersectionPanelActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.INTERSECTBUTTON, true);
-      }
-    });
-    intersect_button.addEventListener("mouseout", function(e){
-      if (State.intersectionPanelActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.INTERSECTBUTTON, false);
-      } 
-    });
-    buffer_button.addEventListener("mouseover", function(e){
-      if (State.bufferPanelActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.BUFFERBUTTON, true);
-      }
-    });
-    buffer_button.addEventListener("mouseout", function(e){
-      if (State.bufferPanelActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.BUFFERBUTTON, false);
-      }
-    });
-    heatmap_button.addEventListener("mouseover", function(e){
-      if (State.heatmapPanelActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.HEATMAPBUTTON, true);
-      }
-    });
-    heatmap_button.addEventListener("mouseout", function(e){
-      if (State.heatmapPanelActive.get() == false){
-        Colors.highlightButton(Utils.buttonIdentifiers.HEATMAPBUTTON, false);
-      } 
-    });
     intersect_button.addEventListener("click", function(){
       if (State.intersectionPanelActive.get() == false){
         toggle_intersect_button("on");
@@ -672,9 +584,6 @@
       else{
         toggle_intersect_button("off");
       }
-    });
-    intersection_close_button.addEventListener("click", function(){
-      toggle_intersect_button("off");
     });
     buffer_button.addEventListener("click", function(){
       if (State.bufferPanelActive.get() == false){
@@ -684,29 +593,12 @@
         toggle_buffer_button("off");
       }
     });
-    buffer_close_button.addEventListener("click", function(){
-      toggle_buffer_button("off");
-    });
     heatmap_button.addEventListener("click", function(){
       if (State.heatmapPanelActive.get() == false){
         toggle_heatmap_button("on");
       }
       else{
         toggle_heatmap_button("off");
-      }
-    });
-    heatmap_close_button.addEventListener("click", function(){
-      toggle_heatmap_button("off");
-    });
-    legend_button.addEventListener("click", function(e){
-      if (State.legendActive.get() == false){
-        toggle_legend_button("on");
-        if (State.printWidgetActive.get() == true){
-          toggle_print_button("off");
-        }
-      }
-      else{
-        toggle_legend_button("off");
       }
     });
     table_button.addEventListener("click", function(e){
@@ -725,8 +617,43 @@
         toggle_layers_button("off");
       }
     }); 
-    close_layers_panel.addEventListener("click", function(){
-      toggle_layers_button("off");
+    item_selector_button.addEventListener("click", function(){
+      if (State.itemSelectorActive.get() == false){ 
+        toggle_item_selector_button("on")
+        if (State.popupsActive.get() == true){
+          toggle_popup_button("off");
+        }
+        if (State.filterActive.get() == true){
+          toggle_filter_button("off");
+        }
+      }
+      else{ 
+         toggle_item_selector_button("off")
+      }
+    });
+
+
+    popups_button.addEventListener("click", function(){
+      if (State.popupsActive.get() == false){ 
+        toggle_popup_button("on")
+        if (State.itemSelectorActive.get() == true){
+          toggle_item_selector_button("off");
+        }
+      }
+      else{ 
+         toggle_popup_button("off")
+      }
+    }); 
+    filter_button.addEventListener("click", function(){
+      if (State.filterActive.get() == false){ 
+        toggle_filter_button("on")
+        if (State.itemSelectorActive.get() == true){
+          toggle_item_selector_button("off");
+        }
+      }
+      else{
+        toggle_filter_button("off")
+      }
     });
     print_button.addEventListener("click", function(){
       if (State.printWidgetActive.get() == false){ 
@@ -739,146 +666,119 @@
         toggle_print_button("off");
       }
     });
-    popups_button.addEventListener("click", function(){
-      if (State.popupsActive.get() == false){ 
-        toggle_popup_checkbox("on")
-        if (State.itemSelectorActive.get() == true){
-          toggle_item_selector_button("off");
-        }
-      }
-      else{ 
-         toggle_popup_checkbox("off")
-      }
-    }); 
-    item_selector_button.addEventListener("click", function(){
-      if (State.itemSelectorActive.get() == false){ 
-        toggle_item_selector_button("on")
-        if (State.popupsActive.get() == true){
-          toggle_popup_checkbox("off");
-        }
-        if (State.filterActive.get() == true){
-          toggle_filter_button("off");
-        }
-      }
-      else{ 
-         toggle_item_selector_button("off")
-      }
-    });
-    filter_button.addEventListener("click", function(){
-      if (State.filterActive.get() == false){ 
-        toggle_filter_button("on")
-        if (State.itemSelectorActive.get() == true){
-          toggle_item_selector_button("off");
+    legend_button.addEventListener("click", function(e){
+      if (State.legendActive.get() == false){
+        toggle_legend_button("on");
+        if (State.printWidgetActive.get() == true){
+          toggle_print_button("off");
         }
       }
       else{
-        toggle_filter_button("off")
+        toggle_legend_button("off");
       }
     });
   }
   setup_listeners(); 
 
   // utility functions used for toggling various buttons & their corresponding elements 
-  function toggle_filter_button(change_state_to){
-    if (change_state_to == "on"){ 
-      map_view.graphics = []; 
-      filter_by_extent("on");
-      filter_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      filter_button_image.style.opacity = 1;
-      filter_button_text.style.opacity = 1; 
-      filter_button_wrapper.style.opacity = 1; 
-      State.filterActive.set(true);
-    }
-    else{ 
-      filter_by_extent("off");
-      filter_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      filter_button_wrapper.style.opacity = 0.65; 
-      State.filterActive.set(false); 
-    }
-  }
-  function toggle_intersect_button(change_state_to){
-    if (change_state_to == "on"){
-      Listeners.increase_z_index(intersection_panel);
-      intersection_panel.style.display = "block";
-      intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      intersect_button_image.style.opacity = 1;
-      intersect_button_text.style.opacity = 1; 
-      intersect_button_wrapper.style.opacity = 1; 
-      State.intersectionPanelActive.set(true);
-    }
-    else{
-      intersection_panel.style.display = "none"; 
-      intersect_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      intersect_button_wrapper.style.opacity = 0.65;
-      State.intersectionPanelActive.set(false);
-    }
-  }
-  function toggle_item_selector_button(change_state_to){
-    if (change_state_to == "on"){ 
-      map_view.graphics = []; 
-      item_selector_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      item_selector_button_image.style.opacity = 1;
-      item_selector_button_text.style.opacity = 1; 
-      item_selector_button_wrapper.style.opacity = 1; 
-      mapview.style.cursor = "crosshair";
-      State.itemSelectorActive.set(true); 
-    }
-    else{ 
-      item_selector_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      item_selector_button_wrapper.style.opacity = 0.65; 
-      mapview.style.cursor = "initial";
-      State.itemSelectorActive.set(false);
-    }
-  }
-  function toggle_popup_checkbox(change_to_state){
+  function toggle_popup_button(change_to_state){
     if (change_to_state == "off"){
-      popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      popups_button_wrapper.style.opacity = 0.65; 
+      Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, false);
       State.popupsActive.set(false);
       for (let x = 0; x < feature_layers_array.length; x++){
         feature_layers_array[x].popupEnabled = false; 
       }
     }
     else if (change_to_state == "on"){
-      popups_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      popups_button_icon.style.opacity = 1;
-      popups_button_div.style.opacity = 1; 
-      popups_button_wrapper.style.opacity = 1; 
+      Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, true);
       State.popupsActive.set(true);
       for (let x = 0; x < feature_layers_array.length; x++){
         feature_layers_array[x].popupEnabled = true; 
       }
     }
   }
+
+
+  function toggle_filter_button(change_state_to){
+    if (change_state_to == "on"){ 
+      map_view.graphics = []; 
+      filter_by_extent("on");
+      Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, true); 
+      State.filterActive.set(true);
+    }
+    else{ 
+      filter_by_extent("off");
+      Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, false); 
+      State.filterActive.set(false); 
+    }
+  }
+
+
+  function toggle_item_selector_button(change_state_to){
+    if (change_state_to == "on"){ 
+      map_view.graphics = []; 
+      Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, true);
+      mapview.style.cursor = "crosshair";
+      State.itemSelectorActive.set(true); 
+    }
+    else{ 
+      Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, false);
+      mapview.style.cursor = "initial";
+      State.itemSelectorActive.set(false);
+    }
+  }
+
+
+  function toggle_intersect_button(change_state_to){
+    if (change_state_to == "on"){
+      Listeners.increase_z_index(intersection_panel);
+      intersection_panel.style.display = "block";
+      Colors.highlightButton(Utils.buttonIdentifiers.INTERSECTBUTTON, true);
+      State.intersectionPanelActive.set(true);
+    }
+    else{
+      intersection_panel.style.display = "none"; 
+      Colors.highlightButton(Utils.buttonIdentifiers.INTERSECTBUTTON, false);
+      State.intersectionPanelActive.set(false);
+    }
+  }
   function toggle_buffer_button(change_state_to){
     if (change_state_to == "on"){
       Listeners.increase_z_index(buffer_panel);
       buffer_panel.style.display = "block";
-      buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      buffer_button_image.style.opacity = 1;
-      buffer_button_text.style.opacity = 1;
-      buffer_button_wrapper.style.opacity = 1;
+      Colors.highlightButton(Utils.buttonIdentifiers.BUFFERBUTTON, true);
       State.bufferPanelActive.set(true);
     }
     else{
       buffer_panel.style.display = "none"; 
-      buffer_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      buffer_button_wrapper.style.opacity = 0.65;
+      Colors.highlightButton(Utils.buttonIdentifiers.BUFFERBUTTON, false);
       State.bufferPanelActive.set(false);
     }
   }
-  function toggle_print_button(change_state_to){
+  function toggle_heatmap_button(change_state_to){
     if (change_state_to == "on"){
-      print_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      print_button_icon.style.opacity = 1;
-      print_button_div.style.opacity = 1; 
-      print_button_wrapper.style.opacity = 1; 
+      Listeners.increase_z_index(heatmap_panel);
+      heatmap_panel.style.display = "block";
+      Colors.highlightButton(Utils.buttonIdentifiers.HEATMAPBUTTON, true);
+      State.heatmapPanelActive.set(true);
+    }
+    else{
+      heatmap_panel.style.display = "none"; 
+      Colors.highlightButton(Utils.buttonIdentifiers.HEATMAPBUTTON, false);
+      State.heatmapPanelActive.set(false);
+    }
+  }
+
+
+  function toggle_print_button(change_state_to){
+    var print_widget = document.getElementById("print_widget");
+    if (change_state_to == "on"){
+      Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, true);
       State.printWidgetActive.set(true);
       print_widget.style.display = "block";
     }
     else{
-      print_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      print_button_wrapper.style.opacity = 0.65; 
+      Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, false);
       State.printWidgetActive.set(false);
       print_widget.style.display = "none";
     }
@@ -887,71 +787,47 @@
     var layers_panel = document.getElementById("layers_panel"); 
     if (change_state_to == "on"){
       layers_panel.style.display = "block";
-      layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      layers_button_icon.style.opacity = 1;
-      layers_button_div.style.opacity = 1; 
-      layers_button_wrapper.style.opacity = 1; 
+      Colors.highlightButton(Utils.buttonIdentifiers.LAYERSBUTTON, true);
       State.layersPanelActive.set(true);
     }
     else{
       layers_panel.style.display = "none"; 
-      layers_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      layers_button_wrapper.style.opacity = 0.65;
+      Colors.highlightButton(Utils.buttonIdentifiers.LAYERSBUTTON, false);
       State.layersPanelActive.set(false);
     }
   }
   function toggle_table_button(change_state_to){
+    var table_and_tools_wrapper = document.getElementById("table_and_tools_wrapper");
     if (change_state_to == "on"){
       table_and_tools_wrapper.style.display = "block";
-      table_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      table_button_icon.style.opacity = 1;
-      table_button_div.style.opacity = 1; 
-      table_button_wrapper.style.opacity = 1;
+      Colors.highlightButton(Utils.buttonIdentifiers.TABLEBUTTON, true);
       State.tableActive.set(true);
     }
     else{
       table_and_tools_wrapper.style.display = "none";
-      table_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      table_button_wrapper.style.opacity = 0.65;
+      Colors.highlightButton(Utils.buttonIdentifiers.TABLEBUTTON, false);
       State.tableActive.set(false)
     }
   }
-  function toggle_heatmap_button(change_state_to){
-    if (change_state_to == "on"){
-      Listeners.increase_z_index(heatmap_panel);
-      heatmap_panel.style.display = "block";
-      heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      heatmap_button_image.style.opacity = 1;
-      heatmap_button_text.style.opacity = 1;
-      heatmap_button_wrapper.style.opacity = 1;
-      State.heatmapPanelActive.set(true);
-    }
-    else{
-      heatmap_panel.style.display = "none"; 
-      heatmap_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      heatmap_button_wrapper.style.opacity = 0.65;
-      State.heatmapPanelActive.set(false);
-    }
-  }
   function toggle_legend_button(change_state_to){
+    var legend_widget = document.getElementById("legend_widget");
     if (change_state_to == "on"){
       legend_widget.style.display = "block";
-      legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "darkorange");
-      legend_button_icon.style.opacity = 1;
-      legend_button_div.style.opacity = 1; 
-      legend_button_wrapper.style.opacity = 1;
+      Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, true);
       State.legendActive.set(true);
     }
     else{
       legend_widget.style.display = "none";
-      legend_button.style.backgroundColor = Colors.getColor("webflowcolor", "lightorange");
-      legend_button_wrapper.style.opacity = 0.65;
+      Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, false);
       State.legendActive.set(false);
     }
   }
 
+
+
+
   // fill the distance selector in the buffer panel with valid options 
-  var distance_options = ["miles", "kilometers", "meters", "feet", "nautical-miles", "yards"]; 
+  const distance_options = ["miles", "kilometers", "meters", "feet", "nautical-miles", "yards"]; 
   for (var x = 0; x < distance_options.length; x++){
     let new_option = document.createElement("option");
     new_option.textContent = distance_options[x];
@@ -968,30 +844,35 @@
 
 /*********************************************************************************************************************************************************/
 /*******************CODE FOR MAP***************************************************************************************************************************/
-// variables to hold ArcGis library functions, filled by the request below
-var Map, MapView, Zoom, TileLayer, MapImageLayer, Request, Collection, Legend, Basemap, TileInfo, BasemapToggle, Search, Graphic, Watch, Circle, 
-	WebMercTools, GeometryEngine, Point, Line, AsyncGeometryEngine, Polygon, FeatureLayer, WebMap, GraphicsLayer, SimpleMarkerSymbol, SimpleFillSymbol, 
+// ArcAPI. 
+var MapObject, MapView, Zoom, TileLayer, ArcRequest, Collection, Legend, Basemap, TileInfo, BasemapToggle, Search, Graphic, Watch, Circle, 
+	WebMercTools, GeometryEngine, Point, Line, AsyncGeometryEngine, Polygon, FeatureLayer, GraphicsLayer, SimpleMarkerSymbol, SimpleFillSymbol, 
   ScaleBar, Print, Projection, SpatialReference, Field, PopupTemplate, FieldsContent, FieldInfo; 
-// various map related variables
-var map_obj, map_view, brownmap, greenmap; 
-// other miscellaneous variables
+
+// State.map_view 
+var map_obj, map_view;
+
+// State.service
 const default_service = "OilSandsProjectBoundaries";  // OilSandsProjectBoundaries PoolPermits Water_Network
 var base_url = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/";
 
+// State.UI - no, something else
 var selected_service_name = null;
 var old_clicked_page = 0;
 var current_page = 0;
 var global_results_per_page = 12;
 var global_title_rows = []; 
+var next_grid_line = 1;
+var field_widths = {};
+var grid_divs_list = [];
 
+// State.graphics - no, something else
 var graphic = undefined;
 var previous_graphic = null;
 var global_use_graphics = false;
-var next_grid_line = 1;
-var field_widths = {};
-
 var polygon_outline_widths = [];
-var grid_divs_list = [];
+
+// State.layers
 var feature_layers_array = [];
 var background_layers = [];
 var layer_ids = []; 
@@ -1001,23 +882,6 @@ var current_layers_query = null;
 var saved_complete_query = null; 
 var selector_elements_list = [table_dataset_selector, intersection_layer_selector_1, intersection_layer_selector_2, buffer_layer_selector, search_layer_selector];
 
-/* used to establish the zoom levels for the basemap & resolutions for each level */
-var extended_tilelods = [
-	{"level": 3, "resolution": 19567.879241000017, "scale": 73957190.94894437},
-	{"level": 4, "resolution": 9783.939620500008, "scale": 36978595.47447219},
-	{"level": 5, "resolution": 4891.969810250004, "scale": 18489297.737236094},
-	{"level": 6, "resolution": 2445.984905125002, "scale": 9244648.868618047},
-	{"level": 7, "resolution": 1222.992452562501, "scale": 4622324.434309023},
-	{"level": 8, "resolution": 611.4962262812505, "scale": 2311162.2171545117}, 
-	{"level": 9, "resolution": 305.74811314055756, "scale": 1155581.108577}, 
-	{"level": 10, "resolution": 152.87405657041106, "scale": 577790.554289}, 
-	{"level": 11, "resolution": 76.43702828507324, "scale": 288895.277144}, 
-	{"level": 12, "resolution": 38.21851414253662, "scale": 144447.638572}, 
-	{"level": 13, "resolution": 19.10925707126831, "scale": 72223.819286},
-  {"level": 14, "resolution": 9.554628535634155, "scale": 36111.909643}, 
-  {"level": 15, "resolution": 4.77731426794937, "scale": 18055.954822}, 
-  {"level": 16, "resolution": 2.388657133974685, "scale": 9027.977411}
-];
 
 /* require is a function provided by the arcGIS API - fetches various API components 
   arguments to the require array have a 1 to 1 mapping to the callback functions parameters*/ 
@@ -1025,23 +889,23 @@ require(["esri/Map", "esri/views/MapView", "esri/widgets/Zoom", "esri/layers/Til
         "esri/request", "esri/core/Collection", "esri/widgets/Legend", "esri/Basemap", "esri/layers/support/TileInfo", "esri/widgets/BasemapToggle",
         "esri/widgets/Search", "esri/Graphic", "esri/core/watchUtils", "esri/geometry/Circle", "esri/geometry/support/webMercatorUtils", 
         "esri/geometry/geometryEngine", "esri/geometry/Point", "esri/geometry/Polyline", "esri/geometry/geometryEngineAsync", "esri/geometry/Polygon", 
-        "esri/layers/FeatureLayer", "esri/WebMap", "esri/layers/GraphicsLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleFillSymbol", 
+        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleFillSymbol", 
         "esri/widgets/ScaleBar", "esri/widgets/Print", "esri/geometry/projection", "esri/geometry/SpatialReference", "esri/layers/support/Field", 
         "esri/PopupTemplate", "esri/popup/content/FieldsContent", "esri/popup/FieldInfo", "dojo/domReady!"],
-function(eMap, eMapView, eZoom, eTileLayer, eRequest, eCollection, eLegend, eBasemap, eTileInfo, eBasemapToggle, eSearch, 
-        eGraphic, eWatch, eCircle, eWebMercTools, eGeometryEngine, ePoint, eLine, eAsyncGeometryEngine, ePolygon, eFeatureLayer, eWebMap, 
+function(eMapObject, eMapView, eZoom, eTileLayer, eArcRequest, eCollection, eLegend, eBasemap, eTileInfo, eBasemapToggle, eSearch, 
+        eGraphic, eWatch, eCircle, eWebMercTools, eGeometryEngine, ePoint, eLine, eAsyncGeometryEngine, ePolygon, eFeatureLayer,
         eGraphicsLayer, eSimpleMarkerSymbol, eSimpleFillSymbol, eScaleBar, ePrint, eProjection, eSpatialReference, eField, ePopupTemplate, 
         eFieldsContent, eFieldInfo){
 	
-  Map=eMap, MapView=eMapView, Zoom=eZoom, TileLayer=eTileLayer, Request=eRequest, Collection=eCollection, 
+  MapObject=eMapObject, MapView=eMapView, Zoom=eZoom, TileLayer=eTileLayer, ArcRequest=eArcRequest, Collection=eCollection, 
         Legend=eLegend, Basemap=eBasemap, TileInfo=eTileInfo, BasemapToggle=eBasemapToggle, Search=eSearch, Graphic=eGraphic, Watch=eWatch, 
         Circle=eCircle, WebMercTools=eWebMercTools, GeometryEngine=eGeometryEngine, Point=ePoint, Line=eLine, 
-        AsyncGeometryEngine=eAsyncGeometryEngine, Polygon=ePolygon, FeatureLayer=eFeatureLayer, WebMap=eWebMap, GraphicsLayer=eGraphicsLayer, 
+        AsyncGeometryEngine=eAsyncGeometryEngine, Polygon=ePolygon, FeatureLayer=eFeatureLayer, GraphicsLayer=eGraphicsLayer, 
         SimpleMarkerSymbol=eSimpleMarkerSymbol, SimpleFillSymbol=eSimpleFillSymbol, ScaleBar=eScaleBar, Print=ePrint, Projection=eProjection, 
         SpatialReference=eSpatialReference, Field=eField, PopupTemplate=ePopupTemplate, FieldsContent=eFieldsContent, FieldInfo=eFieldInfo;
 
 	// create basemap (brown one, higher detail)
-	brownmap = new Basemap({
+  var brownmap =  new Basemap({
 		baseLayers: [new TileLayer({
       url: "http://server.arcgisonline.com/arcgis/rest/services/World_Shaded_Relief/MapServer", 
       title: "world_physical_basemap"})], 
@@ -1050,7 +914,7 @@ function(eMap, eMapView, eZoom, eTileLayer, eRequest, eCollection, eLegend, eBas
 		thumbnailUrl: "images/brownmap_icon.PNG"
 	});
     // create basemap (green one, looks better than others)
-	greenmap = new Basemap({
+	var greenmap = new Basemap({
 		baseLayers: [new TileLayer({
         url: "http://server.arcgisonline.com/arcgis/rest/services/World_Physical_Map/MapServer", 
         title: "world_physical_basemap"}
@@ -1060,9 +924,26 @@ function(eMap, eMapView, eZoom, eTileLayer, eRequest, eCollection, eLegend, eBas
 		thumbnailUrl: "images/greenmap_icon.PNG"
 	});
 	// load the default basemap 
-	map_obj = new Map({basemap: brownmap});
+	map_obj = new MapObject({basemap: brownmap});
 	
-	// create view - the view is like the lense through which you see the map
+  /* used to establish the zoom levels for the basemap & resolutions for each level */
+  var extended_tilelods = [
+    {"level": 3, "resolution": 19567.879241000017, "scale": 73957190.94894437},
+    {"level": 4, "resolution": 9783.939620500008, "scale": 36978595.47447219},
+    {"level": 5, "resolution": 4891.969810250004, "scale": 18489297.737236094},
+    {"level": 6, "resolution": 2445.984905125002, "scale": 9244648.868618047},
+    {"level": 7, "resolution": 1222.992452562501, "scale": 4622324.434309023},
+    {"level": 8, "resolution": 611.4962262812505, "scale": 2311162.2171545117}, 
+    {"level": 9, "resolution": 305.74811314055756, "scale": 1155581.108577}, 
+    {"level": 10, "resolution": 152.87405657041106, "scale": 577790.554289}, 
+    {"level": 11, "resolution": 76.43702828507324, "scale": 288895.277144}, 
+    {"level": 12, "resolution": 38.21851414253662, "scale": 144447.638572}, 
+    {"level": 13, "resolution": 19.10925707126831, "scale": 72223.819286},
+    {"level": 14, "resolution": 9.554628535634155, "scale": 36111.909643}, 
+    {"level": 15, "resolution": 4.77731426794937, "scale": 18055.954822}, 
+    {"level": 16, "resolution": 2.388657133974685, "scale": 9027.977411}
+  ];
+
 	map_view = new MapView({
 		container: "mapview",
 		map: map_obj, 
@@ -1138,7 +1019,7 @@ function(eMap, eMapView, eZoom, eTileLayer, eRequest, eCollection, eLegend, eBas
 
 // add services to the drop down list of services on the layers pane, prime event listeners to load them, then call load_service to load the first service in the list
 function populate_services(){
-	Request(base_url + "?f=json", {responseType: "json"})
+	ArcRequest(base_url + "?f=json", {responseType: "json"})
 	.then(function(response){
 		let server_json = response.data;
 		// add event listeners so that when a new service is selected - fetch that service, render it on the map, & fill the layers pane with checkboxes for its layers
@@ -1175,7 +1056,7 @@ function load_service(first_time){
   // make a json request to find out how many layers there are 
   let featureserver_info_url = base_url + selected_service_name + "/FeatureServer?f=pjson"; 
 
-  Request(featureserver_info_url).then(function(service_json_response){
+  ArcRequest(featureserver_info_url).then(function(service_json_response){
     feature_layers_array = []; 
     background_layers = []; 
     global_title_rows = []; 
@@ -1209,7 +1090,7 @@ function load_service(first_time){
     for (let x = 0; x < total_layers; x++){
 
       let layer_query_url = server_query_url + layer_ids[x];      
-      let promise = Request(layer_query_url + json_query).then(function(layer_json_response){
+      let promise = ArcRequest(layer_query_url + json_query).then(function(layer_json_response){
           
         let fields = layer_json_response.data.fields; 
         let popup_field_infos = [];
@@ -1250,10 +1131,10 @@ function load_service(first_time){
   }).then(function(){
 
     if (State.popupsActive.get() == false){
-      toggle_popup_checkbox("off");
+      toggle_popup_button("off");
     }
     else{
-      toggle_popup_checkbox("on");
+      toggle_popup_button("on");
     }
 
     var geometry_types = ["polygon", "polyline", "point"];
@@ -1834,7 +1715,7 @@ function project_and_zoom(fullExtent){
 		}// end query 
 	}// end options 
 
-	Request(url, options)
+	ArcRequest(url, options)
 	.then(response => {
 		// construct a custom extent object with the response 
 		let extent_object = {};
