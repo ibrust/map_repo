@@ -1,6 +1,7 @@
 import * as Utils from './utils.js';
 import * as Colors from './colors.js';
 import * as Listeners from './listeners.js';
+import * as Main from './main.js';
 
 var _legend_active = false;
 var _layers_panel_active = false;
@@ -37,8 +38,12 @@ export const printWidgetActive = {
   } ,
   get: () => { return _print_widget_active }
 }
+
 export const popupsActive = {
   set: (boolean_value) => {
+    for (let x = 0; x < MapProperties.feature_layers.length; x++){
+      MapProperties.feature_layers[x].popupEnabled = boolean_value; 
+    }
     Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, boolean_value);
     _popups_active = boolean_value
   },
@@ -90,13 +95,27 @@ export const heatmapPanelActive = {
 }
 export const filterActive = {
   set: (boolean_value) => {
+    if (boolean_value == true) {
+      MapProperties.map_view.graphics = [];
+      Main.filter_by_extent("on");
+    } else {
+      Main.filter_by_extent("off");
+    }
     Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, boolean_value);
     _filter_active = boolean_value
   },
   get: () => { return _filter_active }
 }
+
 export const itemSelectorActive = {
   set: (boolean_value) => {
+    let map_view_container = document.getElementById("map_view_container");
+    if (boolean_value == true) {
+      MapProperties.map_view.graphics = [];
+      map_view_container.style.cursor = "crosshair";
+    } else {
+      map_view_container.style.cursor = "initial";
+    }
     Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, boolean_value);
     _item_selector_active = boolean_value
   },
@@ -138,17 +157,16 @@ export var UIProperties = {
 export var MapProperties = {
   map_object: null,
   map_view: null,
-  feature_layers_array: [],
+  feature_layers: [],
   background_layers: [],
   layer_ids: [],
-  queried_features_array: [],
+  queried_features: [],
   queried_background_features: [],
   current_layers_query: null,
   saved_complete_query: null
 }
 
 export var MapGraphics = {
-  graphic: undefined,
   previous_graphic: null,
   global_use_graphics: false,
   polygon_outline_widths: []
