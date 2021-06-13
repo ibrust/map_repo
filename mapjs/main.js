@@ -64,88 +64,6 @@
     var buffer_close_button = document.getElementById("buffer_close_button"); 
     var heatmap_close_button = document.getElementById("heatmap_close_button");
 
-    function toggle_filter_button(change_state_to){
-        if (change_state_to == "on"){
-        State.filterActive.set(true);
-        }
-        else{
-        State.filterActive.set(false); 
-        }
-    }
-
-    function toggle_popup_button(change_state_to){
-        if (change_state_to == "on"){
-            State.popupsActive.set(true);
-        }
-        else {
-            State.popupsActive.set(false);
-        }
-    }
-    function toggle_item_selector_button(change_state_to){
-        if (change_state_to == "on"){ 
-            State.itemSelectorActive.set(true); 
-        }
-        else{
-            State.itemSelectorActive.set(false);
-        }
-    }
-    function toggle_intersect_button(change_state_to){
-        if (change_state_to == "on"){
-        State.intersectionPanelActive.set(true);
-        }
-        else {
-        State.intersectionPanelActive.set(false);
-        }
-    }
-    function toggle_buffer_button(change_state_to){
-        if (change_state_to == "on"){
-        State.bufferPanelActive.set(true);
-        }
-        else{
-        State.bufferPanelActive.set(false);
-        }
-    }
-    function toggle_heatmap_button(change_state_to){
-        if (change_state_to == "on"){
-        State.heatmapPanelActive.set(true);
-        }
-        else{
-        State.heatmapPanelActive.set(false);
-        }
-    }
-    function toggle_print_button(change_state_to){
-        if (change_state_to == "on") {
-        State.printWidgetActive.set(true);
-        }
-        else {
-        State.printWidgetActive.set(false);
-        }
-    }
-    function toggle_layers_button(change_state_to){
-        if (change_state_to == "on"){
-        State.layersPanelActive.set(true);
-        }
-        else{
-        State.layersPanelActive.set(false);
-        }
-    }
-    function toggle_table_button(change_state_to){
-        if (change_state_to == "on"){
-        State.tableActive.set(true);
-        }
-        else{
-        State.tableActive.set(false)
-        }
-    }
-    function toggle_legend_button(change_state_to){
-        if (change_state_to == "on"){
-        State.legendActive.set(true);
-        }
-        else{
-        State.legendActive.set(false);
-        }
-    }
-
 export function start() {
     // use interact.js to add drag / resize functionality to certain elements 
     function dragListener(event) {				// called whenever the box is dragged, sets the transform & updates the elements x/y attributes 
@@ -220,130 +138,65 @@ export function start() {
             search_panel.style.display = "block"; 
             Listeners.increase_z_index(search_panel);
         });
-
-
         search_close_button.addEventListener("click", function(){
             search_panel.style.display = "none"; 
         });
 
 
         table_close_button.addEventListener("click", function(){
-            toggle_table_button("off");
+            State.tableActive.set(false);
         });
         intersection_close_button.addEventListener("click", function(){
-            toggle_intersect_button("off");
+            State.intersectionPanelActive.set(false);
         });
         buffer_close_button.addEventListener("click", function(){
-            toggle_buffer_button("off");
+            State.bufferPanelActive.set(false);
         });
         close_layers_panel.addEventListener("click", function(){
-            toggle_layers_button("off");
+            State.layersPanelActive.set(false);
         });
         heatmap_close_button.addEventListener("click", function(){
-            toggle_heatmap_button("off");
+            State.heatmapPanelActive.set(false);
         });
 
+        // -------------------
 
+        intersect_button.addEventListener("click", function() {
+            State.intersectionPanelActive.set(!State.intersectionPanelActive.get());
+        });
 
+        buffer_button.addEventListener("click", function() {
+            State.bufferPanelActive.set(!State.bufferPanelActive.get());
+        });
 
-        intersect_button.addEventListener("click", function(){
-        if (State.intersectionPanelActive.get() == false){
-            toggle_intersect_button("on");
-        }
-        else{
-            toggle_intersect_button("off");
-        }
+        heatmap_button.addEventListener("click", function() {
+            State.heatmapPanelActive.set(!State.heatmapPanelActive.get());
         });
-        buffer_button.addEventListener("click", function(){
-        if (State.bufferPanelActive.get() == false){
-            toggle_buffer_button("on");
-        }
-        else{
-            toggle_buffer_button("off");
-        }
+        table_button.addEventListener("click", function() {
+            State.tableActive.set(!State.tableActive.get());
         });
-        heatmap_button.addEventListener("click", function(){
-        if (State.heatmapPanelActive.get() == false){
-            toggle_heatmap_button("on");
-        }
-        else{
-            toggle_heatmap_button("off");
-        }
+        layers_button.addEventListener("click", function() {
+            State.layersPanelActive.set(!State.layersPanelActive.get());
         });
-        table_button.addEventListener("click", function(e){
-        if (State.tableActive.get() == false){
-            toggle_table_button("on");
-        }
-        else{
-            toggle_table_button("off");
-        }
-        });
-        layers_button.addEventListener("click", function(){
-        if (State.layersPanelActive.get() == false){
-            toggle_layers_button("on");
-        }
-        else{
-            toggle_layers_button("off");
-        }
-        }); 
+
         item_selector_button.addEventListener("click", function(){
-        if (State.itemSelectorActive.get() == false){ 
-            toggle_item_selector_button("on")
-            if (State.popupsActive.get() == true){
-            toggle_popup_button("off");
-            }
-            if (State.filterActive.get() == true){
-            toggle_filter_button("off");
-            }
-        }
-        else{ 
-            toggle_item_selector_button("off")
-        }
+            State.itemSelectorActive.set(!State.itemSelectorActive.get());
         });
 
         popups_button.addEventListener("click", function(){
-        if (State.popupsActive.get() == false){ 
-            toggle_popup_button("on")
-            if (State.itemSelectorActive.get() == true){
-            toggle_item_selector_button("off");
-            }
-        }
-        else{ 
-            toggle_popup_button("off")
-        }
-        }); 
+            State.popupsActive.set(!State.popupsActive.get());
+        });
+
         filter_button.addEventListener("click", function(){
-        if (State.filterActive.get() == false){ 
-            toggle_filter_button("on")
-            if (State.itemSelectorActive.get() == true){
-            toggle_item_selector_button("off");
-            }
-        }
-        else{
-            toggle_filter_button("off")
-        }
+            State.filterActive.set(!State.filterActive.get());
         });
+
         print_button.addEventListener("click", function(){
-        if (State.printWidgetActive.get() == false){ 
-            toggle_print_button("on");
-            if (State.legendActive.get() == true){
-            toggle_legend_button("off");
-            }
-        }
-        else{ 
-            toggle_print_button("off");
-        }
+            State.printWidgetActive.set(!State.printWidgetActive.get());
         });
-        legend_button.addEventListener("click", function(e){
-        if (State.legendActive.get() == false){
-            toggle_legend_button("on");
-            if (State.printWidgetActive.get() == true){
-            toggle_print_button("off");
-            }
-        }
-        else{
-            toggle_legend_button("off");
-        }
+
+        legend_button.addEventListener("click", function(){
+            State.legendActive.set(!State.legendActive.get())
         });
     }
     setup_listeners(); 
@@ -511,8 +364,7 @@ function load_service(first_time){
   ArcGIS.API.ArcRequest(featureserver_info_url).then(function(service_json_response){
     State.MapProperties.feature_layers = []; 
     State.MapProperties.background_layers = []; 
-    State.UIProperties.all_title_fields = []; 
-    State.MapGraphics.graphic = undefined;
+    State.UIProperties.all_title_fields = [];
     State.MapGraphics.enable_graphics = false; 
     State.MapGraphics.polygon_outline_widths = []; 
     State.MapProperties.queried_features = []; 
@@ -581,13 +433,6 @@ function load_service(first_time){
     }
     return Promise.all(promises_array);
   }).then(function(){
-
-    if (State.popupsActive.get() == false){
-      toggle_popup_button("off");
-    }
-    else{
-      toggle_popup_button("on");
-    }
 
     var geometry_types = ["polygon", "polyline", "point"];
     for (let y = 0; y < 3; y++){
@@ -1320,7 +1165,7 @@ function fill_attribute_table(input_page, reload_buttons, use_graphics, from_sea
         zoom_to_feature(e);
       }
       else{
-        toggle_filter_button("off");
+        State.filterActive.set(false);
         zoom_to_feature(e);
       }
     });
@@ -1606,9 +1451,9 @@ function initialize_listeners(){
 	table_dataset_selector.addEventListener("change", function(){table_select_handler();});
   
   // with this listener, every time the map stops moving and the filter button is active, the filter function gets called. this ongoingly filters
-	ArcGIS.API.Watch.whenTrue(State.MapProperties.map_view, "stationary", function(){
+	ArcGIS.API.Watch.whenTrue(State.MapProperties.map_view, "stationary", function() {
 		if (State.filterActive.get() == true){
-      filter_by_extent("on");
+            filter_by_extent("on");
 		}
 	});
 
@@ -1620,11 +1465,11 @@ function initialize_listeners(){
 			}
 		}
 		if (e.button == 2){
-      State.MapProperties.map_view.graphics = [];
-      if (State.MapGraphics.enable_graphics == true){
-        clear_graphics_layer(); 
-      }
-      toggle_item_selector_button("off");
+            State.MapProperties.map_view.graphics = [];
+            if (State.MapGraphics.enable_graphics == true){
+                clear_graphics_layer(); 
+            }
+            State.itemSelectorActive.set(false);
 		}
 	});
 	State.MapProperties.map_view.on("drag", function(e){
@@ -2985,10 +2830,10 @@ function search_function(){
         }
         State.MapProperties.current_layers_query = {"data": query_results, "selected_id": selected_id};
         if (State.filterActive.get() == true){
-          toggle_filter_button("off");
+            State.filterActive.set(false);
         } 
         if (State.itemSelectorActive.get() == true){
-          toggle_item_selector_button("off"); 
+            State.itemSelectorActive.set(false);
         }
         
         fill_attribute_table(1, true, false);

@@ -18,6 +18,9 @@ export const legendActive = {
   set: (boolean_value) => {
     document.getElementById("legend_widget").style.display = boolean_value ? "block" : "none";
     Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, boolean_value);
+    if (boolean_value == true && printWidgetActive.get() == true){
+      printWidgetActive.set(false);
+    }
     _legend_active = boolean_value
   },
   get: () => { return _legend_active }
@@ -34,6 +37,9 @@ export const printWidgetActive = {
   set: (boolean_value) => { 
     document.getElementById("print_widget").style.display = boolean_value ? "block" : "none";
     Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, boolean_value);
+    if (boolean_value == true && legendActive.get() == true){
+      legendActive.set(false);
+    }
     _print_widget_active = boolean_value
   } ,
   get: () => { return _print_widget_active }
@@ -45,6 +51,9 @@ export const popupsActive = {
       MapProperties.feature_layers[x].popupEnabled = boolean_value; 
     }
     Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, boolean_value);
+    if (boolean_value == true && itemSelectorActive.get() == true) {
+      itemSelectorActive(false);
+    }
     _popups_active = boolean_value
   },
   get: () => { return _popups_active }
@@ -96,6 +105,9 @@ export const heatmapPanelActive = {
 export const filterActive = {
   set: (boolean_value) => {
     if (boolean_value == true) {
+      if (itemSelectorActive.get() == true) {
+        itemSelectorActive.set(false);
+      }
       MapProperties.map_view.graphics = [];
       Main.filter_by_extent("on");
     } else {
@@ -106,7 +118,6 @@ export const filterActive = {
   },
   get: () => { return _filter_active }
 }
-
 export const itemSelectorActive = {
   set: (boolean_value) => {
     let map_view_container = document.getElementById("map_view_container");
@@ -117,6 +128,14 @@ export const itemSelectorActive = {
       map_view_container.style.cursor = "initial";
     }
     Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, boolean_value);
+    if (boolean_value == true) {
+      if (popupsActive.get() == true) {
+        popupsActive.set(false);
+      }
+      if (filterActive.get() == true) {
+        filterActive.set(false);
+      }
+    }
     _item_selector_active = boolean_value
   },
   get: () => { return _item_selector_active }
@@ -168,7 +187,7 @@ export var MapProperties = {
 
 export var MapGraphics = {
   previous_graphic: null,
-  global_use_graphics: false,
+  enable_graphics: false,
   polygon_outline_widths: []
 }
 
