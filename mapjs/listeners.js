@@ -61,6 +61,31 @@ export function setup_button_hover_listeners() {
         });
     }
 }
+export function setup_button_click_listeners() {
+    for (let x = 0; x < Utils.buttonIdentifiersArray.length; x++) {
+        let button = document.getElementById(Utils.buttonIdentifiersArray[x].button);
+        button.addEventListener("click", function() {
+            Utils.buttonIdentifiersArray[x].buttonState.set(!Utils.buttonIdentifiersArray[x].buttonState.get());
+        });
+    }
+    document.getElementById("search_button").addEventListener("click", function(){
+        let search_panel = document.getElementById("search_panel")
+        search_panel.style.display = "block"; 
+        increase_z_index(search_panel);
+    });
+}
+
+export function setup_close_buttons() {
+    document.getElementById("search_close_button").addEventListener("click", function(){
+        document.getElementById("search_panel").style.display = "none"; 
+    });
+    for (let x = 0; x < Utils.closeButtons.length; x++) {
+        console.log("closebutton: ", Utils.closeButtons[x]);
+        Utils.closeButtons[x].button.addEventListener("click", function() {
+            Utils.closeButtons[x].buttonSetter(false);
+        });
+    }
+}
 
 export function setup_interact() {
     function dragListener(event) {				// called whenever the box is dragged, sets the transform & updates the elements x/y attributes 

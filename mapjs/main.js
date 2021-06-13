@@ -6,8 +6,6 @@
   import * as ArcGIS from './ArcGIS.js';
 
 
-    var close_layers_panel = document.getElementById("close_layers_panel"); 
-
     var attribute_table = document.getElementById("attribute_table"); 
     var intersection_panel = document.getElementById("intersection_panel"); 
     var buffer_panel = document.getElementById("buffer_panel");
@@ -43,59 +41,13 @@
     var buffer_error_div = document.getElementById("buffer_error_div");
     var intersect_error_div = document.getElementById("intersect_error_div");
 
-    var intersection_close_button = document.getElementById("intersection_close_button"); 
-    var buffer_close_button = document.getElementById("buffer_close_button"); 
-    var heatmap_close_button = document.getElementById("heatmap_close_button");
-
 export function start() {
-    function setup_listeners(){
-        Listeners.setup_interact();
-        Listeners.setup_drag_bars();
-        Listeners.setup_zindex_adjustment_listeners();
-        Listeners.setup_button_hover_listeners();
-
-        const search_button = document.getElementById("search_button")
-        const search_close_button = document.getElementById("search_close_button")
-        const search_panel = document.getElementById("search_panel")
-
-        const table_close_button = document.getElementById("table_close_button")
-    
-        // even these i'd like to factor out. Ultimately I want to factor this entire function out of here
-        search_button.addEventListener("click", function(){
-            search_panel.style.display = "block"; 
-            Listeners.increase_z_index(search_panel);
-        });
-
-
-        search_close_button.addEventListener("click", function(){
-            search_panel.style.display = "none"; 
-        });
-        table_close_button.addEventListener("click", function(){
-            State.tableActive.set(false);
-        });
-        intersection_close_button.addEventListener("click", function(){
-            State.intersectionPanelActive.set(false);
-        });
-        buffer_close_button.addEventListener("click", function(){
-            State.bufferPanelActive.set(false);
-        });
-        close_layers_panel.addEventListener("click", function(){
-            State.layersPanelActive.set(false);
-        });
-        heatmap_close_button.addEventListener("click", function(){
-            State.heatmapPanelActive.set(false);
-        });
-
-        // -------------------
-
-        for (let x = 0; x < Utils.buttonIdentifiersArray.length; x++) {
-            let button = document.getElementById(Utils.buttonIdentifiersArray[x].button);
-            button.addEventListener("click", function() {
-                Utils.buttonIdentifiersArray[x].buttonState.set(!Utils.buttonIdentifiersArray[x].buttonState.get());
-            });
-        }
-    }
-    setup_listeners(); 
+    Listeners.setup_interact();
+    Listeners.setup_drag_bars();
+    Listeners.setup_zindex_adjustment_listeners();
+    Listeners.setup_button_hover_listeners();
+    Listeners.setup_button_click_listeners();
+    Listeners.setup_close_buttons();
 
     // fill the distance selector in the buffer panel with valid options 
     const distance_options = ["miles", "kilometers", "meters", "feet", "nautical-miles", "yards"]; 
@@ -103,7 +55,7 @@ export function start() {
         let new_option = document.createElement("option");
         new_option.textContent = distance_options[x];
         if (new_option.textContent == "miles"){
-        new_option.selected = true; 
+            new_option.selected = true; 
         }
         buffer_distance_selector.appendChild(new_option);
     }
@@ -113,11 +65,8 @@ export function start() {
     heatmap_panel.style.height = "330px";
     search_panel.style.height = "265px";
 
-    /*********************************************************************************************************************************************************/
-    /*******************CODE FOR MAP***************************************************************************************************************************/
 
     ArcGIS.fetchArcAPI(setupMap);
-
 }
 
 
