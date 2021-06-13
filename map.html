@@ -109,7 +109,7 @@
   </div>
 
   <!-- MAP VIEW W/ ESTI WIDGETS -->
-  <div id="mapview" style="width:95.5%;height:92%;position:absolute;top:60px;left:72px;">
+  <div id="map_view_container" style="width:95.5%;height:92%;position:absolute;top:60px;left:72px;">
     <div id="zoom_widget" style="position:absolute;right:110px;top:50px;"></div>
     <div id="legend_widget" style="display:none;position:absolute;right:20px;top:165px"></div>
     <div id="toggle_widget" style="position:absolute;right:20px;top:50px;"></div>
@@ -384,6 +384,7 @@
   import * as Utils from './mapjs/utils.js';
   import * as Colors from './mapjs/colors.js';
   import * as State from './mapjs/state.js';
+  import * as ArcGIS from './mapjs/ArcGIS.js';
 
 
   var layers_button = document.getElementById("layers_button");
@@ -683,142 +684,97 @@
   // utility functions used for toggling various buttons & their corresponding elements 
   function toggle_popup_button(change_to_state){
     if (change_to_state == "off"){
-      Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, false);
       State.popupsActive.set(false);
       for (let x = 0; x < feature_layers_array.length; x++){
         feature_layers_array[x].popupEnabled = false; 
       }
     }
     else if (change_to_state == "on"){
-      Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, true);
       State.popupsActive.set(true);
       for (let x = 0; x < feature_layers_array.length; x++){
         feature_layers_array[x].popupEnabled = true; 
       }
     }
   }
-
-
   function toggle_filter_button(change_state_to){
     if (change_state_to == "on"){ 
       map_view.graphics = []; 
       filter_by_extent("on");
-      Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, true); 
       State.filterActive.set(true);
     }
     else{ 
       filter_by_extent("off");
-      Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, false); 
       State.filterActive.set(false); 
     }
   }
-
-
   function toggle_item_selector_button(change_state_to){
+    let map_view_container = document.getElementById("map_view_container");
     if (change_state_to == "on"){ 
-      map_view.graphics = []; 
-      Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, true);
-      mapview.style.cursor = "crosshair";
+      map_view.graphics = [];
+      map_view_container.style.cursor = "crosshair";
       State.itemSelectorActive.set(true); 
     }
-    else{ 
-      Colors.highlightButton(Utils.buttonIdentifiers.ITEMSELECTORBUTTON, false);
-      mapview.style.cursor = "initial";
+    else{
+      map_view_container.style.cursor = "initial";
       State.itemSelectorActive.set(false);
     }
   }
 
 
+
   function toggle_intersect_button(change_state_to){
     if (change_state_to == "on"){
-      Listeners.increase_z_index(intersection_panel);
-      intersection_panel.style.display = "block";
-      Colors.highlightButton(Utils.buttonIdentifiers.INTERSECTBUTTON, true);
       State.intersectionPanelActive.set(true);
     }
-    else{
-      intersection_panel.style.display = "none"; 
-      Colors.highlightButton(Utils.buttonIdentifiers.INTERSECTBUTTON, false);
+    else {
       State.intersectionPanelActive.set(false);
     }
   }
   function toggle_buffer_button(change_state_to){
     if (change_state_to == "on"){
-      Listeners.increase_z_index(buffer_panel);
-      buffer_panel.style.display = "block";
-      Colors.highlightButton(Utils.buttonIdentifiers.BUFFERBUTTON, true);
       State.bufferPanelActive.set(true);
     }
     else{
-      buffer_panel.style.display = "none"; 
-      Colors.highlightButton(Utils.buttonIdentifiers.BUFFERBUTTON, false);
       State.bufferPanelActive.set(false);
     }
   }
   function toggle_heatmap_button(change_state_to){
     if (change_state_to == "on"){
-      Listeners.increase_z_index(heatmap_panel);
-      heatmap_panel.style.display = "block";
-      Colors.highlightButton(Utils.buttonIdentifiers.HEATMAPBUTTON, true);
       State.heatmapPanelActive.set(true);
     }
     else{
-      heatmap_panel.style.display = "none"; 
-      Colors.highlightButton(Utils.buttonIdentifiers.HEATMAPBUTTON, false);
       State.heatmapPanelActive.set(false);
     }
   }
-
-
   function toggle_print_button(change_state_to){
-    var print_widget = document.getElementById("print_widget");
-    if (change_state_to == "on"){
-      Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, true);
+    if (change_state_to == "on") {
       State.printWidgetActive.set(true);
-      print_widget.style.display = "block";
     }
-    else{
-      Colors.highlightButton(Utils.buttonIdentifiers.PRINTBUTTON, false);
+    else {
       State.printWidgetActive.set(false);
-      print_widget.style.display = "none";
     }
   }
   function toggle_layers_button(change_state_to){
-    var layers_panel = document.getElementById("layers_panel"); 
     if (change_state_to == "on"){
-      layers_panel.style.display = "block";
-      Colors.highlightButton(Utils.buttonIdentifiers.LAYERSBUTTON, true);
       State.layersPanelActive.set(true);
     }
     else{
-      layers_panel.style.display = "none"; 
-      Colors.highlightButton(Utils.buttonIdentifiers.LAYERSBUTTON, false);
       State.layersPanelActive.set(false);
     }
   }
   function toggle_table_button(change_state_to){
-    var table_and_tools_wrapper = document.getElementById("table_and_tools_wrapper");
     if (change_state_to == "on"){
-      table_and_tools_wrapper.style.display = "block";
-      Colors.highlightButton(Utils.buttonIdentifiers.TABLEBUTTON, true);
       State.tableActive.set(true);
     }
     else{
-      table_and_tools_wrapper.style.display = "none";
-      Colors.highlightButton(Utils.buttonIdentifiers.TABLEBUTTON, false);
       State.tableActive.set(false)
     }
   }
   function toggle_legend_button(change_state_to){
-    var legend_widget = document.getElementById("legend_widget");
     if (change_state_to == "on"){
-      legend_widget.style.display = "block";
-      Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, true);
       State.legendActive.set(true);
     }
     else{
-      legend_widget.style.display = "none";
-      Colors.highlightButton(Utils.buttonIdentifiers.LEGENDBUTTON, false);
       State.legendActive.set(false);
     }
   }
@@ -844,10 +800,8 @@
 
 /*********************************************************************************************************************************************************/
 /*******************CODE FOR MAP***************************************************************************************************************************/
-// ArcAPI. 
-var MapObject, MapView, Zoom, TileLayer, ArcRequest, Collection, Legend, Basemap, TileInfo, BasemapToggle, Search, Graphic, Watch, Circle, 
-	WebMercTools, GeometryEngine, Point, Line, AsyncGeometryEngine, Polygon, FeatureLayer, GraphicsLayer, SimpleMarkerSymbol, SimpleFillSymbol, 
-  ScaleBar, Print, Projection, SpatialReference, Field, PopupTemplate, FieldsContent, FieldInfo; 
+
+// jojojo
 
 // State.map_view 
 var map_obj, map_view;
@@ -880,33 +834,12 @@ var queried_features_array = [];
 var queried_background_features = []; 
 var current_layers_query = null; 
 var saved_complete_query = null; 
-var selector_elements_list = [table_dataset_selector, intersection_layer_selector_1, intersection_layer_selector_2, buffer_layer_selector, search_layer_selector];
 
+ArcGIS.fetchArcAPI(setupMap);
 
-/* require is a function provided by the arcGIS API - fetches various API components 
-  arguments to the require array have a 1 to 1 mapping to the callback functions parameters*/ 
-require(["esri/Map", "esri/views/MapView", "esri/widgets/Zoom", "esri/layers/TileLayer", 
-        "esri/request", "esri/core/Collection", "esri/widgets/Legend", "esri/Basemap", "esri/layers/support/TileInfo", "esri/widgets/BasemapToggle",
-        "esri/widgets/Search", "esri/Graphic", "esri/core/watchUtils", "esri/geometry/Circle", "esri/geometry/support/webMercatorUtils", 
-        "esri/geometry/geometryEngine", "esri/geometry/Point", "esri/geometry/Polyline", "esri/geometry/geometryEngineAsync", "esri/geometry/Polygon", 
-        "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleFillSymbol", 
-        "esri/widgets/ScaleBar", "esri/widgets/Print", "esri/geometry/projection", "esri/geometry/SpatialReference", "esri/layers/support/Field", 
-        "esri/PopupTemplate", "esri/popup/content/FieldsContent", "esri/popup/FieldInfo", "dojo/domReady!"],
-function(eMapObject, eMapView, eZoom, eTileLayer, eArcRequest, eCollection, eLegend, eBasemap, eTileInfo, eBasemapToggle, eSearch, 
-        eGraphic, eWatch, eCircle, eWebMercTools, eGeometryEngine, ePoint, eLine, eAsyncGeometryEngine, ePolygon, eFeatureLayer,
-        eGraphicsLayer, eSimpleMarkerSymbol, eSimpleFillSymbol, eScaleBar, ePrint, eProjection, eSpatialReference, eField, ePopupTemplate, 
-        eFieldsContent, eFieldInfo){
-	
-  MapObject=eMapObject, MapView=eMapView, Zoom=eZoom, TileLayer=eTileLayer, ArcRequest=eArcRequest, Collection=eCollection, 
-        Legend=eLegend, Basemap=eBasemap, TileInfo=eTileInfo, BasemapToggle=eBasemapToggle, Search=eSearch, Graphic=eGraphic, Watch=eWatch, 
-        Circle=eCircle, WebMercTools=eWebMercTools, GeometryEngine=eGeometryEngine, Point=ePoint, Line=eLine, 
-        AsyncGeometryEngine=eAsyncGeometryEngine, Polygon=ePolygon, FeatureLayer=eFeatureLayer, GraphicsLayer=eGraphicsLayer, 
-        SimpleMarkerSymbol=eSimpleMarkerSymbol, SimpleFillSymbol=eSimpleFillSymbol, ScaleBar=eScaleBar, Print=ePrint, Projection=eProjection, 
-        SpatialReference=eSpatialReference, Field=eField, PopupTemplate=ePopupTemplate, FieldsContent=eFieldsContent, FieldInfo=eFieldInfo;
-
-	// create basemap (brown one, higher detail)
-  var brownmap =  new Basemap({
-		baseLayers: [new TileLayer({
+function setupMap(){
+  var brownmap =  new ArcGIS.API.Basemap ({
+		baseLayers: [new ArcGIS.API.TileLayer ({
       url: "http://server.arcgisonline.com/arcgis/rest/services/World_Shaded_Relief/MapServer", 
       title: "world_physical_basemap"})], 
 		title: "historically accurate", 
@@ -914,8 +847,8 @@ function(eMapObject, eMapView, eZoom, eTileLayer, eArcRequest, eCollection, eLeg
 		thumbnailUrl: "images/brownmap_icon.PNG"
 	});
     // create basemap (green one, looks better than others)
-	var greenmap = new Basemap({
-		baseLayers: [new TileLayer({
+	var greenmap = new ArcGIS.API.Basemap({
+		baseLayers: [new ArcGIS.API.TileLayer({
         url: "http://server.arcgisonline.com/arcgis/rest/services/World_Physical_Map/MapServer", 
         title: "world_physical_basemap"}
       )],	
@@ -924,57 +857,41 @@ function(eMapObject, eMapView, eZoom, eTileLayer, eArcRequest, eCollection, eLeg
 		thumbnailUrl: "images/greenmap_icon.PNG"
 	});
 	// load the default basemap 
-	map_obj = new MapObject({basemap: brownmap});
+	map_obj = new ArcGIS.API.MapObject({basemap: brownmap});
 	
   /* used to establish the zoom levels for the basemap & resolutions for each level */
-  var extended_tilelods = [
-    {"level": 3, "resolution": 19567.879241000017, "scale": 73957190.94894437},
-    {"level": 4, "resolution": 9783.939620500008, "scale": 36978595.47447219},
-    {"level": 5, "resolution": 4891.969810250004, "scale": 18489297.737236094},
-    {"level": 6, "resolution": 2445.984905125002, "scale": 9244648.868618047},
-    {"level": 7, "resolution": 1222.992452562501, "scale": 4622324.434309023},
-    {"level": 8, "resolution": 611.4962262812505, "scale": 2311162.2171545117}, 
-    {"level": 9, "resolution": 305.74811314055756, "scale": 1155581.108577}, 
-    {"level": 10, "resolution": 152.87405657041106, "scale": 577790.554289}, 
-    {"level": 11, "resolution": 76.43702828507324, "scale": 288895.277144}, 
-    {"level": 12, "resolution": 38.21851414253662, "scale": 144447.638572}, 
-    {"level": 13, "resolution": 19.10925707126831, "scale": 72223.819286},
-    {"level": 14, "resolution": 9.554628535634155, "scale": 36111.909643}, 
-    {"level": 15, "resolution": 4.77731426794937, "scale": 18055.954822}, 
-    {"level": 16, "resolution": 2.388657133974685, "scale": 9027.977411}
-  ];
 
-	map_view = new MapView({
-		container: "mapview",
+	map_view = new ArcGIS.API.MapView({
+		container: "map_view_container",
 		map: map_obj, 
 		center: [-85.18798828122625, 32.86113232280214], 
 		zoom: 3, 
-		constraints: {lods: extended_tilelods}
+		constraints: {lods: Utils.extended_tilelods}
 	});
 
 	// create widgets & add to view
 	map_view.ui.components = ["attribution"];
 	
-  var zoom = new Zoom({
+  var zoom = new ArcGIS.API.Zoom({
     view: map_view, 
     container: "zoom_widget"
   });
 	map_view.ui.add(zoom, "manual"); // manual specifies that you will position the element manually, in this case within the zoom_widget div 
 	
-  var legend = new Legend({
+  var legend = new ArcGIS.API.Legend({
     view: map_view, 
     defaultsymbol: false, 
     container: "legend_widget"
   });
 	map_view.ui.add(legend, "manual");
 	
-  let ESRI_search = new Search({
+  let ESRI_search = new ArcGIS.API.Search({
     view: map_view, 
     container: "search_widget"
   });
 	map_view.ui.add(ESRI_search, "manual");
 
-  var scale_bar = new ScaleBar({
+  var scale_bar = new ArcGIS.API.ScaleBar({
     view: map_view, 
     container: "scalebar_widget", 
     unit: "non-metric", 
@@ -982,7 +899,7 @@ function(eMapObject, eMapView, eZoom, eTileLayer, eArcRequest, eCollection, eLeg
   });
   map_view.ui.add(scale_bar, {position: "manual"});
 
-  var print_obj = new Print({
+  var print_obj = new ArcGIS.API.Print({
     view: map_view, 
     container: "print_widget", 
     printServiceUrl: base_url + "Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
@@ -990,7 +907,7 @@ function(eMapObject, eMapView, eZoom, eTileLayer, eArcRequest, eCollection, eLeg
   map_view.ui.add(print_obj, {position: "manual"});
 	
     // toggles between 2 baemaps - if you need more than 2 basemaps you have to use the basemap gallery widget 
-	var basemapToggle = new BasemapToggle({
+	var basemapToggle = new ArcGIS.API.BasemapToggle({
 		view: map_view,
 		nextBasemap: greenmap,
 		container: "toggle_widget",
@@ -1015,11 +932,11 @@ function(eMapObject, eMapView, eZoom, eTileLayer, eArcRequest, eCollection, eLeg
 	// set up an event listener for the REST URL box
   var service_input = document.getElementById("service_input");
 	service_input.addEventListener("change", change_services_url);
-}); /* end require  */
+}
 
 // add services to the drop down list of services on the layers pane, prime event listeners to load them, then call load_service to load the first service in the list
 function populate_services(){
-	ArcRequest(base_url + "?f=json", {responseType: "json"})
+	ArcGIS.API.ArcRequest(base_url + "?f=json", {responseType: "json"})
 	.then(function(response){
 		let server_json = response.data;
 		// add event listeners so that when a new service is selected - fetch that service, render it on the map, & fill the layers pane with checkboxes for its layers
@@ -1056,7 +973,7 @@ function load_service(first_time){
   // make a json request to find out how many layers there are 
   let featureserver_info_url = base_url + selected_service_name + "/FeatureServer?f=pjson"; 
 
-  ArcRequest(featureserver_info_url).then(function(service_json_response){
+  ArcGIS.API.ArcRequest(featureserver_info_url).then(function(service_json_response){
     feature_layers_array = []; 
     background_layers = []; 
     global_title_rows = []; 
@@ -1090,13 +1007,13 @@ function load_service(first_time){
     for (let x = 0; x < total_layers; x++){
 
       let layer_query_url = server_query_url + layer_ids[x];      
-      let promise = ArcRequest(layer_query_url + json_query).then(function(layer_json_response){
+      let promise = ArcGIS.API.ArcRequest(layer_query_url + json_query).then(function(layer_json_response){
           
         let fields = layer_json_response.data.fields; 
         let popup_field_infos = [];
         let popup_field_names = []; 
         for (let y = 0; y < fields.length; y++){
-          popup_field_infos.push(new FieldInfo({
+          popup_field_infos.push(new ArcGIS.API.FieldInfo({
             fieldName: fields[y].name,
             label: fields[y].alias,
             visible: true, 
@@ -1106,14 +1023,14 @@ function load_service(first_time){
         }
         let display_field = layer_json_response.data.displayField; 
 
-        let popup_template = new PopupTemplate({
+        let popup_template = new ArcGIS.API.PopupTemplate({
           content: [{
             type: "fields", 
             fieldInfos: popup_field_infos
           }]
         });
 
-        let new_feature_layer = new FeatureLayer({
+        let new_feature_layer = new ArcGIS.API.FeatureLayer({
           url: layer_query_url, 
           outFields: popup_field_names, 
           popupTemplate: popup_template
@@ -1217,10 +1134,10 @@ function load_service(first_time){
     }// end of loop for adding layer checkboxes
 
     // remove any old layer selector options throughout the various panels 
-    for (let x = 0; x < selector_elements_list.length; x++){
-      let old_count = selector_elements_list[x].childElementCount;
+    for (let x = 0; x < Utils.selector_elements_list.length; x++){
+      let old_count = Utils.selector_elements_list[x].childElementCount;
       for (let y = 0; y < old_count; y++){
-        selector_elements_list[x].removeChild(selector_elements_list[x].childNodes[0]); 
+        Utils.selector_elements_list[x].removeChild(Utils.selector_elements_list[x].childNodes[0]); 
       }
     }
     let heatmap_child_count = heatmap_layer_selector.childElementCount; 
@@ -1231,8 +1148,8 @@ function load_service(first_time){
     for (let x = 0; x < layer_ids.length; x++){
       let layer_id = layer_ids[x]; 
       let featurelayer = feature_layers_array[x];
-      for (let z = 0; z < selector_elements_list.length; z++){
-        add_option(selector_elements_list[z], featurelayer, layer_id);
+      for (let z = 0; z < Utils.selector_elements_list.length; z++){
+        add_option(Utils.selector_elements_list[z], featurelayer, layer_id);
       }
     }
     for (let x = 0; x < layer_ids.length; x++){
@@ -1290,26 +1207,26 @@ function load_service(first_time){
     }
     Promise.all(promise_array).then(() => {
 
-      const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+      const WGS84_spatial_reference = new ArcGIS.API.SpatialReference({wkid: 4326});
 
-      Projection.load().then(function(){
+      ArcGIS.API.Projection.load().then(function(){
         for (let x = 0; x < queried_features_array.length; x++){
           let prior_spatial_reference
           if (queried_features_array[x]["data"].spatialReference.wkid != null){
-            prior_spatial_reference = new SpatialReference({
+            prior_spatial_reference = new ArcGIS.API.SpatialReference({
               wkid: queried_features_array[x]["data"].spatialReference.wkid
             });
           }
           else if (queried_features_array[x]["data"].spatialReference.wkt != null){
-            prior_spatial_reference = new SpatialReference({
+            prior_spatial_reference = new ArcGIS.API.SpatialReference({
               wkt: queried_features_array[x]["data"].spatialReference.wkt
             });
           }
 
-          let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+          let transformation_object = ArcGIS.API.Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
           
           queried_features_array[x]["data"].features.forEach(function(element) {
-            element.geometry = Projection.project(element.geometry, WGS84_spatial_reference);
+            element.geometry = ArcGIS.API.Projection.project(element.geometry, WGS84_spatial_reference);
           });
         }
       }, 
@@ -1347,7 +1264,7 @@ function create_graphic_layers(){
       let fields = []; 
       for (let y = 0; y < feature_fields.length; y++){
         fields.push(
-          new Field({
+          new ArcGIS.API.Field({
             alias: feature_fields[y].alias,
             editable: true, 
             name: feature_fields[y].name, 
@@ -1369,7 +1286,7 @@ function create_graphic_layers(){
 
       let reduced_fields = []; 
       let found_oid = false; 
-      let new_oid_field = new Field({
+      let new_oid_field = new ArcGIS.API.Field({
         alias: "new__oid",
         editable: true, 
         name: "new__oid", 
@@ -1447,9 +1364,9 @@ function create_graphic_layers(){
         reduced_fields.push(fields[z].name);
       }
 
-      let WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+      let WGS84_spatial_reference = new ArcGIS.API.SpatialReference({wkid: 4326});
 
-      let new_feature_layer = new FeatureLayer({
+      let new_feature_layer = new ArcGIS.API.FeatureLayer({
         source: [],
         fields: fields,
         outFields: reduced_fields,
@@ -1542,7 +1459,7 @@ function create_point_graphic(x, y, color, size, style, attributes){
 		size: size, 
 		style: style
 	}
-	let graphic = new Graphic({geometry: point, symbol: symbol, attributes: attributes}); 
+	let graphic = new ArcGIS.API.Graphic({geometry: point, symbol: symbol, attributes: attributes}); 
 	return graphic;
 }
 
@@ -1561,12 +1478,10 @@ function create_line_graphic(paths, color, cap, join, width, style, attributes){
 		width: width, 
 		style: style
 	}
-	let graphic = new Graphic({geometry: lines, symbol: symbol, attributes: attributes}); 
+	let graphic = new ArcGIS.API.Graphic({geometry: lines, symbol: symbol, attributes: attributes}); 
 	return graphic;
 }
 
-/* 	https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-SimpleFillSymbol.html
-	example: drawPolygon([[x1, y1], [x2, y2], [x3, y3], [x1, y1]], "brown", "red", "round", "bevel", 7, "backward-diagonal", "solid")*/ 
 function create_polygon_graphic(rings, fill_color, fill_style, outline_color, outline_style, width, cap, join, attributes){
 	let polygon = {
 		type: "polygon", 
@@ -1584,7 +1499,7 @@ function create_polygon_graphic(rings, fill_color, fill_style, outline_color, ou
 			join: join
 		}
 	}
-	graphic = new Graphic({geometry: polygon, symbol: symbol, attributes: attributes}); 
+	graphic = new ArcGIS.API.Graphic({geometry: polygon, symbol: symbol, attributes: attributes}); 
 	return graphic; 
 }
 
@@ -1605,19 +1520,19 @@ function append_feature_counts(){
 function create_geometry_class_object(input_geometry){
 	var class_object; 
 	if (input_geometry.rings != undefined){
-		class_object = new Polygon({
+		class_object = new ArcGIS.API.Polygon({
 			rings: input_geometry.rings, 
 			spatialReference: 4326, 
 		});
 	}
 	else if (input_geometry.paths != undefined){
-		class_object = new Line({
+		class_object = new ArcGIS.API.Line({
 			paths: input_geometry.paths, 
 			spatialReference: 4326
 		});
 	}
 	else{
-		class_object = new Point({
+		class_object = new ArcGIS.API.Point({
 			x: input_geometry.x, 
 			y: input_geometry.y, 
 			spatialReference: 4326
@@ -1640,7 +1555,7 @@ function set_polygon_outline_widths(){
 
       for (let x = 0; x < features.length; x++){
         let class_geometry_object = create_geometry_class_object(features[x].geometry);
-        let promise = AsyncGeometryEngine.geodesicArea(class_geometry_object, "square-miles")
+        let promise = ArcGIS.API.AsyncGeometryEngine.geodesicArea(class_geometry_object, "square-miles")
         .then(function(area){
           areas_array.push(area);
           let count = 0;
@@ -1715,7 +1630,7 @@ function project_and_zoom(fullExtent){
 		}// end query 
 	}// end options 
 
-	ArcRequest(url, options)
+	ArcGIS.API.ArcRequest(url, options)
 	.then(response => {
 		// construct a custom extent object with the response 
 		let extent_object = {};
@@ -2099,20 +2014,20 @@ function filter_by_extent(mode){
 
       if (query_results.features.length > 0 && query_results.spatialReference.isWGS84 == false){
         let prior_spatial_reference; 
-        const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+        const WGS84_spatial_reference = new ArcGIS.API.SpatialReference({wkid: 4326});
 
-        let all_promised = Projection.load().then(function(){
+        let all_promised = ArcGIS.API.Projection.load().then(function(){
           if (query_results.spatialReference.wkid != null){
-            prior_spatial_reference = new SpatialReference({wkid: query_results.spatialReference.wkid});
+            prior_spatial_reference = new ArcGIS.API.SpatialReference({wkid: query_results.spatialReference.wkid});
           }
           else if (query_results.spatialReference.wkt != null){
-            prior_spatial_reference = new SpatialReference({wkt: query_results.spatialReference.wkt});
+            prior_spatial_reference = new ArcGIS.API.SpatialReference({wkt: query_results.spatialReference.wkt});
           }
 
-          let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+          let transformation_object = ArcGIS.API.Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
 
           for (let x = 0; x < query_results.features.length; x++){
-            query_results.features[x].geometry = Projection.project(query_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
+            query_results.features[x].geometry = ArcGIS.API.Projection.project(query_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
           }
           current_layers_query = {"data": query_results, "layer_id": selected_id};
           fill_attribute_table(1, true, false);
@@ -2153,7 +2068,7 @@ function initialize_listeners(){
 	table_dataset_selector.addEventListener("change", function(){table_select_handler();});
   
   // with this listener, every time the map stops moving and the filter button is active, the filter function gets called. this ongoingly filters
-	Watch.whenTrue(map_view, "stationary", function(){
+	ArcGIS.API.Watch.whenTrue(map_view, "stationary", function(){
 		if (State.filterActive.get() == true){
       filter_by_extent("on");
 		}
@@ -2249,45 +2164,45 @@ function intersect_function(){
   var intersected_fields_two = null;
   var error_flag = false; 
   var promises_array = [];
-  const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+  const WGS84_spatial_reference = new ArcGIS.API.SpatialReference({wkid: 4326});
 
   let all_promised = feature_layer_one.queryFeatures(query_one)
   .then(function(query_one_results){
       
-    let all_promised = Projection.load().then(function(){
+    let all_promised = ArcGIS.API.Projection.load().then(function(){
         let prior_spatial_reference; 
 
         if (query_one_results.features.length > 0 && query_one_results.spatialReference.isWGS84 == false){
 
             if (query_one_results.spatialReference.wkid != null){
-                prior_spatial_reference = new SpatialReference({wkid: query_one_results.spatialReference.wkid});
+                prior_spatial_reference = new ArcGIS.API.SpatialReference({wkid: query_one_results.spatialReference.wkid});
             }
             else if (query_one_results.spatialReference.wkt != null){
-                prior_spatial_reference = new SpatialReference({wkt: query_one_results.spatialReference.wkt});
+                prior_spatial_reference = new ArcGIS.API.SpatialReference({wkt: query_one_results.spatialReference.wkt});
             }
 
-            let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+            let transformation_object = ArcGIS.API.Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
             
             for (let x = 0; x < query_one_results.features.length; x++){
-                query_one_results.features[x].geometry = Projection.project(query_one_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
+                query_one_results.features[x].geometry = ArcGIS.API.Projection.project(query_one_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
             }
         }
     }).then(function(){
       let all_promised = feature_layer_two.queryFeatures(query_two)
       .then(function(query_two_results){
-        let all_promised = Projection.load().then(function(){
+        let all_promised = ArcGIS.API.Projection.load().then(function(){
           let prior_spatial_reference; 
           if (query_two_results.features.length > 0 && query_two_results.spatialReference.isWGS84 == false){
             if (query_two_results.spatialReference.wkid != null){
-              prior_spatial_reference = new SpatialReference({wkid: query_two_results.spatialReference.wkid});
+              prior_spatial_reference = new ArcGIS.API.SpatialReference({wkid: query_two_results.spatialReference.wkid});
             }
             else if (query_two_results.spatialReference.wkt != null){
-              prior_spatial_reference = new SpatialReference({wkt: query_two_results.spatialReference.wkt});
+              prior_spatial_reference = new ArcGIS.API.SpatialReference({wkt: query_two_results.spatialReference.wkt});
             }
-            let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+            let transformation_object = ArcGIS.API.Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
             
             for (let x = 0; x < query_two_results.features.length; x++){
-              query_two_results.features[x].geometry = Projection.project(query_two_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
+              query_two_results.features[x].geometry = ArcGIS.API.Projection.project(query_two_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
             }
           }
               
@@ -2302,10 +2217,10 @@ function intersect_function(){
             for (let y = 0; y < query_two_results.features.length; y++){
               let geometry_two = query_two_results.features[y].geometry; 
 
-              let promised_indicator = AsyncGeometryEngine.intersects(geometry_one, geometry_two)
+              let promised_indicator = ArcGIS.API.AsyncGeometryEngine.intersects(geometry_one, geometry_two)
               .then(function(results){
                 if (results == true){
-                  let promised_geometry = AsyncGeometryEngine.intersect(geometry_one, geometry_two)
+                  let promised_geometry = ArcGIS.API.AsyncGeometryEngine.intersect(geometry_one, geometry_two)
                   .then(function(results){
                     if (results != null){
                       var duplicate = false 
@@ -2364,7 +2279,7 @@ function intersect_function(){
           oid_one_name = intersected_fields_one[x]["name"];
 
           new_oid_name = "new__oid";
-          new_oid_field = new Field({
+          new_oid_field = new ArcGIS.API.Field({
             alias: new_oid_name, 
             defaultValue: intersected_fields_one[x]["defaultValue"], 
             description: intersected_fields_one[x]["description"], 
@@ -2450,7 +2365,7 @@ function intersect_function(){
 
         for (let x = 0; x < current_layers_query["data"].features.length; x++){
           let class_geometry_object = create_geometry_class_object(current_layers_query["data"].features[x].geometry);
-          let area = GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
+          let area = ArcGIS.API.GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
           if (area > 100000){
             continue; 
           }
@@ -2500,7 +2415,7 @@ function intersect_function(){
         // get area to make sure you don't have a full extent object
         if (geometry_type == "polygon"){
           let class_geometry_object = create_geometry_class_object(WGS84_intersected_results[x]);
-          let area = GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
+          let area = ArcGIS.API.GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
           if (area > 100000){
             continue; 
           }
@@ -2528,7 +2443,7 @@ function intersect_function(){
       var new_title = "intersection " + count.toString(); 
 
       // now construct the new feature layer & add it to the map             
-      var new_feature_layer = new FeatureLayer({
+      var new_feature_layer = new ArcGIS.API.FeatureLayer({
         source: graphics_objects_array,
         fields: final_fields,
         outFields: reduced_fields,
@@ -2563,11 +2478,11 @@ function intersect_function(){
           fill_attribute_table(1, true, false);
 
           // now add the new feature layer to selectors throughout the map 
-          for (let z = 0; z < selector_elements_list.length; z++){
+          for (let z = 0; z < Utils.selector_elements_list.length; z++){
             let layer_option = document.createElement("option");
             layer_option.textContent = new_feature_layer.title;
             layer_option.id = new_layer_id;                 // id is needed later by the options handler when an option is selected 
-            selector_elements_list[z].append(layer_option);
+            Utils.selector_elements_list[z].append(layer_option);
           }
           table_dataset_selector[table_dataset_selector.length - 1].selected = true;
 
@@ -2688,10 +2603,10 @@ function intersect_function(){
               layer_ids.push(feature_layers_array[x].layerId); 
             }
             // remove the option from various selectors 
-            for (let x = 0; x < selector_elements_list.length; x++){
-              for (let y = 0; y < selector_elements_list[x].length; y++){
-                if (selector_elements_list[x].options[y].id == new_layer_id){
-                  selector_elements_list[x].remove(y); 
+            for (let x = 0; x < Utils.selector_elements_list.length; x++){
+              for (let y = 0; y < Utils.selector_elements_list[x].length; y++){
+                if (Utils.selector_elements_list[x].options[y].id == new_layer_id){
+                  Utils.selector_elements_list[x].remove(y); 
                 }
               }
             }
@@ -2807,23 +2722,23 @@ function buffer_function(){
 
         // convert the
         if (query_results.features.length > 0){
-            const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
-            let all_promised = Projection.load().then(function(){
+            const WGS84_spatial_reference = new ArcGIS.API.SpatialReference({wkid: 4326});
+            let all_promised = ArcGIS.API.Projection.load().then(function(){
                 let prior_spatial_reference; 
 
                 if (query_results.spatialReference.isWGS84 == false){
 
                     if (query_results.spatialReference.wkid != null){
-                        prior_spatial_reference = new SpatialReference({wkid: query_results.spatialReference.wkid});
+                        prior_spatial_reference = new ArcGIS.API.SpatialReference({wkid: query_results.spatialReference.wkid});
                     }
                     else if (query_results.spatialReference.wkt != null){
-                        prior_spatial_reference = new SpatialReference({wkt: query_results.spatialReference.wkt});
+                        prior_spatial_reference = new ArcGIS.API.SpatialReference({wkt: query_results.spatialReference.wkt});
                     }
 
-                    let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+                    let transformation_object = ArcGIS.API.Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
                     
                     for (let x = 0; x < query_results.features.length; x++){
-                        query_results.features[x].geometry = Projection.project(query_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
+                        query_results.features[x].geometry = ArcGIS.API.Projection.project(query_results.features[x].geometry, WGS84_spatial_reference, transformation_object);
                     }
                 }
                 
@@ -2841,12 +2756,12 @@ function buffer_function(){
                         let areas_array = []; 
 
                         let class_geometry_object = create_geometry_class_object(query_results.features[x].geometry);
-                        let area = GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
+                        let area = ArcGIS.API.GeometryEngine.geodesicArea(class_geometry_object, "square-miles");
                         if (area > 100000){
                             continue; 
                         }
                     }
-                    let buffer_object = AsyncGeometryEngine.geodesicBuffer(esri_object, distance, units)
+                    let buffer_object = ArcGIS.API.AsyncGeometryEngine.geodesicBuffer(esri_object, distance, units)
                     .then(function(response){
                         WSG84_buffer_results.push({"geometry": response, "attributes": query_results.features[x].attributes});
                         return response;
@@ -2886,7 +2801,7 @@ function buffer_function(){
 
             for (let x = 0; x < WSG84_buffer_results.length; x++){
                 let class_geometry_object = create_geometry_class_object(WSG84_buffer_results[x]["geometry"]);
-                let promise = AsyncGeometryEngine.geodesicArea(class_geometry_object, "square-miles")
+                let promise = ArcGIS.API.AsyncGeometryEngine.geodesicArea(class_geometry_object, "square-miles")
                 .then(function(results){
                     if (!(results > 100000)){
                         areas_array.push(results);
@@ -2966,7 +2881,7 @@ function buffer_function(){
 
                 var reduced_fields = Object.getOwnPropertyNames(WSG84_buffer_results[0]["attributes"]);
 
-                var new_feature_layer = new FeatureLayer({              // now construct the new feature layer & add it to the map  
+                var new_feature_layer = new ArcGIS.API.FeatureLayer({              // now construct the new feature layer & add it to the map  
                     source: graphics_objects_array,
                     fields: query_fields,
                     outFields: reduced_fields,
@@ -2999,11 +2914,11 @@ function buffer_function(){
                         current_layers_query = query_object;
 
                         // now add the new feature layer to selectors throughout the map 
-                        for (let z = 0; z < selector_elements_list.length; z++){
+                        for (let z = 0; z < Utils.selector_elements_list.length; z++){
                             let layer_option = document.createElement("option");
                             layer_option.textContent = new_feature_layer.title;
                             layer_option.id = new_layer_id;                 // id is needed later by the options handler when an option is selected 
-                            selector_elements_list[z].append(layer_option);
+                            Utils.selector_elements_list[z].append(layer_option);
                         }
 
                         let checkbox = document.createElement("input");
@@ -3116,10 +3031,10 @@ function buffer_function(){
                             }
 
                             // remove the option from various selectors 
-                            for (let x = 0; x < selector_elements_list.length; x++){
-                                for (let y = 0; y < selector_elements_list[x].length; y++){
-                                    if (selector_elements_list[x].options[y].id == new_layer_id){
-                                        selector_elements_list[x].remove(y); 
+                            for (let x = 0; x < Utils.selector_elements_list.length; x++){
+                                for (let y = 0; y < Utils.selector_elements_list[x].length; y++){
+                                    if (Utils.selector_elements_list[x].options[y].id == new_layer_id){
+                                        Utils.selector_elements_list[x].remove(y); 
                                     }
                                 }
                             }
@@ -3205,7 +3120,7 @@ function heatmap_function(){
         random_indices.push(random_index);
         
         let center_point = queried_features["data"].features[random_indices[x]].geometry; 
-        let edge_point = new Point({
+        let edge_point = new ArcGIS.API.Point({
             x: center_point.x  - tolerance_radius, 
             y: center_point.y, 
             spatialReference: 4326
@@ -3217,7 +3132,7 @@ function heatmap_function(){
         }
 
         // now get a geodesic buffer around that point
-        let promise = AsyncGeometryEngine.geodesicBuffer(center_point, radius, "miles").then(function(buffer){
+        let promise = ArcGIS.API.AsyncGeometryEngine.geodesicBuffer(center_point, radius, "miles").then(function(buffer){
             let buffer_object = create_graphics_object(buffer, {}); 
             let count = 0; 
 
@@ -3274,7 +3189,7 @@ function heatmap_function(){
             }
         let new_layer_id = max_id + 1;
 
-        const WGS84_spatial_reference = new SpatialReference({wkid: 4326});
+        const WGS84_spatial_reference = new ArcGIS.API.SpatialReference({wkid: 4326});
 
         let graphics_objects_array = [];
         var oid_name = null;
@@ -3283,24 +3198,24 @@ function heatmap_function(){
 
         let query_results = queried_features["data"]; 
  
-        let promise = Projection.load().then(function(){
+        let promise = ArcGIS.API.Projection.load().then(function(){
             for (let x = 0; x < query_results.features.length; x++){
                 let prior_spatial_reference
                 if (query_results.spatialReference.wkid != null){
-                    prior_spatial_reference = new SpatialReference({
+                    prior_spatial_reference = new ArcGIS.API.SpatialReference({
                         wkid: query_results.spatialReference.wkid
                     });
                 }
                 else if (query_results.spatialReference.wkt != null){
-                    prior_spatial_reference = new SpatialReference({
+                    prior_spatial_reference = new ArcGIS.API.SpatialReference({
                         wkt: query_results.spatialReference.wkt
                     });
                 }
 
-                let transformation_object = Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
+                let transformation_object = ArcGIS.API.Projection.getTransformation(prior_spatial_reference, WGS84_spatial_reference);
                 
                 query_results.features.forEach(function(element) {
-                    element.geometry = Projection.project(element.geometry, WGS84_spatial_reference);
+                    element.geometry = ArcGIS.API.Projection.project(element.geometry, WGS84_spatial_reference);
                 });
             }
             return null; 
@@ -3329,7 +3244,7 @@ function heatmap_function(){
 
         }).then(function(){
 
-            let new_feature_layer = new FeatureLayer({              // now construct the new feature layer & add it to the map  
+            let new_feature_layer = new ArcGIS.API.FeatureLayer({              // now construct the new feature layer & add it to the map  
                 source: graphics_objects_array,
                 maximumNumberOfFeatures: 60000, 
                 layerId: new_layer_id,
@@ -3646,7 +3561,7 @@ function zoom_to_feature(e){
             x: target_geometry.x, 
             y: target_geometry.y
         }
-        graphic = new Graphic({geometry: point, symbol: symbol}); 
+        graphic = new ArcGIS.API.Graphic({geometry: point, symbol: symbol}); 
     }
     else if (geometry_type == "polyline"){
         symbol = {
@@ -3661,7 +3576,7 @@ function zoom_to_feature(e){
             type: "polyline", 
             paths: target_geometry.paths
         }
-        graphic = new Graphic({geometry: lines, symbol: symbol}); 
+        graphic = new ArcGIS.API.Graphic({geometry: lines, symbol: symbol}); 
     }
     else if (geometry_type == "polygon"){
         let outline_color = Colors.hex_to_hsla(Colors.getColor("maptools", "seagreen"), .95); 
@@ -3683,7 +3598,7 @@ function zoom_to_feature(e){
             type: "polygon", 
             rings: target_geometry.rings
         }
-        graphic = new Graphic({geometry: polygon, symbol: symbol}); 
+        graphic = new ArcGIS.API.Graphic({geometry: polygon, symbol: symbol}); 
     }
 
     map_view.graphics.add(graphic);
@@ -3730,25 +3645,25 @@ function click_select_function(e){
 		tolerance_radius = 6359560;				// 1300 & 6359560 are dependent, so be careful with adjusting either 
 	}
 
-  var WGS84_center_point = WebMercTools.webMercatorToGeographic({"x": clicked_point.x, "y": clicked_point.y});
-	var WGS84_edge_point = WebMercTools.webMercatorToGeographic({"x": point.x  - tolerance_radius, "y": point.y}); // you might need to check if this needs flipping from + to - at some point 
+  var WGS84_center_point = ArcGIS.API.WebMercTools.webMercatorToGeographic({"x": clicked_point.x, "y": clicked_point.y});
+	var WGS84_edge_point = ArcGIS.API.WebMercTools.webMercatorToGeographic({"x": point.x  - tolerance_radius, "y": point.y}); // you might need to check if this needs flipping from + to - at some point 
 	var WGS84_radius = Math.abs(WGS84_center_point.x - WGS84_edge_point.x);
 
     // needed to create a circle around the mouse click point 
-	var WGS84_center_point_object = new Point({
+	var WGS84_center_point_object = new ArcGIS.API.Point({
 		x: WGS84_center_point.x, 
 		y: WGS84_center_point.y, 
 		spatialReference: 4326
 	});
 	// get a circular buffer around the central point. geodesic buffers ended up more buggy at the map edges than regular circles with their oblong shape
-  var search_circle = new Circle(
+  var search_circle = new ArcGIS.API.Circle(
 		WGS84_center_point_object, 
 		{
 			"radius": tolerance_radius * .00001, 
 			"radiusUnit": "miles" 
 		}
 	);
-  var small_search_circle = new Circle(
+  var small_search_circle = new ArcGIS.API.Circle(
 		WGS84_center_point_object, 
 		{
 			"radius": (tolerance_radius * .00001) * 0.13, 
@@ -3874,14 +3789,14 @@ function click_select_function(e){
               let layers_single_geometry = array_results[x][y].geometry;
 
               // get the distance from the center point to that geometry.
-              let distance_from_center = new Line({
+              let distance_from_center = new ArcGIS.API.Line({
                 paths: [
                   [layers_single_geometry.x, layers_single_geometry.y],
                   [WGS84_center_point.x, WGS84_center_point.y]
                 ],
                 spatialReference: 4326
               });
-              let distance = GeometryEngine.geodesicLength(distance_from_center, "miles");
+              let distance = ArcGIS.API.GeometryEngine.geodesicLength(distance_from_center, "miles");
               if (closest_point == null || smallest_distance > distance){
                 updated_geometry_flag = true; 
                 smallest_distance = distance;
@@ -3898,8 +3813,8 @@ function click_select_function(e){
               let layers_single_geometry = array_results[x][y].geometry;
 
               let path = layers_single_geometry.paths; 
-              let nearest_point = GeometryEngine.nearestCoordinate(layers_single_geometry, WGS84_center_point_object);
-              let clipped_line = new Line({
+              let nearest_point = ArcGIS.API.GeometryEngine.nearestCoordinate(layers_single_geometry, WGS84_center_point_object);
+              let clipped_line = new ArcGIS.API.Line({
                 paths: [
                   [nearest_point.coordinate.x, nearest_point.coordinate.y], 
                   [WGS84_center_point.x, WGS84_center_point.y]
@@ -3921,7 +3836,7 @@ function click_select_function(e){
               let layers_single_attribute = array_results[x][y].attributes;
               let layers_single_geometry = array_results[x][y].geometry;
 
-              let area = GeometryEngine.geodesicArea(layers_single_geometry, "square-miles");
+              let area = ArcGIS.API.GeometryEngine.geodesicArea(layers_single_geometry, "square-miles");
 
               if (smallest_area == null || area < smallest_area){
                 updated_geometry_flag = true; 
@@ -3968,7 +3883,7 @@ function click_select_function(e){
           x: closest_point.x, 
           y: closest_point.y
         }
-        graphic = new Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
+        graphic = new ArcGIS.API.Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
         return {"graphic": graphic, "index": index, "background_index": background_index}; 
       }
       else if (closest_line != null){
@@ -3980,7 +3895,7 @@ function click_select_function(e){
           type: "polyline",
           paths: closest_line.paths
         }
-        graphic = new Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
+        graphic = new ArcGIS.API.Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
         return {"graphic": graphic, "index": index, "background_index": background_index}; 
       }
       else if (closest_polygon != null){
@@ -3992,7 +3907,7 @@ function click_select_function(e){
           type: "polygon",
           rings: closest_polygon.rings
         }
-        graphic = new Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
+        graphic = new ArcGIS.API.Graphic({geometry: new_geometry, symbol: symbol, attributes: final_features.attributes});
         return {"graphic": graphic, "index": index, "background_index": background_index};
       }
     });
@@ -4051,8 +3966,8 @@ function drag_select_function(e){
 
   var current_point = map_view.toMap(e); 
 	var original_point = map_view.toMap(e.origin); 
-	var WGS84_original_point = WebMercTools.webMercatorToGeographic({"x": original_point.x, "y": original_point.y});
-	var WGS84_current_point = WebMercTools.webMercatorToGeographic({"x": current_point.x, "y": current_point.y});
+	var WGS84_original_point = ArcGIS.API.WebMercTools.webMercatorToGeographic({"x": original_point.x, "y": original_point.y});
+	var WGS84_current_point = ArcGIS.API.WebMercTools.webMercatorToGeographic({"x": current_point.x, "y": current_point.y});
 
   var rectangle_rings = [
 		[[WGS84_original_point.x, WGS84_original_point.y], 
@@ -4061,7 +3976,7 @@ function drag_select_function(e){
 		[WGS84_original_point.x, WGS84_current_point.y], 
 		[WGS84_original_point.x, WGS84_original_point.y]]
 	];
-	var new_rectangle = new Polygon({
+	var new_rectangle = new ArcGIS.API.Polygon({
 		rings: rectangle_rings, 
 		spatialReference: 4326
 	});
@@ -4077,7 +3992,7 @@ function drag_select_function(e){
 			join: "miter"
 		}
 	}
-	previous_graphic = new Graphic({geometry: new_rectangle, symbol: symbol});
+	previous_graphic = new ArcGIS.API.Graphic({geometry: new_rectangle, symbol: symbol});
 	map_view.graphics.add(previous_graphic);
 
   var promises_array = [];
@@ -4197,7 +4112,7 @@ function drag_select_function(e){
                     rings: query_geometry.rings
                   }
                 }
-                graphic = new Graphic({geometry: new_geometry, symbol: symbol, attributes: attributes}); 
+                graphic = new ArcGIS.API.Graphic({geometry: new_geometry, symbol: symbol, attributes: attributes}); 
                 graphics_objects_array.push(graphic); 
               }
               // add the features to the background layer
