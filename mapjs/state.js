@@ -52,7 +52,7 @@ export const popupsActive = {
     }
     Colors.highlightButton(Utils.buttonIdentifiers.POPUPSBUTTON, boolean_value);
     if (boolean_value == true && itemSelectorActive.get() == true) {
-      itemSelectorActive(false);
+      itemSelectorActive.set(false);
     }
     _popups_active = boolean_value
   },

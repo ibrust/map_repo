@@ -1,5 +1,4 @@
 
-  import interact from 'https://cdn.interactjs.io/v1.9.19/interactjs/index.js';       // interact allows boxes to be dragged & resized
   import * as Listeners from './listeners.js';
   import * as Utils from './utils.js';
   import * as Colors from './colors.js';
@@ -7,18 +6,7 @@
   import * as ArcGIS from './ArcGIS.js';
 
 
-    var layers_button = document.getElementById("layers_button");
     var close_layers_panel = document.getElementById("close_layers_panel"); 
-    
-    var table_button = document.getElementById("table_button"); 
-
-    var print_button = document.getElementById("print_button"); 
-    
-    var popups_button = document.getElementById("popups_button"); 
-
-    var legend_button = document.getElementById("legend_button"); 
-
-    var filter_button = document.getElementById("filter_button"); 
 
     var attribute_table = document.getElementById("attribute_table"); 
     var intersection_panel = document.getElementById("intersection_panel"); 
@@ -34,19 +22,14 @@
     var search_layer_selector = document.getElementById("search_layer_selector");
     var submit_search_button = document.getElementById("submit_search_button"); 
 
-    var item_selector_button = document.getElementById("item_selector_button"); 
-
-    var intersect_button = document.getElementById("intersect_button"); 
     var intersection_layer_selector_1 = document.getElementById("intersection_layer_selector_1");
     var intersection_layer_selector_2 = document.getElementById("intersection_layer_selector_2");
 
-    var buffer_button = document.getElementById("buffer_button"); 
     var buffer_layer_selector = document.getElementById("buffer_layer_selector");
     var buffer_distance_textbox = document.getElementById("buffer_distance_textbox");
     var buffer_distance_selector = document.getElementById("buffer_distance_selector");
     var buffer_submit_button = document.getElementById("buffer_submit_button");
 
-    var heatmap_button = document.getElementById("heatmap_button"); 
     var heatmap_submit_button = document.getElementById("heatmap_submit_button");
     var heatmap_layer_selector = document.getElementById("heatmap_layer_selector");
 
@@ -65,72 +48,16 @@
     var heatmap_close_button = document.getElementById("heatmap_close_button");
 
 export function start() {
-    // use interact.js to add drag / resize functionality to certain elements 
-    function dragListener(event) {				// called whenever the box is dragged, sets the transform & updates the elements x/y attributes 
-        var target = event.target;
-        var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;				// store the dragged position in the data-x/data-y attributes
-        var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-        // without this test statement the mouse behaves sticky & a variety of bugs arise
-        if (Listeners.mouseover_draggable.get() == true){
-            target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';    // this is the actual drag operation
-            target.setAttribute('data-x', x);												// updates the position attributes 
-            target.setAttribute('data-y', y);
-        }
-    }
-
-    interact('.layers-pane-div')
-    .resizable({ 
-        edges: { left: false, right: true, bottom: true, top: false },			// resize from right and bottom 
-        listeners: {
-            move (event) {
-                Listeners.domElement_resizeHandler(event)
-            }
-        },
-        modifiers: [
-            interact.modifiers.restrictEdges({outer: 'parent'}),
-            interact.modifiers.restrictSize({min: { width: 120, height: 184 }})		// minimum size
-        ],
-        inertia: true
-    });
-    interact('.popups')
-    .draggable({							// makes the search box draggable as well as resizable 
-        inertia: false,								// disable inertial throwing - inertia can throw off the titlebars mouseover listener
-        modifiers: [								// keep the element within the area of its parent
-            interact.modifiers.restrictRect({
-                restriction: 'parent',
-                endOnly: true
-            })
-        ],
-        autoScroll: true, 
-        listeners: {move: dragListener}			// call this function on every dragmove event
-    });
-    interact('#scalebar_widget')
-    .draggable({ 
-            inertia: false, 
-            modifiers: [ 
-                interact.modifiers.restrictRect({
-                restriction: 'parent',
-                endOnly: true
-            })
-        ],
-        autoScroll: true, 
-        listeners: {move: dragListener} 
-    });
-
-    
-    // utility functions used for toggling various buttons & their corresponding elements 
-
-   
-
     function setup_listeners(){
-        Listeners.add_zindex_adjustment_listeners();
-        Listeners.setup_drag_listeners();
+        Listeners.setup_interact();
+        Listeners.setup_drag_bars();
+        Listeners.setup_zindex_adjustment_listeners();
         Listeners.setup_button_hover_listeners();
 
         const search_button = document.getElementById("search_button")
         const search_close_button = document.getElementById("search_close_button")
         const search_panel = document.getElementById("search_panel")
+
         const table_close_button = document.getElementById("table_close_button")
     
         // even these i'd like to factor out. Ultimately I want to factor this entire function out of here
@@ -138,11 +65,11 @@ export function start() {
             search_panel.style.display = "block"; 
             Listeners.increase_z_index(search_panel);
         });
+
+
         search_close_button.addEventListener("click", function(){
             search_panel.style.display = "none"; 
         });
-
-
         table_close_button.addEventListener("click", function(){
             State.tableActive.set(false);
         });
@@ -161,43 +88,12 @@ export function start() {
 
         // -------------------
 
-        intersect_button.addEventListener("click", function() {
-            State.intersectionPanelActive.set(!State.intersectionPanelActive.get());
-        });
-
-        buffer_button.addEventListener("click", function() {
-            State.bufferPanelActive.set(!State.bufferPanelActive.get());
-        });
-
-        heatmap_button.addEventListener("click", function() {
-            State.heatmapPanelActive.set(!State.heatmapPanelActive.get());
-        });
-        table_button.addEventListener("click", function() {
-            State.tableActive.set(!State.tableActive.get());
-        });
-        layers_button.addEventListener("click", function() {
-            State.layersPanelActive.set(!State.layersPanelActive.get());
-        });
-
-        item_selector_button.addEventListener("click", function(){
-            State.itemSelectorActive.set(!State.itemSelectorActive.get());
-        });
-
-        popups_button.addEventListener("click", function(){
-            State.popupsActive.set(!State.popupsActive.get());
-        });
-
-        filter_button.addEventListener("click", function(){
-            State.filterActive.set(!State.filterActive.get());
-        });
-
-        print_button.addEventListener("click", function(){
-            State.printWidgetActive.set(!State.printWidgetActive.get());
-        });
-
-        legend_button.addEventListener("click", function(){
-            State.legendActive.set(!State.legendActive.get())
-        });
+        for (let x = 0; x < Utils.buttonIdentifiersArray.length; x++) {
+            let button = document.getElementById(Utils.buttonIdentifiersArray[x].button);
+            button.addEventListener("click", function() {
+                Utils.buttonIdentifiersArray[x].buttonState.set(!Utils.buttonIdentifiersArray[x].buttonState.get());
+            });
+        }
     }
     setup_listeners(); 
 
@@ -2096,7 +1992,6 @@ function buffer_function(){
 
     var WSG84_buffer_results = [];
     var promises_array = [];
-    var graphics_objects_array = [];
     var query_fields = null; 
 
     let all_promised = input_feature_layer.queryFeatures(query)
@@ -2988,7 +2883,7 @@ function zoom_to_feature(e){
     State.MapProperties.map_view.goTo(graphic);
 }
 
-function table_select_handler(e){
+function table_select_handler(){
 	State.UIProperties.old_clicked_page = 0;
   State.UIProperties.current_page = 1; 
   let selected_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id;
