@@ -129,8 +129,8 @@ export var UIProperties = {
   field_widths: [], 
   grid_divs_list: [], 
   next_grid_line: 1,
-  global_title_rows: [],
-  global_results_per_page: 12,
+  all_title_fields: [],
+  results_per_page: 12,
   current_page: 0,
   old_clicked_page: 0
 }
