@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!--  This site was created in Webflow. http://www.webflow.com  -->
-<!--  Last Published: Fri Oct 09 2020 19:42:33 GMT+0000 (Coordinated Universal Time)  -->
+<!--  This site was created in Webflow. http://www.webflow.com  
+  (it was exported as HTML/CSS w/ a little JS from webflow, then the map was added / the webflow code was modified) -->
 <html data-wf-page="5f21c02cca91fc81b16e9d2e" data-wf-site="5e80cbe25836db0b31bdef23">
 <head>
   <meta charset="utf-8">
@@ -338,8 +338,6 @@
         <label for="Server-URL-3" class="form-title-1">Intensity</label>
         <input type="range" id="heatmap_intensity_range" min="1" max="99">
         
-        <!-- <input type="button" class="popup_buttons" id="heatmap_submit_button" value="Submit" /> -->
-        
         <input type="submit" value="Submit" data-wait="Please wait..." id="heatmap_submit_button" class="submit-button w-button">
       </div>
       
@@ -375,8 +373,8 @@
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
 
 <script type="module">
-  import * as MainJS from "./mapjs/main.js";
-  MainJS.start();
+  import * as MapMain from "./mapjs/main.js";
+  MapMain.start();
 </script>
 
 </body>

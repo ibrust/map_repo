@@ -14,14 +14,23 @@ const mouseover_draggable = {
 }
 Object.freeze(mouseover_draggable);
 
-export function increase_z_index(clicked_element){
+function increase_z_index(clicked_element){
     clicked_element.style.zIndex = "4000";
     for (let x = 0; x < overlapping_elements.length; x++){
         overlapping_elements[x].style.zIndex = (Number(overlapping_elements[x].style.zIndex) - 1).toString(); 
     }
 }
 
-export function setup_zindex_adjustment_listeners() {
+export function setup() {
+    setup_zindex_adjustment_listeners();
+    setup_drag_bars();
+    setup_button_hover_listeners();
+    setup_button_click_listeners();
+    setup_close_buttons();
+    setup_interact();
+}
+
+function setup_zindex_adjustment_listeners() {
     for (let x = 0; x < overlapping_elements.length; x++){
         overlapping_elements[x].addEventListener("click", function(){
             increase_z_index(overlapping_elements[x]);
@@ -29,7 +38,7 @@ export function setup_zindex_adjustment_listeners() {
     }
 }
 
-export function setup_drag_bars() {
+function setup_drag_bars() {
     const draggable_elements = [document.getElementById("heatmap_title_bar"), 
                                 document.getElementById("intersection_title_bar"), 
                                 document.getElementById("search_title_bar"), 
@@ -45,7 +54,7 @@ export function setup_drag_bars() {
     }
 }
 
-export function setup_button_hover_listeners() {
+function setup_button_hover_listeners() {
     for (let x = 0; x < Utils.buttonIdentifiersArray.length; x++) {
         let buttonIdentifier = Utils.buttonIdentifiersArray[x];
         let button = document.getElementById(buttonIdentifier.button);
@@ -61,7 +70,8 @@ export function setup_button_hover_listeners() {
         });
     }
 }
-export function setup_button_click_listeners() {
+
+function setup_button_click_listeners() {
     for (let x = 0; x < Utils.buttonIdentifiersArray.length; x++) {
         let button = document.getElementById(Utils.buttonIdentifiersArray[x].button);
         button.addEventListener("click", function() {
@@ -75,7 +85,7 @@ export function setup_button_click_listeners() {
     });
 }
 
-export function setup_close_buttons() {
+function setup_close_buttons() {
     document.getElementById("search_close_button").addEventListener("click", function(){
         document.getElementById("search_panel").style.display = "none"; 
     });
@@ -87,7 +97,7 @@ export function setup_close_buttons() {
     }
 }
 
-export function setup_interact() {
+function setup_interact() {
     function dragListener(event) {				// called whenever the box is dragged, sets the transform & updates the elements x/y attributes 
         var target = event.target;
         var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;				// store the dragged position in the data-x/data-y attributes

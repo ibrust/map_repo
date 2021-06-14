@@ -48,11 +48,15 @@ export const selector_elements_list = [document.getElementById("table_dataset_se
                                        document.getElementById("buffer_layer_selector"), 
                                        document.getElementById("search_layer_selector")];
 
+export function setup() {
+    setup_distance_selector();
+    setup_panel_heights();
+}
 
-
-
-/*
+function setup_distance_selector() {
+    // fill the distance selector in the buffer panel with valid options 
     const distance_options = ["miles", "kilometers", "meters", "feet", "nautical-miles", "yards"]; 
+    var buffer_distance_selector = document.getElementById("buffer_distance_selector");
     for (var x = 0; x < distance_options.length; x++){
         let new_option = document.createElement("option");
         new_option.textContent = distance_options[x];
@@ -61,9 +65,11 @@ export const selector_elements_list = [document.getElementById("table_dataset_se
         }
         buffer_distance_selector.appendChild(new_option);
     }
+}
 
-    intersection_panel.style.height = "450px"; 
-    buffer_panel.style.height = "345px";
-    heatmap_panel.style.height = "330px";
-    search_panel.style.height = "265px";
-*/
+function setup_panel_heights() {
+    document.getElementById("intersection_panel").style.height = "450px"; 
+    document.getElementById("buffer_panel").style.height = "345px";
+    document.getElementById("heatmap_panel").style.height = "330px";
+    document.getElementById("search_panel").style.height = "265px";
+}
