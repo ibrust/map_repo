@@ -1,4 +1,6 @@
 import * as State from './state.js';
+import * as ArcGIS from './ArcGIS.js';
+
 export const buttonIdentifiers = Object.freeze({
     LAYERSBUTTON: { button: "layers_button", icon: "layers_button_icon", div: "layers_button_div", wrapper: "layers_button_wrapper", buttonState: State.layersPanelActive },
     TABLEBUTTON: { button: "table_button", icon: "table_button_icon", div: "table_button_div", wrapper: "table_button_wrapper", buttonState: State.tableActive },
@@ -53,10 +55,10 @@ export function setup() {
     setup_panel_heights();
 }
 
-function setup_distance_selector() {
-    // fill the distance selector in the buffer panel with valid options 
+function setup_distance_selector() {      // fill the distance selector in the buffer panel with various options 
     const distance_options = ["miles", "kilometers", "meters", "feet", "nautical-miles", "yards"]; 
     var buffer_distance_selector = document.getElementById("buffer_distance_selector");
+
     for (var x = 0; x < distance_options.length; x++){
         let new_option = document.createElement("option");
         new_option.textContent = distance_options[x];
@@ -72,4 +74,65 @@ function setup_panel_heights() {
     document.getElementById("buffer_panel").style.height = "345px";
     document.getElementById("heatmap_panel").style.height = "330px";
     document.getElementById("search_panel").style.height = "265px";
+}
+
+export function error_handler(error_message, error_div, parent_div) {
+    let int_slice = parent_div.style.height;
+    int_slice = Number(int_slice.slice(0, 3));
+    int_slice += 50;
+    let px_size = int_slice + "px";
+
+    error_div.innerHTML = error_message;
+    error_div.style.overflowY = "scroll";
+    if (parent_div != null) {
+        parent_div.style.height = px_size;
+    }
+}
+
+export function append_feature_counts(){
+    for (let x = 0; x < State.MapProperties.queried_features.length; x++){
+        let checkbox_label_id = "services_checkbox_label_" + State.MapProperties.layer_ids[x]; 
+        let checkbox_label = document.getElementById(checkbox_label_id);
+
+        for (let y = 0; y < State.MapProperties.queried_features.length; y++){
+            if (State.MapProperties.queried_features[y]["layer_id"] == State.MapProperties.layer_ids[x]){
+                let feature_count = State.MapProperties.queried_features[y]["data"].features.length; 
+                checkbox_label.textContent += " (" + feature_count + ")"; 
+            }
+        }    
+    }
+}
+
+export function project_and_zoom(fullExtent){
+	let url = State.URLProperties.base_url + "Utilities/Geometry/GeometryServer/project";
+	// this is a query to the spatial projection utility provided by the REST API 
+	let options = {
+		responseType: "json", 
+		query: {
+			f: "json", 
+			inSR: JSON.stringify(fullExtent.spatialReference), 
+			outSR: 4326, 
+			geometries: JSON.stringify({
+				"geometryType": "esriGeometryPoint", 
+				"geometries": [
+					{"x": fullExtent.xmin, "y": fullExtent.ymin}, 
+					{"x": fullExtent.xmax, "y": fullExtent.ymax}
+				]
+			})
+		}// end query 
+	}// end options 
+
+	ArcGIS.API.ArcRequest(url, options)
+	.then(response => {
+		// construct a custom extent object with the response 
+		let extent_object = {};
+		let data = response.data;
+		extent_object.xmin = data.geometries[0].x; 
+		extent_object.ymin = data.geometries[0].y; 
+		extent_object.xmax = data.geometries[1].x; 
+		extent_object.ymax = data.geometries[1].y; 
+		extent_object.spatialReference = 4326;
+		// add that custom extent object to the map view
+		State.MapProperties.map_view.extent = extent_object;
+	});
 }

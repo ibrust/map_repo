@@ -1,7 +1,7 @@
 import * as Utils from './utils.js';
 import * as Colors from './colors.js';
 import * as Listeners from './listeners.js';
-import * as Main from './main.js';
+import * as MapTools from './maptools.js';
 
 var _legend_active = false;
 var _layers_panel_active = false;
@@ -109,9 +109,9 @@ export const filterActive = {
         itemSelectorActive.set(false);
       }
       MapProperties.map_view.graphics = [];
-      Main.filter_by_extent("on");
+      MapTools.filter_by_extent("on");
     } else {
-      Main.filter_by_extent("off");
+      MapTools.filter_by_extent("off");
     }
     Colors.highlightButton(Utils.buttonIdentifiers.FILTERBUTTON, boolean_value);
     _filter_active = boolean_value
