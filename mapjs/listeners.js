@@ -1,5 +1,10 @@
 import * as Colors from './colors.js';
 import * as Utils from './utils.js';
+import * as ArcGIS from './ArcGIS.js';
+import * as MapTools from './maptools.js'
+import * as Table from './table.js';
+import * as State from './state.js';
+import * as Graphics from './graphics.js';
 import interact from 'https://cdn.interactjs.io/v1.9.19/interactjs/index.js';       // interact allows boxes to be dragged & resized
 
 const overlapping_elements = [document.getElementById("search_panel"), 
@@ -14,7 +19,7 @@ const mouseover_draggable = {
 }
 Object.freeze(mouseover_draggable);
 
-function increase_z_index(clicked_element){
+export function increase_z_index(clicked_element){
     clicked_element.style.zIndex = "4000";
     for (let x = 0; x < overlapping_elements.length; x++){
         overlapping_elements[x].style.zIndex = (Number(overlapping_elements[x].style.zIndex) - 1).toString(); 

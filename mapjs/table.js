@@ -143,11 +143,11 @@ export function fill_attribute_table(input_page, reload_buttons, from_search_but
 
         zoom_image_button.addEventListener("click", function(e){
             if (State.filterActive.get() == false){
-                Table.zoom_to_feature(e);
+                zoom_to_feature(e);
             }
             else{
                 State.filterActive.set(false);
-                Table.zoom_to_feature(e);
+                zoom_to_feature(e);
             }
         });
 
@@ -187,6 +187,114 @@ export function fill_attribute_table(input_page, reload_buttons, from_search_but
     function style_normal_column(element){
         element.style.padding = padding;
         element.style.overflow = "hidden";
+    }
+}
+
+export function change_results_count(count){
+    let multiple = count / State.UIProperties.results_per_page;
+    
+    State.UIProperties.old_clicked_page--; 
+    State.UIProperties.old_clicked_page = Math.floor(State.UIProperties.old_clicked_page / multiple); 
+    State.UIProperties.old_clicked_page++; 
+    State.UIProperties.current_page--; 
+    State.UIProperties.current_page = Math.floor(State.UIProperties.current_page / multiple); 
+    State.UIProperties.current_page++; 
+
+    State.UIProperties.results_per_page = count;        // update the global results count to whatever the radio button is now
+    if (State.filterActive.get() == false){
+        initialize_page_buttons(State.UIProperties.current_page, false);
+    }
+	else {   // filter_by_extent refills the attribute table differently, it must be called instead of initialize_page_buttons if the filter is active 
+        MapTools.filter_by_extent("on");
+    }
+}
+
+export function table_load_handler(reason){
+    var attribute_table = document.getElementById("attribute_table");
+    var table_error_div = document.getElementById("table_error_div");
+
+	table_error_div.style.display = "block"; 
+	attribute_table.style.display = "none"; 
+	table_error_div.innerHTML = reason.message; 
+	// remove all rows from the table
+	var count = attribute_table.childNodes.length; 
+	for (let x = 0; x < count; x++){
+		attribute_table.removeChild(attribute_table.childNodes[0]);
+	}
+}
+
+export function table_reorder(field, mode){
+    var field_name = field.name; 
+    for (let x = 0; x < State.MapProperties.current_layers_query["data"].fields.length; x++){
+        if (field_name == State.MapProperties.current_layers_query["data"].fields[x].name){
+            var field_type = field.type; 
+            if (mode == "ascending"){
+                if (field_type == "small-integer" || field_type == "integer" || field_type == "single" || field_type == "double" || field_type == "long" || field_type == "oid" || field_type == "date"){
+                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
+                        return a.attributes[field_name] - b.attributes[field_name]; 
+                    });
+                }
+                else if (field_type == "string"){
+                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
+                        return a.attributes[field_name].localeCompare(b.attributes[field_name]);  
+                    }); 
+                }
+                else{
+                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
+                        return -1; 
+                    }); 
+                }
+            }
+            else if (mode == "descending"){
+                if (field_type == "small-integer" || field_type == "integer" || field_type == "single" || field_type == "double" || field_type == "long" || field_type == "oid" || field_type == "date"){
+                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
+                        return b.attributes[field_name] - a.attributes[field_name]; 
+                    });
+                }
+                else if (field_type == "string") {
+                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
+                        return b.attributes[field_name].localeCompare(a.attributes[field_name]); 
+                    });
+                }
+                else{
+                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
+                        return -1; 
+                    }); 
+                }
+            }
+            break;
+        }
+    }
+}
+
+export function table_select_handler(){
+    var table_dataset_selector = document.getElementById("table_dataset_selector");
+
+	State.UIProperties.old_clicked_page = 0;
+    State.UIProperties.current_page = 1; 
+    let selected_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id;
+    // State.MapProperties.current_layers_query
+    if (State.MapGraphics.enable_graphics == false){
+        for (let x = 0; x < State.MapProperties.queried_features.length; x++){
+            if (State.MapProperties.queried_features[x]["layer_id"] == selected_id){
+                State.MapProperties.current_layers_query = State.MapProperties.queried_features[x]; 
+                break;
+            }
+        }
+    }
+    else if (State.MapGraphics.enable_graphics == true){
+        for (let x = 0; x < State.MapProperties.queried_background_features.length; x++){
+            if (State.MapProperties.queried_background_features[x]["parent_layer_id"] == selected_id){
+                State.MapProperties.current_layers_query = State.MapProperties.queried_background_features[x]; 
+                break;
+            }
+        }
+    }
+    if (State.filterActive.get() == true){
+        MapTools.filter_by_extent("on");         // this calls fill_attribute_table 
+    }
+    else{   // called regardless of if we're using graphics for the data source, the only check needed is State.filterActive.get() == true
+        fill_attribute_table(1, true);
     }
 }
 
@@ -300,84 +408,7 @@ function adjust_page_buttons(newly_clicked_page, total_pages, from_refill_table)
 	}
 }
 
-export function change_results_count(count){
-    let multiple = count / State.UIProperties.results_per_page;
-    
-    State.UIProperties.old_clicked_page--; 
-    State.UIProperties.old_clicked_page = Math.floor(State.UIProperties.old_clicked_page / multiple); 
-    State.UIProperties.old_clicked_page++; 
-    State.UIProperties.current_page--; 
-    State.UIProperties.current_page = Math.floor(State.UIProperties.current_page / multiple); 
-    State.UIProperties.current_page++; 
-
-    State.UIProperties.results_per_page = count;        // update the global results count to whatever the radio button is now
-    if (State.filterActive.get() == false){
-        initialize_page_buttons(State.UIProperties.current_page, false);
-    }
-	else {   // filter_by_extent refills the attribute table differently, it must be called instead of initialize_page_buttons if the filter is active 
-        MapTools.filter_by_extent("on");
-    }
-}
-
-export function table_load_handler(reason){
-    var attribute_table = document.getElementById("attribute_table");
-    var table_error_div = document.getElementById("table_error_div");
-
-	table_error_div.style.display = "block"; 
-	attribute_table.style.display = "none"; 
-	table_error_div.innerHTML = reason.message; 
-	// remove all rows from the table
-	var count = attribute_table.childNodes.length; 
-	for (let x = 0; x < count; x++){
-		attribute_table.removeChild(attribute_table.childNodes[0]);
-	}
-}
-
-export function table_reorder(field, mode){
-    var field_name = field.name; 
-    for (let x = 0; x < State.MapProperties.current_layers_query["data"].fields.length; x++){
-        if (field_name == State.MapProperties.current_layers_query["data"].fields[x].name){
-            var field_type = field.type; 
-            if (mode == "ascending"){
-                if (field_type == "small-integer" || field_type == "integer" || field_type == "single" || field_type == "double" || field_type == "long" || field_type == "oid" || field_type == "date"){
-                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
-                        return a.attributes[field_name] - b.attributes[field_name]; 
-                    });
-                }
-                else if (field_type == "string"){
-                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
-                        return a.attributes[field_name].localeCompare(b.attributes[field_name]);  
-                    }); 
-                }
-                else{
-                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
-                        return -1; 
-                    }); 
-                }
-            }
-            else if (mode == "descending"){
-                if (field_type == "small-integer" || field_type == "integer" || field_type == "single" || field_type == "double" || field_type == "long" || field_type == "oid" || field_type == "date"){
-                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
-                        return b.attributes[field_name] - a.attributes[field_name]; 
-                    });
-                }
-                else if (field_type == "string") {
-                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
-                        return b.attributes[field_name].localeCompare(a.attributes[field_name]); 
-                    });
-                }
-                else{
-                    State.MapProperties.current_layers_query["data"].features.sort(function(a, b){
-                        return -1; 
-                    }); 
-                }
-            }
-            break;
-        }
-    }
-}
-
-export function zoom_to_feature(e){ 
+function zoom_to_feature(e){ 
     State.MapProperties.map_view.graphics = []; 
 	  let object_id = e.target.object_id;			// each zoom button was assigned the object_id to use in this spatial query 
     var graphic = null;
@@ -465,35 +496,4 @@ export function zoom_to_feature(e){
 
     State.MapProperties.map_view.graphics.add(graphic);
     State.MapProperties.map_view.goTo(graphic);
-}
-
-export function table_select_handler(){
-    var table_dataset_selector = document.getElementById("table_dataset_selector");
-
-	State.UIProperties.old_clicked_page = 0;
-    State.UIProperties.current_page = 1; 
-    let selected_id = table_dataset_selector.options[table_dataset_selector.selectedIndex].id;
-    // State.MapProperties.current_layers_query
-    if (State.MapGraphics.enable_graphics == false){
-        for (let x = 0; x < State.MapProperties.queried_features.length; x++){
-            if (State.MapProperties.queried_features[x]["layer_id"] == selected_id){
-                State.MapProperties.current_layers_query = State.MapProperties.queried_features[x]; 
-                break;
-            }
-        }
-    }
-    else if (State.MapGraphics.enable_graphics == true){
-        for (let x = 0; x < State.MapProperties.queried_background_features.length; x++){
-            if (State.MapProperties.queried_background_features[x]["parent_layer_id"] == selected_id){
-                State.MapProperties.current_layers_query = State.MapProperties.queried_background_features[x]; 
-                break;
-            }
-        }
-    }
-    if (State.filterActive.get() == true){
-        MapTools.filter_by_extent("on");         // this calls fill_attribute_table 
-    }
-    else{   // called regardless of if we're using graphics for the data source, the only check needed is State.filterActive.get() == true
-        fill_attribute_table(1, true);
-    }
 }

@@ -152,11 +152,6 @@ Object.freeze(heatmapPanelActive);
 Object.freeze(filterActive);
 Object.freeze(itemSelectorActive);
 
-
-// maybe rename the setters to buttons.layersPanel.active(true); or false? 
-// restructure it and rename it to something... 
-
-
 export var URLProperties = {
   default_service: "OilSandsProjectBoundaries",
   selected_service_name: null,

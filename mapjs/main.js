@@ -1,9 +1,7 @@
 import * as Listeners from './listeners.js';
 import * as Utils from './utils.js';
-import * as Colors from './colors.js';
 import * as State from './state.js';
 import * as ArcGIS from './ArcGIS.js';
-import * as MapTools from './maptools.js';
 import * as Graphics from './graphics.js';
 import * as Table from './table.js';
 
