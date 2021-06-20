@@ -1,8 +1,10 @@
-bugs in map: 
-- clickdown should trigger zindex adjustment of boxes, not clickup. 
+major bugs in map: 
+- found a new bug where buffer followed by intersection of polygons doesn't work - it stops after 1 intersection is found. definitely a required fix
 - page buttons in the table don't start out the right color. looks like the whole titlebar color changed. 
 - the cursor changes to a drag icon when over the body of a draggable box, but should only do so when over the box titlebar
 - tools still freeze with large datasets 
-- found a new bug where buffer followed by intersection of polygons doesn't work - it stops after 1 intersection is found. definitely a required fix
-- there appears to be some bug when mouse dragging over newly generated layers, at least I think that's the issue, not sure. 
+- there appears to be some bug when mouse dragging over newly generated layers, at least I think that's the issue, not sure
+
+minor bugs in map: 
+- clickdown should trigger zindex adjustment of boxes, not clickup. 
 - the layers list has orange highlighting which doesn't look great but I can't figure out how to remove it, webflow must have added it somehow

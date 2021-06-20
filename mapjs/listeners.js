@@ -26,56 +26,6 @@ export function increase_z_index(clicked_element){
     }
 }
 
-export function setup_tools() { 
-    var table_dataset_selector = document.getElementById("table_dataset_selector");
-  // prime the dataset selector in the table to fetch & populate the table upon selection of a new dataset  
-	table_dataset_selector.addEventListener("change", function(){ Table.table_select_handler(); });
-  
-  // with this listener, every time the map stops moving and the filter button is active, the filter function gets called. this ongoingly filters
-	ArcGIS.API.Watch.whenTrue(State.MapProperties.map_view, "stationary", function() {
-		if (State.filterActive.get() == true){
-            MapTools.filter_by_extent("on");
-		}
-	});
-
-  // a variety of functions can be called when the map is clicked or dragged upon, here we choose which to call if any 
-	State.MapProperties.map_view.on("click", function(e){
-		if (State.itemSelectorActive.get() == true){
-			if (e.button == 0){
-				MapTools.click_select_function(e);
-			}
-		}
-		if (e.button == 2){
-            State.MapProperties.map_view.graphics = [];
-            if (State.MapGraphics.enable_graphics == true){
-                Graphics.clear_graphics_layer(); 
-            }
-            State.itemSelectorActive.set(false);
-		}
-	});
-	State.MapProperties.map_view.on("drag", function(e){
-		if (State.itemSelectorActive.get() == true){
-			MapTools.drag_select_function(e);
-		}
-	});
-
-    // listener for handling submissions from various toolboxes
-    document.getElementById("intersection_submit_button").addEventListener("click", function(){
-		MapTools.intersect_function();
-	});
-  
-	document.getElementById("buffer_submit_button").addEventListener("click", function(){
-		MapTools.buffer_function();
-	});
-  
-    document.getElementById("heatmap_submit_button").addEventListener("click", function(){
-		MapTools.heatmap_function();
-	});
-	document.getElementById("submit_search_button").addEventListener("click", function(){
-		MapTools.search_function();
-	});
-}
-
 export function setup() {
     setup_zindex_adjustment_listeners();
     setup_drag_bars();
@@ -218,4 +168,55 @@ function setup_interact() {
         autoScroll: true, 
         listeners: {move: dragListener} 
     });
+}
+
+
+export function setup_tools() {             // this is called after the map is setup
+    var table_dataset_selector = document.getElementById("table_dataset_selector");
+  // prime the dataset selector in the table to fetch & populate the table upon selection of a new dataset  
+	table_dataset_selector.addEventListener("change", function(){ Table.table_select_handler(); });
+  
+  // with this listener, every time the map stops moving and the filter button is active, the filter function gets called. this ongoingly filters
+	ArcGIS.API.Watch.whenTrue(State.MapProperties.map_view, "stationary", function() {
+		if (State.filterActive.get() == true){
+            MapTools.filter_by_extent("on");
+		}
+	});
+
+  // a variety of functions can be called when the map is clicked or dragged upon, here we choose which to call if any 
+	State.MapProperties.map_view.on("click", function(e){
+		if (State.itemSelectorActive.get() == true){
+			if (e.button == 0){
+				MapTools.click_select_function(e);
+			}
+		}
+		if (e.button == 2){
+            State.MapProperties.map_view.graphics = [];
+            if (State.MapGraphics.enable_graphics == true){
+                Graphics.clear_graphics_layer(); 
+            }
+            State.itemSelectorActive.set(false);
+		}
+	});
+	State.MapProperties.map_view.on("drag", function(e){
+		if (State.itemSelectorActive.get() == true){
+			MapTools.drag_select_function(e);
+		}
+	});
+
+    // listener for handling submissions from various toolboxes
+    document.getElementById("intersection_submit_button").addEventListener("click", function(){
+		MapTools.intersect_function();
+	});
+  
+	document.getElementById("buffer_submit_button").addEventListener("click", function(){
+		MapTools.buffer_function();
+	});
+  
+    document.getElementById("heatmap_submit_button").addEventListener("click", function(){
+		MapTools.heatmap_function();
+	});
+	document.getElementById("submit_search_button").addEventListener("click", function(){
+		MapTools.search_function();
+	});
 }
